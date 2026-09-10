@@ -1,0 +1,3 @@
+import { supabase } from '../../lib/supabase'; import type { CustomerInput } from './customerSchema';
+export async function listCustomers(search=''){ if(!supabase)return {data:[],error:new Error('Supabase não configurado.')}; let query=supabase.from('customers').select('*').is('archived_at',null).order('created_at',{ascending:false}); if(search)query=query.ilike('full_name',`%${search}%`); return query; }
+export async function createCustomer(input:CustomerInput){ if(!supabase)return {data:null,error:new Error('Supabase não configurado.')}; return supabase.from('customers').insert({full_name:input.full_name,phone:input.phone,whatsapp:input.whatsapp||null,email:input.email||null,cpf:input.cpf||null,address:input.address||null,notes:input.notes||null}).select().single(); }

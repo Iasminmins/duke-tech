@@ -1,0 +1,10 @@
+services:
+  duke-tech-admin:
+    build:
+      context: ./admin-app
+      args:
+        VITE_SUPABASE_URL: ${VITE_SUPABASE_URL:-https://xhyfzgxpouyeroaedeco.supabase.co}
+        VITE_SUPABASE_ANON_KEY: ${VITE_SUPABASE_ANON_KEY:-}
+    ports:
+      - "5174:80"
+    restart: unless-stopped

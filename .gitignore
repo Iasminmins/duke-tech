@@ -1,1 +1,7 @@
 .playwright-mcp/
+.env
+.env.*
+!.env.example
+admin-app/.env.local
+admin-app/dist/
+admin-app/node_modules/

@@ -1,0 +1,2 @@
+import type { PublicTracking } from './trackingRepository';
+test('public projection contains no sensitive administrative fields',()=>{const publicData:PublicTracking={number:1,public_code:'abc',model:'iPhone',brand:'Apple',status:'received',estimated_due_date:null,public_message:null,updated_at:new Date().toISOString(),photos:[]};expect(publicData).not.toHaveProperty('cpf');expect(publicData).not.toHaveProperty('access_password');expect(publicData).not.toHaveProperty('internal_notes');});

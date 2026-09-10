@@ -1,0 +1,4 @@
+import { supabase } from '../../lib/supabase';
+export type PublicTracking = { number:number; public_code:string; model:string; brand:string; status:string; estimated_due_date:string|null; public_message:string|null; updated_at:string; photos:Array<{path:string;category:string}> };
+export async function getPublicTracking(code:string){ const client=supabase; if(!client)return {data:null,error:new Error('Acompanhamento indisponível sem conexão com o Supabase.')}; return client.rpc('get_public_work_order',{p_code:code}).then(({data,error})=>({data:(data?.[0] as PublicTracking|undefined)||null,error:error||null})); }
+export function subscribeToTracking(id:string,callback:()=>void){ const client=supabase; if(!client)return ()=>{}; const channel=client.channel(`public-tracking-${id}`).on('postgres_changes',{event:'*',schema:'public',table:'work_orders'},callback).subscribe(); return ()=>{client.removeChannel(channel)}; }
