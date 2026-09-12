@@ -7,7 +7,7 @@ import { supabase } from '../../lib/supabase'; import type { DeviceInput } from 
  */
 export async function listDevices() {
   if (!supabase) return { data: [], error: new Error('Supabase não configurado.') };
-  return supabase.from('devices').select('id,customer_id,brand,model,color,imei,serial_number,physical_condition,received_accessories,reported_problem,created_at,customers(full_name)').is('archived_at', null).order('created_at', { ascending: false });
+  return supabase.from('devices').select('id,customer_id,brand,model,color,imei,serial_number,physical_condition,received_accessories,reported_problem,created_at,customers(full_name),work_orders(id)').is('archived_at', null).order('created_at', { ascending: false });
 }
 
 export async function createDevice(input: DeviceInput) {

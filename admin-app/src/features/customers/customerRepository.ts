@@ -5,7 +5,7 @@ const friendlyDuplicateMessage = 'Já existe um cliente cadastrado com este tele
 
 export async function listCustomers(search = '') {
   if (!supabase) return { data: [], error: new Error('Supabase não configurado.') };
-  let query = supabase.from('customers').select('*').is('archived_at', null).order('created_at', { ascending: false });
+  let query = supabase.from('customers').select('*,work_orders(status,final_amount,created_at)').is('archived_at', null).order('created_at', { ascending: false });
   if (search) {
     const digits = normalizePhone(search);
     // Busca simultânea por nome ou telefone, como pedido em "busca rápida".

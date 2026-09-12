@@ -1,6 +1,6 @@
 import type { ReactNode, SVGProps } from 'react';
 
-type IconName = 'grid' | 'clipboard' | 'calendar' | 'wrench' | 'users' | 'device' | 'box' | 'cart' | 'wallet' | 'chart' | 'settings' | 'search' | 'bell' | 'plus' | 'arrow' | 'menu' | 'logout' | 'chevron' | 'sun' | 'moon';
+type IconName = 'grid' | 'clipboard' | 'calendar' | 'wrench' | 'users' | 'device' | 'box' | 'cart' | 'wallet' | 'chart' | 'settings' | 'search' | 'bell' | 'plus' | 'arrow' | 'menu' | 'logout' | 'chevron' | 'sun' | 'moon' | 'check' | 'file' | 'refresh' | 'inbox' | 'x' | 'clock';
 
 export function Icon({ name, size = 18, ...props }: SVGProps<SVGSVGElement> & { name: IconName; size?: number }) {
   const paths: Record<IconName, ReactNode> = {
@@ -24,6 +24,12 @@ export function Icon({ name, size = 18, ...props }: SVGProps<SVGSVGElement> & { 
     chevron: <path d="m9 18 6-6-6-6"/>,
     sun: <><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"/></>,
     moon: <path d="M20.5 14.3A8.5 8.5 0 0 1 9.7 3.5 8.5 8.5 0 1 0 20.5 14.3Z"/>,
+    check: <path d="M20 6 9 17l-5-5"/>,
+    file: <><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6Z"/><path d="M14 2v6h6M9 13h6M9 17h6"/></>,
+    refresh: <><path d="M21 12a9 9 0 0 1-15.3 6.4M3 12a9 9 0 0 1 15.3-6.4"/><path d="M3 4v5h5M21 20v-5h-5"/></>,
+    inbox: <><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.5 5h13l3.5 7v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-7l3.5-7Z"/></>,
+    x: <path d="M18 6 6 18M6 6l12 12"/>,
+    clock: <><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></>,
   };
   return <svg aria-hidden="true" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" {...props}>{paths[name]}</svg>;
 }

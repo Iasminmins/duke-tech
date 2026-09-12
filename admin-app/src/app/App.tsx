@@ -14,6 +14,7 @@ import { PublicTrackingPage } from '../features/tracking/PublicTrackingPage';
 import { ProductsPage } from '../features/commerce/ProductsPage';
 import { ModulePage } from '../pages/ModulePage';
 import { ThemeProvider } from '../theme/ThemeProvider';
+import { ToastProvider } from '../components/ui/ToastProvider';
 import { AgendaPage } from '../features/agenda/AgendaPage';
 import { FinancePage } from '../features/finance/FinancePage';
 import { SalesPage } from '../features/commerce/SalesPage';
@@ -23,7 +24,7 @@ import { StockPage } from '../features/commerce/StockPage';
 import { UsersPage } from '../features/users/UsersPage';
 
 export default function App() {
-  return <ThemeProvider><AuthProvider><Routes>
+  return <ThemeProvider><ToastProvider><AuthProvider><Routes>
     <Route path="/admin/login" element={<LoginPage />} />
     <Route path="/acompanhar/:codigo" element={<PublicTrackingPage />} />
     <Route path="/admin" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
@@ -44,5 +45,5 @@ export default function App() {
       <Route path="comandas/:id" element={<WorkOrderDetailPage />} />
     </Route>
     <Route path="*" element={<Navigate to="/admin" replace />} />
-  </Routes></AuthProvider></ThemeProvider>;
+  </Routes></AuthProvider></ToastProvider></ThemeProvider>;
 }

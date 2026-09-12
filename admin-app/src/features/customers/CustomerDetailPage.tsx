@@ -45,14 +45,14 @@ export function CustomerDetailPage() {
   const totalSpent = orders.filter(o => o.status === 'delivered').reduce((sum, o) => sum + Number(o.final_amount || 0), 0);
   const lastVisit = orders[0]?.created_at;
 
-  if (loading) return <section className="content"><div className="empty" role="status" aria-live="polite">Carregando cliente…</div></section>;
-  if (error && !customer) return <section className="content"><div className="empty error-state" role="alert"><p>{error}</p><button className="btn primary" onClick={load}>Tentar novamente</button></div></section>;
+  if (loading) return <section className="content"><div className="card loading-skeleton" role="status" aria-live="polite"><span /><span /><span /><span /></div></section>;
+  if (error && !customer) return <section className="content"><div className="card empty error-state" role="alert"><p>{error}</p><button className="btn primary" onClick={load}>Tentar novamente</button></div></section>;
   if (!customer) return null;
 
   return <section className="content">
-    <div className="page-heading">
-      <div><h2>{customer.full_name}</h2><p className="muted">Cliente desde {dateFmt(customer.created_at)}</p></div>
-      <div className="heading-actions"><Link className="btn" to="/admin/clientes">← Voltar</Link><button className="btn" style={{ color: 'var(--red)' }} onClick={() => setConfirmingDelete(true)}>Excluir cliente</button></div>
+    <div className="page-toolbar-top">
+      <span className="page-toolbar-count">Cliente desde {dateFmt(customer.created_at)}</span>
+      <div className="heading-actions"><Link className="btn" to="/admin/clientes">← Voltar</Link><button className="btn danger" onClick={() => setConfirmingDelete(true)}>Excluir cliente</button></div>
     </div>
     {error && <div className="error" role="alert" style={{ marginBottom: 16 }}>{error}</div>}
     {confirmingDelete && <div className="form-card" role="alertdialog" aria-label="Confirmar exclusão" style={{ marginBottom: 16 }}>
@@ -82,7 +82,7 @@ export function CustomerDetailPage() {
         </section>
       </div>
       <section className="panel">
-        <header className="panel-header"><h3>Dados de contato</h3></header>
+        <header className="panel-header"><div><span className="section-kicker">Dados de contato</span><h3>{customer.full_name}</h3></div></header>
         <dl className="detail-list">
           <div><dt>Telefone</dt><dd>{customer.phone}</dd></div>
           <div><dt>WhatsApp</dt><dd>{customer.whatsapp || '—'}</dd></div>
