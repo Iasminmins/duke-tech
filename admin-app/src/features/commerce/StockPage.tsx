@@ -37,7 +37,7 @@ export function StockPage() {
 
     {low.length > 0 && <section className="panel" style={{ marginTop: 16, borderLeft: '3px solid var(--amber)' }}>
       <header className="panel-header"><h3>Alertas de estoque crítico</h3></header>
-      <div className="report-bars" style={{ marginTop: 16 }}>{low.map(product => <div className="report-bar-row" key={product.id}><span className="report-bar-label">{product.name}</span><div className="report-bar-track"><div className="report-bar-fill is-critical" style={{ width: `${Math.min(100, (product.quantity / Math.max(product.minimum_stock, 1)) * 100)}%` }} /></div><strong className="report-bar-value">{product.quantity}</strong></div>)}</div>
+      <div className="report-bars" style={{ marginTop: 16 }}>{low.map(product => <div className="report-bar-row" key={product.id}><span className="report-bar-label">{product.name}</span><div className="report-bar-track"><div className="report-bar-fill is-critical" style={{ width: `${Math.max(4, 100 - (product.quantity / Math.max(product.minimum_stock, 1)) * 100)}%` }} /></div><strong className="report-bar-value">{product.quantity}</strong></div>)}</div>
     </section>}
 
     <section className="panel" style={{ marginTop: 16 }}>

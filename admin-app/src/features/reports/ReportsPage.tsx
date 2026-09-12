@@ -2,6 +2,16 @@ import { useEffect, useMemo, useState } from 'react';
 import { supabase } from '../../lib/supabase';
 import { statusLabels } from '../../components/ui/status';
 import { BarChart } from '../../components/ui/charts/BarChart';
+import { DonutChart, type DonutSlice } from '../../components/ui/charts/DonutChart';
+
+const CATEGORY_PALETTE = ['var(--blue)', 'var(--violet)', 'var(--amber)', 'var(--green)', 'var(--red)', '#64748b'];
+function toDonutSlices(entries: [string, number][], labelFor: (key: string) => string): DonutSlice[] {
+  const sorted = [...entries].sort((a, b) => b[1] - a[1]);
+  const head = sorted.slice(0, 5).map(([key, value], index) => ({ key, label: labelFor(key), value, color: CATEGORY_PALETTE[index] }));
+  const rest = sorted.slice(5);
+  if (rest.length) head.push({ key: '__other__', label: 'Outros', value: rest.reduce((sum, [, value]) => sum + value, 0), color: CATEGORY_PALETTE[5] });
+  return head;
+}
 
 type Period = 'Hoje' | 'Últimos 7 dias' | 'Últimos 30 dias' | 'Este mês';
 const periodDays: Record<Period, number> = { 'Hoje': 1, 'Últimos 7 dias': 7, 'Últimos 30 dias': 30, 'Este mês': 30 };
@@ -15,6 +25,7 @@ export function ReportsPage() {
   const [period, setPeriod] = useState<Period>('Últimos 30 dias');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [statusView, setStatusView] = useState<'bar' | 'pie'>('bar');
 
   useEffect(() => {
     if (!supabase) { setLoading(false); return; }
@@ -93,12 +104,12 @@ export function ReportsPage() {
 
     <div className="dashboard-grid secondary-grid">
       <section className="panel">
-        <header className="panel-header"><h3>Comandas por status</h3></header>
-        {Object.keys(statusCounts).length ? <div className="report-bars">{Object.entries(statusCounts).sort((a, b) => b[1] - a[1]).map(([status, count]) => <div className="report-bar-row" key={status}><span className="report-bar-label">{statusLabels[status] || status}</span><div className="report-bar-track"><div className="report-bar-fill" style={{ width: `${(count / maxStatusCount) * 100}%` }} /></div><strong className="report-bar-value">{count}</strong></div>)}</div> : <div className="empty">Nenhuma comanda no período.</div>}
+        <header className="panel-header"><h3>Comandas por status</h3><div className="view-toggle chart-view-toggle" role="group" aria-label="Tipo de gráfico"><button type="button" className={`btn${statusView === 'bar' ? ' active' : ''}`} aria-pressed={statusView === 'bar'} onClick={() => setStatusView('bar')}>Barras</button><button type="button" className={`btn${statusView === 'pie' ? ' active' : ''}`} aria-pressed={statusView === 'pie'} onClick={() => setStatusView('pie')}>Pizza</button></div></header>
+        {!Object.keys(statusCounts).length ? <div className="empty">Nenhuma comanda no período.</div> : statusView === 'bar' ? <div className="report-bars">{Object.entries(statusCounts).sort((a, b) => b[1] - a[1]).map(([status, count]) => <div className="report-bar-row" key={status}><span className="report-bar-label">{statusLabels[status] || status}</span><div className="report-bar-track"><div className="report-bar-fill" style={{ width: `${(count / maxStatusCount) * 100}%` }} /></div><strong className="report-bar-value">{count}</strong></div>)}</div> : <DonutChart data={toDonutSlices(Object.entries(statusCounts), status => statusLabels[status] || status)} />}
       </section>
       <section className="panel">
         <header className="panel-header"><h3>Produtos com estoque baixo</h3></header>
-        {lowStock.length ? <div className="report-bars">{lowStock.map(product => <div className="report-bar-row" key={product.id}><span className="report-bar-label">{product.name}</span><div className="report-bar-track"><div className="report-bar-fill is-critical" style={{ width: `${Math.min(100, (product.quantity / Math.max(product.minimum_stock, 1)) * 100)}%` }} /></div><strong className="report-bar-value">{product.quantity}</strong></div>)}</div> : <div className="empty">Nenhum alerta de estoque.</div>}
+        {lowStock.length ? <div className="report-bars">{lowStock.map(product => <div className="report-bar-row" key={product.id}><span className="report-bar-label">{product.name}</span><div className="report-bar-track"><div className="report-bar-fill is-critical" style={{ width: `${Math.max(4, 100 - (product.quantity / Math.max(product.minimum_stock, 1)) * 100)}%` }} /></div><strong className="report-bar-value">{product.quantity}</strong></div>)}</div> : <div className="empty">Nenhum alerta de estoque.</div>}
       </section>
     </div>
   </section>;
