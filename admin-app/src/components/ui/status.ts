@@ -1,0 +1,3 @@
+export const statusLabels: Record<string, string> = { received: 'Recebido', diagnosis: 'Em diagnóstico', quote_sent: 'Orçamento enviado', awaiting_approval: 'Aguardando aprovação', approved: 'Aprovado', rejected: 'Recusado', awaiting_part: 'Aguardando peça', repair: 'Em reparo', testing: 'Em testes', ready: 'Pronto para retirada', delivered: 'Entregue', cancelled: 'Cancelado' };
+export const priorityLabels: Record<string, string> = { normal: 'Normal', high: 'Alta', urgent: 'Urgente' };
+export const formatMetric = (value: number) => Number(value || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }).replace(/\u00a0/g, ' ');

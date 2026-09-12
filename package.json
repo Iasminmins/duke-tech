@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "scripts": {
+    "vercel-build": "npm --prefix admin-app install && npm --prefix admin-app run build && node scripts/prepare-vercel.mjs"
+  }
+}

@@ -16,3 +16,50 @@ html[data-theme='light'] .table th,html[data-theme='light'] .table td{border-bot
 .status-editor{margin-top:18px;padding-top:18px;border-top:1px solid var(--line);max-width:420px}.status-editor>label{display:block;color:var(--muted);font-size:12px;font-weight:700;margin-bottom:7px}.status-editor .actions{margin-top:12px}
 .tracking-share{margin-top:18px;padding:18px;border:1px solid var(--line);border-radius:12px;background:var(--panel-soft);max-width:760px}.tracking-share h3{margin:7px 0}.tracking-link-row{display:flex;gap:8px;margin-top:14px}.tracking-link-row .input{flex:1;min-width:0}.tracking-share-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:12px}.tracking-share-actions a{text-decoration:none}@media(max-width:600px){.tracking-link-row{display:grid}.tracking-link-row .btn{width:100%}}
 @media(max-width:800px){.detail-grid{grid-template-columns:1fr}.detail-list{grid-template-columns:1fr}.detail-list .full{grid-column:auto}}
+
+
+/* --- Redesenho: comandas (remove ruído visual genérico) --- */
+.page-toolbar-top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:18px}
+.page-toolbar-count{color:var(--muted);font-size:13px;font-weight:600}
+.command-filters{display:flex;flex-wrap:nowrap;gap:2px;overflow-x:auto;overflow-y:hidden;max-height:none;border-bottom:1px solid var(--line);padding-bottom:0;margin-bottom:20px}
+.command-filters .btn{background:transparent;border:none;border-radius:0;border-bottom:2px solid transparent;color:var(--muted);font-weight:600;padding:0 10px 12px;min-height:auto;white-space:nowrap;box-shadow:none}
+.command-filters .btn:hover{background:transparent;color:var(--text)}
+.command-filters .btn.active{background:transparent;color:var(--blue);border-bottom-color:var(--blue)}
+.command-filters .btn[data-tone='danger']{color:#b3564f}
+.command-filters .btn[data-tone='danger'].active{color:var(--red);border-bottom-color:var(--red)}
+.priority-tag{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--text)}
+.priority-dot{width:6px;height:6px;border-radius:50%;background:var(--muted);flex-shrink:0}
+.priority-tag.tone-amber .priority-dot{background:var(--amber)}
+.priority-tag.tone-red{color:var(--red);font-weight:700}
+.priority-tag.tone-red .priority-dot{background:var(--red)}
+.priority-tag.tone-green .priority-dot{background:var(--green)}
+
+/* --- Redesenho: módulos gerais (remove eyebrow/heading duplicado, dá peso real às métricas) --- */
+.module-stat{border-left:3px solid transparent}
+.module-stat.tone-amber{border-left-color:var(--amber)}
+.module-stat.tone-amber strong{color:var(--amber)}
+.module-stat.tone-red{border-left-color:var(--red)}
+.module-stat.tone-red strong{color:var(--red)}
+.module-stat.tone-green strong{color:var(--green)}
+
+.metric-grid.has-primary{grid-template-columns:1.6fr repeat(3,minmax(0,1fr))}
+.metric-card.is-primary{background:linear-gradient(145deg,color-mix(in srgb,var(--blue) 14%,var(--panel)),var(--panel));border-color:color-mix(in srgb,var(--blue) 40%,var(--line))}
+.metric-card.is-primary .metric-label{color:var(--text);font-weight:600}
+.metric-card.is-primary>strong{font-size:32px}
+@media(max-width:800px){.metric-grid.has-primary{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.metric-grid.has-primary{grid-template-columns:1fr}}
+
+.finance-overview{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:14px}
+.finance-overview .module-stat.is-balance{background:linear-gradient(145deg,color-mix(in srgb,var(--blue) 12%,var(--panel)),var(--panel));border-left-color:var(--blue)}
+.finance-overview .module-stat.is-balance strong{font-size:32px}
+.finance-overview .module-stat.is-balance.is-negative strong{color:var(--red)}
+@media(max-width:800px){.finance-overview{grid-template-columns:1fr}}
+
+.logo-card{margin-bottom:16px}
+.logo-uploader{display:flex;align-items:center;gap:20px;margin-top:16px;flex-wrap:wrap}
+.logo-preview{width:72px;height:72px;border-radius:14px;border:1px dashed var(--line);background:var(--panel-soft);display:grid;place-items:center;overflow:hidden;flex-shrink:0}
+.logo-preview img{width:100%;height:100%;object-fit:contain}
+.logo-preview span{font-family:Sora,sans-serif;font-weight:800;color:var(--blue);font-size:20px}
+.logo-uploader-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.logo-hint{width:100%;font-size:11px;margin:2px 0 0}
+.brand-mark img{width:100%;height:100%;object-fit:contain;border-radius:inherit}

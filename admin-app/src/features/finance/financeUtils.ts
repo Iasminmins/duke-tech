@@ -1,0 +1,3 @@
+export type PaymentInput = { id: string; total: number; payment_method: string };
+export function getSalePayment(sale: PaymentInput) { return { sale_id: sale.id, amount: Number(sale.total), payment_method: sale.payment_method }; }
+export const defaultStoreSettings = { companyName: 'Duke Tech | Soluções Tecnológicas', phone: '(24) 99812-4113', whatsapp: '5524998124113', address: 'Belvedere Shopping', whatsappMessage: 'Olá! Aqui é da Duke Tech. Temos uma atualização sobre o seu atendimento.', privacyMessage: 'Utilizamos seus dados apenas para atendimento, contato e registro da operação.', logoUrl: '' };

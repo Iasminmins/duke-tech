@@ -5,3 +5,7 @@
 admin-app/.env.local
 admin-app/dist/
 admin-app/node_modules/
+node_modules/
+admin/
+.agents/
+.vercel
