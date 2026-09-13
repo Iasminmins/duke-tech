@@ -1,15 +1,19 @@
 import { useEffect, useMemo, useState } from 'react';
 import { supabase } from '../../lib/supabase';
 import { statusLabels } from '../../components/ui/status';
+import { KpiCard } from '../../components/ui/KpiCard';
 import { BarChart } from '../../components/ui/charts/BarChart';
+import { ChartSkeleton } from '../../components/ui/charts/ChartSkeleton';
 import { DonutChart, type DonutSlice } from '../../components/ui/charts/DonutChart';
+import { STATUS_SEVERITY_COLORS, stockAlertSeverity, ordinalRampColor } from '../../lib/chartColors';
 
-const CATEGORY_PALETTE = ['var(--blue)', 'var(--violet)', 'var(--amber)', 'var(--green)', 'var(--red)', '#64748b'];
+const statusOrder = Object.keys(statusLabels);
+const statusColor = (status: string) => { const position = statusOrder.indexOf(status); return ordinalRampColor(position < 0 ? 0 : position, statusOrder.length); };
 function toDonutSlices(entries: [string, number][], labelFor: (key: string) => string): DonutSlice[] {
-  const sorted = [...entries].sort((a, b) => b[1] - a[1]);
-  const head = sorted.slice(0, 5).map(([key, value], index) => ({ key, label: labelFor(key), value, color: CATEGORY_PALETTE[index] }));
+  const sorted = [...entries].sort((a, b) => statusOrder.indexOf(a[0]) - statusOrder.indexOf(b[0]));
+  const head = sorted.slice(0, 5).map(([key, value]) => ({ key, label: labelFor(key), value, color: statusColor(key) }));
   const rest = sorted.slice(5);
-  if (rest.length) head.push({ key: '__other__', label: 'Outros', value: rest.reduce((sum, [, value]) => sum + value, 0), color: CATEGORY_PALETTE[5] });
+  if (rest.length) head.push({ key: '__other__', label: 'Outros', value: rest.reduce((sum, [, value]) => sum + value, 0), color: 'var(--chart-axis)' });
   return head;
 }
 
@@ -91,25 +95,25 @@ export function ReportsPage() {
     </div>
     {error && <div className="error" role="alert">{error}</div>}
     <div className="module-overview">
-      <article className="card module-stat"><span>Faturamento</span><strong>{loading ? '—' : money(revenue)}</strong>{!loading && <small className={`trend-line${revenueTrend < 0 ? ' is-negative' : ''}`}>{revenueTrend >= 0 ? '▲' : '▼'} {Math.abs(revenueTrend).toFixed(0)}% vs. período anterior</small>}</article>
-      <article className="card module-stat"><span>Ticket médio</span><strong>{loading ? '—' : money(average)}</strong>{!loading && <small className={`trend-line${averageTrend < 0 ? ' is-negative' : ''}`}>{averageTrend >= 0 ? '▲' : '▼'} {Math.abs(averageTrend).toFixed(0)}% · {filtered.sales.length} venda(s)</small>}</article>
-      <article className="card module-stat"><span>Comandas</span><strong>{loading ? '—' : filtered.orders.length}</strong>{!loading && <small className={`trend-line${ordersTrend < 0 ? ' is-negative' : ''}`}>{ordersTrend >= 0 ? '▲' : '▼'} {Math.abs(ordersTrend).toFixed(0)}% vs. período anterior</small>}</article>
-      <article className={`card module-stat${lowStock.length ? ' tone-amber' : ''}`}><span>Estoque crítico</span><strong>{loading ? '—' : lowStock.length}</strong><small>Produtos abaixo do mínimo</small></article>
+      <KpiCard icon="wallet" tone="blue" label="Faturamento" value={loading ? '—' : money(revenue)} note={!loading && <span className={`trend-line${revenueTrend < 0 ? ' is-negative' : ''}`}>{revenueTrend >= 0 ? '▲' : '▼'} {Math.abs(revenueTrend).toFixed(0)}% vs. período anterior</span>} />
+      <KpiCard icon="cart" tone="violet" label="Ticket médio" value={loading ? '—' : money(average)} note={!loading && <span className={`trend-line${averageTrend < 0 ? ' is-negative' : ''}`}>{averageTrend >= 0 ? '▲' : '▼'} {Math.abs(averageTrend).toFixed(0)}% · {filtered.sales.length} venda(s)</span>} />
+      <KpiCard icon="clipboard" tone="green" label="Comandas" value={loading ? '—' : filtered.orders.length} note={!loading && <span className={`trend-line${ordersTrend < 0 ? ' is-negative' : ''}`}>{ordersTrend >= 0 ? '▲' : '▼'} {Math.abs(ordersTrend).toFixed(0)}% vs. período anterior</span>} />
+      <KpiCard icon="box" tone={lowStock.length ? 'amber' : 'green'} label="Estoque crítico" value={loading ? '—' : lowStock.length} note="Produtos abaixo do mínimo" />
     </div>
 
     <section className="panel" style={{ marginTop: 16 }}>
       <header className="panel-header"><h3>Faturamento por dia</h3><span className="panel-total">{money(revenue)}</span></header>
-      <BarChart data={dailyRevenue} series={[{ key: 'revenue', label: 'Faturamento', color: 'var(--blue)' }]} formatValue={money} emptyLabel="Nenhuma venda no período selecionado." />
+      {loading ? <ChartSkeleton height={260} /> : <BarChart data={dailyRevenue} series={[{ key: 'revenue', label: 'Faturamento', color: 'var(--series-1)' }]} formatValue={money} modes={['line', 'bar']} defaultMode="line" height={260} emptyLabel="Nenhuma venda no período selecionado." />}
     </section>
 
     <div className="dashboard-grid secondary-grid">
       <section className="panel">
         <header className="panel-header"><h3>Comandas por status</h3><div className="view-toggle chart-view-toggle" role="group" aria-label="Tipo de gráfico"><button type="button" className={`btn${statusView === 'bar' ? ' active' : ''}`} aria-pressed={statusView === 'bar'} onClick={() => setStatusView('bar')}>Barras</button><button type="button" className={`btn${statusView === 'pie' ? ' active' : ''}`} aria-pressed={statusView === 'pie'} onClick={() => setStatusView('pie')}>Pizza</button></div></header>
-        {!Object.keys(statusCounts).length ? <div className="empty">Nenhuma comanda no período.</div> : statusView === 'bar' ? <div className="report-bars">{Object.entries(statusCounts).sort((a, b) => b[1] - a[1]).map(([status, count]) => <div className="report-bar-row" key={status}><span className="report-bar-label">{statusLabels[status] || status}</span><div className="report-bar-track"><div className="report-bar-fill" style={{ width: `${(count / maxStatusCount) * 100}%` }} /></div><strong className="report-bar-value">{count}</strong></div>)}</div> : <DonutChart data={toDonutSlices(Object.entries(statusCounts), status => statusLabels[status] || status)} />}
+        {loading ? <ChartSkeleton height={180} /> : !Object.keys(statusCounts).length ? <div className="empty">Nenhuma comanda no período.</div> : statusView === 'bar' ? <div className="report-bars">{Object.entries(statusCounts).sort((a, b) => statusOrder.indexOf(a[0]) - statusOrder.indexOf(b[0])).map(([status, count]) => <div className="report-bar-row" key={status}><span className="report-bar-label">{statusLabels[status] || status}</span><div className="report-bar-track"><div className="report-bar-fill" style={{ width: `${(count / maxStatusCount) * 100}%`, background: statusColor(status) }} /></div><strong className="report-bar-value">{count}</strong></div>)}</div> : <DonutChart data={toDonutSlices(Object.entries(statusCounts), status => statusLabels[status] || status)} />}
       </section>
       <section className="panel">
         <header className="panel-header"><h3>Produtos com estoque baixo</h3></header>
-        {lowStock.length ? <div className="report-bars">{lowStock.map(product => <div className="report-bar-row" key={product.id}><span className="report-bar-label">{product.name}</span><div className="report-bar-track"><div className="report-bar-fill is-critical" style={{ width: `${Math.max(4, 100 - (product.quantity / Math.max(product.minimum_stock, 1)) * 100)}%` }} /></div><strong className="report-bar-value">{product.quantity}</strong></div>)}</div> : <div className="empty">Nenhum alerta de estoque.</div>}
+        {loading ? <ChartSkeleton height={180} /> : lowStock.length ? <div className="report-bars">{lowStock.map(product => <div className="report-bar-row" key={product.id}><span className="report-bar-label">{product.name}</span><div className="report-bar-track"><div className="report-bar-fill" style={{ width: `${Math.max(4, 100 - (product.quantity / Math.max(product.minimum_stock, 1)) * 100)}%`, background: STATUS_SEVERITY_COLORS[stockAlertSeverity(product.quantity)] }} /></div><strong className="report-bar-value">{product.quantity}</strong></div>)}</div> : <div className="empty">Nenhum alerta de estoque.</div>}
       </section>
     </div>
   </section>;

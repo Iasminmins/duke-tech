@@ -1,6 +1,6 @@
 import type { ReactNode, SVGProps } from 'react';
 
-type IconName = 'grid' | 'clipboard' | 'calendar' | 'wrench' | 'users' | 'device' | 'box' | 'cart' | 'wallet' | 'chart' | 'settings' | 'search' | 'bell' | 'plus' | 'arrow' | 'menu' | 'logout' | 'chevron' | 'sun' | 'moon' | 'check' | 'file' | 'refresh' | 'inbox' | 'x' | 'clock';
+export type IconName = 'grid' | 'clipboard' | 'calendar' | 'wrench' | 'users' | 'device' | 'box' | 'cart' | 'wallet' | 'chart' | 'settings' | 'search' | 'bell' | 'plus' | 'arrow' | 'menu' | 'logout' | 'chevron' | 'sun' | 'moon' | 'check' | 'file' | 'refresh' | 'inbox' | 'x' | 'clock' | 'link';
 
 export function Icon({ name, size = 18, ...props }: SVGProps<SVGSVGElement> & { name: IconName; size?: number }) {
   const paths: Record<IconName, ReactNode> = {
@@ -30,6 +30,7 @@ export function Icon({ name, size = 18, ...props }: SVGProps<SVGSVGElement> & { 
     inbox: <><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.5 5h13l3.5 7v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-7l3.5-7Z"/></>,
     x: <path d="M18 6 6 18M6 6l12 12"/>,
     clock: <><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></>,
+    link: <><path d="M9 17H7a5 5 0 1 1 0-10h2"/><path d="M15 7h2a5 5 0 1 1 0 10h-2"/><path d="M8 12h8"/></>,
   };
   return <svg aria-hidden="true" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" {...props}>{paths[name]}</svg>;
 }

@@ -100,9 +100,8 @@ html[data-theme='dark'] .kanban-card:hover{border-color:#385b80}
 .report-bars{display:grid;gap:11px;margin-top:16px}
 .report-bar-row{display:grid;grid-template-columns:minmax(0,150px) 1fr 34px;align-items:center;gap:10px;font-size:12px}
 .report-bar-label{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text)}
-.report-bar-track{height:8px;border-radius:6px;background:var(--panel-soft);overflow:hidden}
-.report-bar-fill{height:100%;background:linear-gradient(90deg,var(--cta),var(--blue));border-radius:6px}
-.report-bar-fill.is-critical{background:linear-gradient(90deg,var(--amber),var(--red))}
+.report-bar-track{height:8px;border-radius:4px;background:var(--panel-soft);overflow:hidden;background-image:repeating-linear-gradient(to right,var(--chart-grid) 0,var(--chart-grid) 1px,transparent 1px,transparent 25%);background-size:100% 100%}
+.report-bar-fill{height:100%;background:var(--series-1);border-radius:0 4px 4px 0}
 .report-bar-value{text-align:right;font-variant-numeric:tabular-nums;color:var(--text);font-family:var(--mono)}
 @media(max-width:600px){.report-bar-row{grid-template-columns:1fr 26px;grid-template-areas:"label label" "track value"}.report-bar-label{grid-area:label}.report-bar-track{grid-area:track}.report-bar-value{grid-area:value}}
 
@@ -200,8 +199,12 @@ html[data-theme='dark'] .kanban-card:hover{border-color:#385b80}
 .chartx-tooltip-row{display:flex;align-items:center;gap:7px}
 .chartx-tooltip-key{width:8px;height:8px;border-radius:2px;flex-shrink:0}
 .chartx-tooltip-label{color:var(--muted)}
-.chartx-tooltip-value{margin-left:auto;font-family:var(--mono);font-weight:700;color:var(--text)}
+.chartx-tooltip-value{margin-left:auto;font-family:var(--mono);font-weight:700;color:var(--text);font-variant-numeric:tabular-nums;padding-left:14px}
 .chartx-empty{padding:32px;text-align:center;color:var(--muted);font-size:13px}
+.chartx-skeleton{display:flex;align-items:flex-end;gap:10px;padding:0 8px 26px}
+.chartx-skeleton-bar{flex:1;border-radius:5px 5px 2px 2px;background:linear-gradient(90deg,var(--panel-soft) 25%,var(--line) 37%,var(--panel-soft) 63%);background-size:400% 100%;animation:chartx-shimmer 1.4s ease-in-out infinite}
+@keyframes chartx-shimmer{0%{background-position:100% 0}100%{background-position:0 0}}
+@media(prefers-reduced-motion:reduce){.chartx-skeleton-bar{animation:none}}
 .chartx-table-toggle{margin-top:12px}
 .chartx-table-toggle summary{cursor:pointer;font-size:12px;color:var(--blue-dark);font-weight:600;list-style:none}
 .chartx-table-toggle summary::-webkit-details-marker{display:none}
@@ -332,6 +335,13 @@ html[data-theme='dark'] .tracking-cancelled-note{background:#3a1a20;color:#ffabb
 
 .tracking-privacy{text-align:center;font-size:11.5px;color:var(--muted);margin-top:18px;line-height:1.5}
 
+.tracking-hours-card{padding:20px}
+.tracking-hours-title{display:flex;align-items:center;gap:8px;font-size:14px;margin:0 0 10px}
+.tracking-hours-title svg{color:var(--blue)}
+.tracking-hours-list{list-style:none;margin:14px 0 0;padding:0;display:flex;flex-direction:column;gap:6px}
+.tracking-hours-row{display:flex;align-items:center;justify-content:space-between;padding:6px 0;font-size:13px;border-bottom:1px solid var(--line)}
+.tracking-hours-row:last-child{border-bottom:none}
+
 .tracking-empty{display:grid;justify-items:center;gap:10px;padding:36px 16px;text-align:center}
 .tracking-empty-icon{width:44px;height:44px;border-radius:12px;background:#fdecec;color:#b91c1c;display:grid;place-items:center}
 html[data-theme='dark'] .tracking-empty-icon{background:#3a1a20;color:#ffabb4}
@@ -360,3 +370,99 @@ html[data-theme='dark'] .tracking-empty-icon{background:#3a1a20;color:#ffabb4}
 .logo-uploader-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .logo-hint{width:100%;font-size:11px;margin:2px 0 0}
 .brand-mark img{width:100%;height:100%;object-fit:contain;border-radius:inherit}
+
+/* --- Badge: tons semanticos que faltavam (neutro e urgente) --- */
+.badge.neutral{background:var(--panel-soft);color:var(--muted)}
+
+/* --- KpiCard: faltava a variante vermelha do icone (saldo negativo, alertas) --- */
+.metric-icon.red{background:#fdecec;color:#c53040}
+html[data-theme='dark'] .metric-icon.red{background:#4a202b;color:#ffafb8}
+
+/* --- KpiCard: trend-line tambem funciona dentro do rodape do metric-card --- */
+.metric-foot .trend-line{color:var(--green);font-weight:700}
+.metric-foot .trend-line.is-negative{color:var(--red)}
+.badge.urgent{box-shadow:0 0 0 1px currentColor inset;font-weight:900}
+
+/* --- Avatar: skeleton enquanto o perfil carrega --- */
+.skeleton-avatar{width:31px;height:31px;border-radius:50%;display:inline-block;flex-shrink:0;background:linear-gradient(90deg,var(--panel-soft) 25%,var(--line) 50%,var(--panel-soft) 75%);background-size:200% 100%;animation:skeleton-shimmer 1.4s ease-in-out infinite}
+@media(prefers-reduced-motion:reduce){.skeleton-avatar{animation:none}}
+
+/* --- Skeletons de carregamento de secao inteira (ja referenciados nas paginas, faltava CSS) --- */
+.loading-skeleton{display:grid;gap:10px}
+.loading-skeleton span{display:block;height:46px;border-radius:10px;background:linear-gradient(90deg,var(--panel-soft) 25%,var(--line) 50%,var(--panel-soft) 75%);background-size:200% 100%;animation:skeleton-shimmer 1.4s ease-in-out infinite}
+@media(prefers-reduced-motion:reduce){.loading-skeleton span{animation:none}}
+.error-state{display:grid;justify-items:center;gap:12px;text-align:center;padding:36px 20px}
+
+/* --- Tabela de clientes: linhas de esqueleto no lugar do texto solto de carregamento --- */
+.table-skeleton-row td{padding:14px 20px}
+.table-skeleton-row .skeleton-row{display:block;height:16px;border-radius:6px}
+
+/* --- Overflow horizontal: scrollbar fina em tabelas, kanban e sidebar --- */
+.table-wrap,.kanban-board,.sidebar .nav{scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+.table-wrap::-webkit-scrollbar,.kanban-board::-webkit-scrollbar{height:8px}
+.sidebar .nav::-webkit-scrollbar{width:6px}
+.table-wrap::-webkit-scrollbar-thumb,.kanban-board::-webkit-scrollbar-thumb,.sidebar .nav::-webkit-scrollbar-thumb{background:var(--line);border-radius:4px}
+.table-wrap::-webkit-scrollbar-track,.kanban-board::-webkit-scrollbar-track,.sidebar .nav::-webkit-scrollbar-track{background:transparent}
+
+/* --- Overflow horizontal: sombra de borda indicando que ha mais conteudo cortado --- */
+.table-wrap{
+  background:
+    linear-gradient(to right,var(--panel) 40%,transparent) 0 0/44px 100% no-repeat local,
+    linear-gradient(to left,var(--panel) 40%,transparent) 100% 0/44px 100% no-repeat local,
+    linear-gradient(to right,rgba(15,36,68,.16),transparent) 0 0/14px 100% no-repeat scroll,
+    linear-gradient(to left,rgba(15,36,68,.16),transparent) 100% 0/14px 100% no-repeat scroll,
+    var(--panel);
+}
+html[data-theme='dark'] .table-wrap{
+  background:
+    linear-gradient(to right,#0e1e32 40%,transparent) 0 0/44px 100% no-repeat local,
+    linear-gradient(to left,#0e1e32 40%,transparent) 100% 0/44px 100% no-repeat local,
+    linear-gradient(to right,rgba(0,0,0,.4),transparent) 0 0/14px 100% no-repeat scroll,
+    linear-gradient(to left,rgba(0,0,0,.4),transparent) 100% 0/14px 100% no-repeat scroll,
+    linear-gradient(145deg,rgba(16,30,50,.95),rgba(10,21,37,.95));
+}
+.kanban-board{
+  background:
+    linear-gradient(to right,var(--bg) 40%,transparent) 0 0/44px 100% no-repeat local,
+    linear-gradient(to left,var(--bg) 40%,transparent) 100% 0/44px 100% no-repeat local,
+    linear-gradient(to right,rgba(15,36,68,.14),transparent) 0 0/14px 100% no-repeat scroll,
+    linear-gradient(to left,rgba(15,36,68,.14),transparent) 100% 0/14px 100% no-repeat scroll;
+}
+
+/* --- Overflow horizontal: coluna de acoes fixa para nao ficar escondida atras do scroll --- */
+.table-sticky-actions th:last-child,.table-sticky-actions td:last-child{position:sticky;right:0;background:var(--panel);box-shadow:-8px 0 8px -8px rgba(15,36,68,.2)}
+.table-sticky-actions th:last-child{z-index:2}
+.table-sticky-actions td:last-child{z-index:1}
+html[data-theme='dark'] .table-sticky-actions th:last-child,html[data-theme='dark'] .table-sticky-actions td:last-child{box-shadow:-8px 0 8px -8px rgba(0,0,0,.5)}
+.table-sticky-actions tbody tr:hover td:last-child{background:var(--panel-soft)}
+.table-sticky-actions.command-table tr.is-overdue td:last-child{background:color-mix(in srgb,var(--danger) 6%,var(--panel))}
+
+/* --- Aparelhos: texto do problema quebra em vez de forcar rolagem horizontal --- */
+.device-problem-cell{white-space:normal;max-width:320px;min-width:200px}
+
+/* --- Comandas: sombra indicando que ha mais filtros de status fora da area visivel --- */
+.command-filters{
+  background:
+    linear-gradient(to right,var(--bg) 40%,transparent) 0 0/28px 100% no-repeat local,
+    linear-gradient(to left,var(--bg) 40%,transparent) 100% 0/28px 100% no-repeat local,
+    linear-gradient(to right,rgba(15,36,68,.16),transparent) 0 0/10px 100% no-repeat scroll,
+    linear-gradient(to left,rgba(15,36,68,.16),transparent) 100% 0/10px 100% no-repeat scroll;
+  scrollbar-width:thin;scrollbar-color:var(--line) transparent;
+}
+.command-filters::-webkit-scrollbar{height:6px}
+.command-filters::-webkit-scrollbar-thumb{background:var(--line);border-radius:4px}
+.command-filters::-webkit-scrollbar-track{background:transparent}
+html[data-theme='dark'] .command-filters{
+  background:
+    linear-gradient(to right,var(--bg) 40%,transparent) 0 0/28px 100% no-repeat local,
+    linear-gradient(to left,var(--bg) 40%,transparent) 100% 0/28px 100% no-repeat local,
+    linear-gradient(to right,rgba(0,0,0,.4),transparent) 0 0/10px 100% no-repeat scroll,
+    linear-gradient(to left,rgba(0,0,0,.4),transparent) 100% 0/10px 100% no-repeat scroll;
+}
+html[data-theme='dark'] .kanban-board{
+  background:
+    linear-gradient(to right,var(--bg) 40%,transparent) 0 0/44px 100% no-repeat local,
+    linear-gradient(to left,var(--bg) 40%,transparent) 100% 0/44px 100% no-repeat local,
+    linear-gradient(to right,rgba(0,0,0,.4),transparent) 0 0/14px 100% no-repeat scroll,
+    linear-gradient(to left,rgba(0,0,0,.4),transparent) 100% 0/14px 100% no-repeat scroll;
+}

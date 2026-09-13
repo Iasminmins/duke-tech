@@ -3,17 +3,13 @@ import { supabase } from '../../lib/supabase';
 import { defaultStoreSettings } from '../finance/financeUtils';
 import { permissionsByRole, roleLabels, type Role } from '../users/userUtils';
 import { useToast } from '../../components/ui/ToastProvider';
+import { dayOrder, dayLabels, defaultBusinessHours, type DayKey, type DayHours, type BusinessHours } from '../../lib/businessHours';
 
 type Settings = { companyName: string; phone: string; whatsapp: string; address: string; whatsappMessage: string; privacyMessage: string; logoUrl: string };
-type DayKey = 'mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat' | 'sun';
-type DayHours = { open: string; close: string; closed: boolean };
-type BusinessHours = Record<DayKey, DayHours>;
 type Notifications = { lowStock: boolean; newOrder: boolean; dueToday: boolean; whatsappReminders: boolean };
 
 const initial: Settings = defaultStoreSettings;
-const dayLabels: Record<DayKey, string> = { mon: 'Segunda', tue: 'Terça', wed: 'Quarta', thu: 'Quinta', fri: 'Sexta', sat: 'Sábado', sun: 'Domingo' };
-const dayOrder: DayKey[] = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
-const defaultHours: BusinessHours = dayOrder.reduce((acc, day) => ({ ...acc, [day]: { open: '09:00', close: '18:00', closed: day === 'sun' } }), {} as BusinessHours);
+const defaultHours: BusinessHours = defaultBusinessHours;
 const defaultNotifications: Notifications = { lowStock: true, newOrder: true, dueToday: true, whatsappReminders: false };
 const moduleLabels: Record<string, string> = { dashboard: 'Visão geral', comandas: 'Comandas', clientes: 'Clientes', aparelhos: 'Aparelhos', agenda: 'Agenda', produtos: 'Produtos', estoque: 'Estoque', vendas: 'Vendas', financeiro: 'Financeiro', relatorios: 'Relatórios', usuarios: 'Usuários', configuracoes: 'Configurações' };
 const tabs = [

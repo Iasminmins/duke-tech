@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState, type CSSProperties } from 'react';
 import { useParams } from 'react-router-dom';
 import { Icon } from '../../components/ui/Icon';
 import { getPublicTracking, getPublicStoreProfile, subscribeToTracking, type PublicTracking } from './trackingRepository';
+import { dayOrder, dayLabels, isStoreOpenNow, defaultBusinessHours, type BusinessHours } from '../../lib/businessHours';
 
 const statusLabel: Record<string, string> = { received: 'Recebido', diagnosis: 'Em diagnóstico', quote_sent: 'Orçamento enviado', awaiting_approval: 'Aguardando aprovação', approved: 'Aprovado', rejected: 'Reprovado', awaiting_part: 'Aguardando peça', repair: 'Em reparo', testing: 'Em testes', ready: 'Pronto para retirada', delivered: 'Entregue', cancelled: 'Cancelado' };
 
@@ -33,7 +34,7 @@ const stepOf = (status: string) => steps.findIndex(step => step.statuses.include
 export function PublicTrackingPage() {
   const { codigo = '' } = useParams();
   const [tracking, setTracking] = useState<PublicTracking | null>(null);
-  const [store, setStore] = useState({ companyName: 'Duke Tech', logoUrl: '' });
+  const [store, setStore] = useState<{ companyName: string; logoUrl: string; businessHours: BusinessHours }>({ companyName: 'Duke Tech', logoUrl: '', businessHours: defaultBusinessHours });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -110,6 +111,20 @@ export function PublicTrackingPage() {
 
           <p className="tracking-trust"><Icon name="refresh" size={14} /> Você poderá acompanhar qualquer mudança no status por este link.</p>
         </>}
+      </section>
+
+      <section className="card tracking-card tracking-hours-card">
+        <h3 className="tracking-hours-title"><Icon name="clock" size={16} /> Horário de funcionamento</h3>
+        <span className={`badge ${isStoreOpenNow(store.businessHours) ? 'green' : 'red'}`}>{isStoreOpenNow(store.businessHours) ? 'Aberto agora' : 'Fechado agora'}</span>
+        <ul className="tracking-hours-list">
+          {dayOrder.map(day => {
+            const hours = store.businessHours[day];
+            return <li className="tracking-hours-row" key={day}>
+              <span>{dayLabels[day]}</span>
+              <span className="muted">{hours.closed ? 'Fechado' : `${hours.open} às ${hours.close}`}</span>
+            </li>;
+          })}
+        </ul>
       </section>
 
       <p className="tracking-privacy">Não exibimos CPF, senha do aparelho, custos internos ou observações administrativas.</p>

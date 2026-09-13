@@ -59,7 +59,7 @@ export function BarChart({ data, series, height = 220, formatValue = value => St
   const plotWidth = VW - PAD.left - PAD.right;
   const plotHeight = height - PAD.top - PAD.bottom;
   const bandWidth = data.length ? plotWidth / data.length : plotWidth;
-  const barWidth = Math.min(22, series.length === 2 ? (bandWidth - 6) / 2 : bandWidth * 0.5);
+  const barWidth = Math.min(22, series.length === 2 ? (bandWidth - 6) / 2 : bandWidth * 0.65);
   const ticks = [0, 0.25, 0.5, 0.75, 1];
   const baselineY = PAD.top + plotHeight;
   const pointX = (index: number) => PAD.left + index * bandWidth + bandWidth / 2;

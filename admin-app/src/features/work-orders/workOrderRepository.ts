@@ -1,4 +1,5 @@
 import { supabase } from '../../lib/supabase';
+import { defaultStoreSettings } from '../finance/financeUtils';
 import { statusLabels, type WorkOrderInput, type WorkOrderStatus } from './workOrderSchema';
 
 export type WorkOrderListItem = { id: string; number: number; status: WorkOrderStatus; priority: 'normal' | 'high' | 'urgent'; estimated_due_date: string | null; final_amount: number; created_at: string; customers: { full_name: string; phone?: string } | null; devices: { brand: string; model: string } | null };
@@ -30,6 +31,16 @@ export async function createWorkOrder(input: WorkOrderInput) {
   if (error || !data) return { data: null, error: error || new Error('Não foi possível criar a comanda.') };
   const history = await supabase.from('work_order_status_history').insert({ work_order_id: data.id, status: 'received', note: 'Comanda criada' });
   return history.error ? { data: null, error: history.error } : { data, error: null };
+}
+
+export async function getWhatsappTemplate() {
+  if (!supabase) return { whatsappMessage: defaultStoreSettings.whatsappMessage, companyName: defaultStoreSettings.companyName };
+  const { data } = await supabase.from('store_settings').select('key,value').in('key', ['whatsapp_messages', 'store_profile']);
+  const values: any = Object.fromEntries((data || []).map(item => [item.key, item.value]));
+  return {
+    whatsappMessage: values.whatsapp_messages?.whatsappMessage || defaultStoreSettings.whatsappMessage,
+    companyName: values.store_profile?.companyName || defaultStoreSettings.companyName,
+  };
 }
 
 export async function updateWorkOrderStatus(id: string, status: WorkOrderStatus) {
