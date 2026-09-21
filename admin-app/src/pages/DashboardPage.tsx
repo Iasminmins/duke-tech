@@ -6,6 +6,7 @@ import { BarChart } from '../components/ui/charts/BarChart';
 import { ChartSkeleton } from '../components/ui/charts/ChartSkeleton';
 import { loadDashboardData, type DashboardData } from '../features/dashboard/dashboardRepository';
 import { statusLabels } from '../features/work-orders/workOrderSchema';
+import { localDayKey } from '../lib/dateUtils';
 
 type Period = 'Hoje' | 'Últimos 7 dias' | 'Últimos 30 dias' | 'Este mês';
 const empty: DashboardData = { orders: [], sales: [], lowStock: [] };
@@ -15,11 +16,11 @@ const money = (value: number) => value.toLocaleString('pt-BR', { style: 'currenc
 const dayLabel = (key: string) => new Date(`${key}T12:00:00`).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
 
 export function DashboardPage() { const [period, setPeriod] = useState<Period>('Últimos 30 dias'); const [data, setData] = useState<DashboardData>(empty); const [loading, setLoading] = useState(true); const [error, setError] = useState(''); useEffect(() => { loadDashboardData().then(result => { setData(result.data); if (result.error) setError('Alguns indicadores não puderam ser carregados.'); setLoading(false); }); }, []);
-  const filtered = useMemo(() => { const start = periodStart(period); const startKey = dateKey(start); return { orders: data.orders.filter(row => row.created_at.slice(0, 10) >= startKey), sales: data.sales.filter(row => row.created_at.slice(0, 10) >= startKey) }; }, [data, period]);
+  const filtered = useMemo(() => { const start = periodStart(period); const startKey = dateKey(start); return { orders: data.orders.filter(row => localDayKey(row.created_at) >= startKey), sales: data.sales.filter(row => localDayKey(row.created_at) >= startKey) }; }, [data, period]);
   const openOrders = data.orders.filter(row => !['delivered', 'cancelled'].includes(row.status)); const repairs = openOrders.filter(row => ['repair', 'awaiting_part', 'testing'].includes(row.status)); const awaiting = openOrders.filter(row => ['quote_sent', 'awaiting_approval'].includes(row.status)); const revenue = filtered.sales.reduce((sum, row) => sum + Number(row.total), 0); const overdue = openOrders.filter(row => row.estimated_due_date && row.estimated_due_date < dateKey(new Date()));
   const dailyRevenue = useMemo(() => {
     const map = new Map<string, number>();
-    filtered.sales.forEach(row => { const key = row.created_at.slice(0, 10); map.set(key, (map.get(key) || 0) + Number(row.total)); });
+    filtered.sales.forEach(row => { const key = localDayKey(row.created_at); map.set(key, (map.get(key) || 0) + Number(row.total)); });
     return Array.from(map.entries()).sort((a, b) => a[0].localeCompare(b[0])).map(([key, value]) => ({ label: dayLabel(key), values: { revenue: value } }));
   }, [filtered.sales]);
   const metricItems = [{ label: 'Faturamento no período', value: money(revenue), note: `${filtered.sales.length} venda(s) registrada(s)`, icon: 'wallet' as const, to: '/admin/vendas', primary: true }, { label: 'Comandas abertas', value: String(openOrders.length), note: 'Acompanhamento operacional', tone: 'violet', icon: 'clipboard' as const, to: '/admin/comandas' }, { label: 'Em reparo agora', value: String(repairs.length), note: 'Diagnóstico, reparo e teste', tone: 'green', icon: 'wrench' as const, to: '/admin/comandas' }, { label: 'Aguardando aprovação', value: String(awaiting.length), note: 'Orçamentos pendentes', tone: 'amber', icon: 'calendar' as const, to: '/admin/comandas' }];

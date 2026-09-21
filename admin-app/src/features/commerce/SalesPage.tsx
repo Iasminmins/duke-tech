@@ -7,6 +7,7 @@ import { BarChart } from '../../components/ui/charts/BarChart';
 import { ChartSkeleton } from '../../components/ui/charts/ChartSkeleton';
 import { DonutChart } from '../../components/ui/charts/DonutChart';
 import { PAYMENT_METHOD_COLORS } from '../../lib/chartColors';
+import { localDayKey } from '../../lib/dateUtils';
 
 type Product = { id: string; name: string; sale_price: number; quantity: number };
 type Customer = { id: string; full_name: string };
@@ -31,7 +32,7 @@ export function SalesPage() {
   const maxMethod = Math.max(1, ...byMethod.map(([, value]) => value));
   const dailyRevenue = useMemo(() => {
     const map = new Map<string, number>();
-    rows.forEach(row => { const key = row.created_at.slice(0, 10); map.set(key, (map.get(key) || 0) + Number(row.total)); });
+    rows.forEach(row => { const key = localDayKey(row.created_at); map.set(key, (map.get(key) || 0) + Number(row.total)); });
     return Array.from(map.entries()).sort((a, b) => a[0].localeCompare(b[0])).slice(-14).map(([key, value]) => ({ label: dayLabel(key), values: { revenue: value } }));
   }, [rows]);
 

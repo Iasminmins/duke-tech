@@ -6,6 +6,7 @@ import { BarChart } from '../../components/ui/charts/BarChart';
 import { ChartSkeleton } from '../../components/ui/charts/ChartSkeleton';
 import { DonutChart, type DonutSlice } from '../../components/ui/charts/DonutChart';
 import { STATUS_SEVERITY_COLORS, stockAlertSeverity, ordinalRampColor } from '../../lib/chartColors';
+import { localDayKey } from '../../lib/dateUtils';
 
 const statusOrder = Object.keys(statusLabels);
 const statusColor = (status: string) => { const position = statusOrder.indexOf(status); return ordinalRampColor(position < 0 ? 0 : position, statusOrder.length); };
@@ -66,9 +67,18 @@ export function ReportsPage() {
 
   const dailyRevenue = useMemo(() => {
     const map = new Map<string, number>();
-    filtered.sales.forEach(row => { const key = row.created_at.slice(0, 10); map.set(key, (map.get(key) || 0) + Number(row.total)); });
-    return Array.from(map.entries()).sort((a, b) => a[0].localeCompare(b[0])).map(([key, value]) => ({ label: dayLabel(key), values: { revenue: value } }));
-  }, [filtered.sales]);
+    filtered.sales.forEach(row => { const key = localDayKey(row.created_at); map.set(key, (map.get(key) || 0) + Number(row.total)); });
+    // Preenche todos os dias do período selecionado (não só os que tiveram
+    // venda), para o gráfico mostrar uma linha do tempo contínua em vez de
+    // pular direto de um dia com venda para o próximo, com um buraco no meio.
+    const start = startFor(period);
+    const days: string[] = [];
+    const cursor = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+    const today = new Date();
+    const last = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    while (cursor <= last) { days.push(`${cursor.getFullYear()}-${String(cursor.getMonth() + 1).padStart(2, '0')}-${String(cursor.getDate()).padStart(2, '0')}`); cursor.setDate(cursor.getDate() + 1); }
+    return days.map(key => ({ label: dayLabel(key), values: { revenue: map.get(key) || 0 } }));
+  }, [filtered.sales, period]);
 
   const revenueTrend = pct(revenue, previous.revenue);
   const averageTrend = pct(average, previous.count ? previous.revenue / previous.count : 0);

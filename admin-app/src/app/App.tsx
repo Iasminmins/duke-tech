@@ -13,6 +13,8 @@ import { WorkOrderDetailPage } from '../features/work-orders/WorkOrderDetailPage
 import { PublicTrackingPage } from '../features/tracking/PublicTrackingPage';
 import { ProductsPage } from '../features/commerce/ProductsPage';
 import { ModulePage } from '../pages/ModulePage';
+import { NotFoundPage } from '../pages/NotFoundPage';
+import { LeadsPage } from '../features/leads/LeadsPage';
 import { ThemeProvider } from '../theme/ThemeProvider';
 import { ToastProvider } from '../components/ui/ToastProvider';
 import { AgendaPage } from '../features/agenda/AgendaPage';
@@ -33,6 +35,7 @@ export default function App() {
       <Route path="clientes/:id" element={<CustomerDetailPage />} />
       <Route path="aparelhos" element={<DevicesPage />} />
       <Route path="agenda" element={<AgendaPage />} />
+      <Route path="contatos" element={<LeadsPage />} />
       <Route path="produtos" element={<ProductsPage />} />
       <Route path="estoque" element={<StockPage />} />
       <Route path="vendas" element={<SalesPage />} />
@@ -44,6 +47,7 @@ export default function App() {
       <Route path="comandas/nova" element={<NewWorkOrderPage />} />
       <Route path="comandas/:id" element={<WorkOrderDetailPage />} />
     </Route>
-    <Route path="*" element={<Navigate to="/admin" replace />} />
+    <Route path="/" element={<Navigate to="/admin" replace />} />
+    <Route path="*" element={<NotFoundPage />} />
   </Routes></AuthProvider></ToastProvider></ThemeProvider>;
 }

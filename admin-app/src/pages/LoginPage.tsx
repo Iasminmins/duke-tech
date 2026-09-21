@@ -27,7 +27,7 @@ export function LoginPage() {
   }
 
   return <main className="login-page"><section className="login-card">
-    <div className="brand"><div className="brand-mark">D</div><div className="brand-copy"><strong>Duke Tech</strong><small>Gestão de assistência</small></div></div>
+    <img className="login-mascot" src={`${import.meta.env.BASE_URL}duke-mascote.webp`} alt="" width="72" height="131" /><div className="brand"><div className="brand-mark">D</div><div className="brand-copy"><strong>Duke Tech</strong><small>Gestão de assistência</small></div></div>
     <h1>Entrar no painel</h1>
     <p>Acesse as operações da loja com segurança.</p>
     {!hasSupabase && <div className="error" role="alert">Ambiente sem Supabase configurado. Defina VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY em admin-app/.env.local.</div>}

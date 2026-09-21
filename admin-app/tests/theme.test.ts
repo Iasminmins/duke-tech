@@ -1,7 +1,8 @@
-import { getInitialTheme, type Theme } from '../src/theme/theme';
+import { getInitialTheme } from '../src/theme/theme';
 
-test('prefers the saved theme over the operating system preference', () => {
-  expect(getInitialTheme('light', true)).toBe('light');
-  expect(getInitialTheme(null, false)).toBe('light');
-  expect(getInitialTheme(null, true)).toBe('dark');
+test('a escolha salva vence; sem escolha o tema padrao e o claro', () => {
+  expect(getInitialTheme('light')).toBe('light');
+  expect(getInitialTheme('dark')).toBe('dark');
+  expect(getInitialTheme(null)).toBe('light');
+  expect(getInitialTheme('valor-invalido')).toBe('light');
 });

@@ -4,6 +4,7 @@ const contexts: Array<[string, PageContext]> = [
   ['/admin/clientes', { title: 'Clientes', subtitle: 'Gestão de clientes' }],
   ['/admin/aparelhos', { title: 'Aparelhos', subtitle: 'Dispositivos e histórico de reparos' }],
   ['/admin/comandas', { title: 'Comandas', subtitle: 'Fila de reparos e atendimentos' }],
+  ['/admin/contatos', { title: 'Contatos do site', subtitle: 'Mensagens enviadas pelo formulário' }],
   ['/admin/agenda', { title: 'Agenda', subtitle: 'Entregas e compromissos' }],
   ['/admin/estoque', { title: 'Estoque', subtitle: 'Controle de inventário' }],
   ['/admin/produtos', { title: 'Produtos', subtitle: 'Catálogo e peças da assistência' }],

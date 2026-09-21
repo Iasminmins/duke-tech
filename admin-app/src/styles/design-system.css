@@ -1,0 +1,202 @@
+/*
+  Duke Tech - Design system (Fase A)
+  Camada de tokens e componentes base. Carregada DEPOIS de tokens.css, admin-enhancements.css
+  e admin-fixes.css (ver main.tsx), entao sobrescreve valores sem apagar nada do que existe.
+  Para reverter: remova o import deste arquivo em main.tsx.
+
+  Paleta: preto #0A0A0F, azul #0EA5FF (acao), dourado #F5B93A (uso pontual),
+  superficies #12131A / #1A1C25 / #252834, borda #2A2D3A, texto #F4F6FA / #9AA3B5.
+  Tipografia: Sora (titulos), Inter (interface), JetBrains Mono (numeros, IDs, IMEI, precos).
+*/
+
+/* ---------- Tokens: tema claro ---------- */
+:root{
+  --font-display:Sora,Inter,ui-sans-serif,system-ui,sans-serif;
+  --font-ui:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+
+  --bg:#f4f6fa;
+  --sidebar:#ffffff;
+  --panel:#ffffff;
+  --panel-soft:#eef1f6;
+  --panel-raised:#e4e8f0;
+  --line:#dde2eb;
+  --text:#12131a;
+  --muted:#5b6478;
+  --blue:#0a6fb0;
+  --blue-dark:#075a90;
+  --blue-light:#e3f1fa;
+  --cta:#0a6fb0;
+  --on-accent:#ffffff;
+  --gold:#8a5a00;
+  --amber:#9a6400;
+  --green:#0f7a41;
+  --red:#b42332;
+  --violet:#5b6478;
+  --accent:var(--blue);
+  --danger:var(--red);
+
+  --radius-sm:8px;
+  --radius-md:10px;
+  --radius-lg:12px;
+  --shadow-card:0 1px 2px rgba(10,10,15,.06);
+  --shadow-md:0 8px 20px rgba(10,10,15,.08);
+  --shadow-pop:0 12px 28px rgba(10,10,15,.14);
+
+  /* grade de 8px */
+  --space-1:8px;--space-2:16px;--space-3:24px;--space-4:32px;--space-5:40px;
+  font-family:var(--font-ui);
+}
+
+/* ---------- Tokens: tema escuro (padrao) ---------- */
+html[data-theme='dark']{
+  color:#f4f6fa;
+  background:#0a0a0f;
+  --bg:#0a0a0f;
+  --sidebar:#12131a;
+  --panel:#12131a;
+  --panel-soft:#1a1c25;
+  --panel-raised:#252834;
+  --line:#2a2d3a;
+  --text:#f4f6fa;
+  --muted:#9aa3b5;
+  --blue:#0ea5ff;
+  --blue-dark:#0ea5ff;
+  --blue-light:#0d2a3d;
+  --cta:#0ea5ff;
+  --on-accent:#04121c;
+  --gold:#f5b93a;
+  --amber:#f5b93a;
+  --green:#3ecf8e;
+  --red:#f87171;
+  --violet:#9aa3b5;
+  --shadow-card:none;
+  --shadow-md:0 8px 24px rgba(0,0,0,.45);
+  --shadow-pop:0 12px 32px rgba(0,0,0,.55);
+}
+
+/* ---------- Tipografia ---------- */
+body{font-family:var(--font-ui)}
+h1,h2,h3,.page-heading h2,.topbar-title h1,.login-card h1{font-family:var(--font-display);letter-spacing:-.01em}
+.mono,.number-value,.metric-card>strong,.module-stat strong,.panel-total,.table td.num,.order-row strong{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+/* ---------- Foco visivel e movimento ---------- */
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.global-search:focus-within{border-color:var(--blue);box-shadow:0 0 0 2px color-mix(in srgb,var(--blue) 35%,transparent)}
+.input:focus-visible,.select:focus-visible,.textarea:focus-visible{outline:2px solid var(--blue);outline-offset:1px;border-color:var(--blue)}
+
+/* ---------- Superficies: sem gradientes, sem vidro ---------- */
+body,html[data-theme='dark'] body{background:var(--bg)}
+html[data-theme='dark'] .sidebar{background:var(--sidebar)}
+.topbar,html[data-theme='dark'] .topbar{background:var(--bg);backdrop-filter:none;-webkit-backdrop-filter:none}
+html[data-theme='dark'] .metric-card,
+html[data-theme='dark'] .panel,
+html[data-theme='dark'] .quick-actions,
+html[data-theme='dark'] .card,
+html[data-theme='dark'] .table-wrap,
+html[data-theme='dark'] .form-card{background:var(--panel);box-shadow:none}
+html[data-theme='dark'] .login-card{background:var(--panel);box-shadow:var(--shadow-pop)}
+html[data-theme='dark'] .tracking,.tracking{background:var(--bg)}
+html[data-theme='dark'] .input,html[data-theme='dark'] .select,html[data-theme='dark'] .textarea{background:var(--panel-soft);color:var(--text)}
+html[data-theme='dark'] .global-search,html[data-theme='dark'] .notification{background:var(--panel-soft)}
+html[data-theme='dark'] .global-search input{color:var(--text)}
+html[data-theme='dark'] .profile-chip,html[data-theme='dark'] .profile-chip strong{color:var(--text)}
+html[data-theme='dark'] .table tbody tr:hover{background:var(--panel-soft)}
+html[data-theme='dark'] .order-row:hover{background:var(--panel-soft)}
+html[data-theme='dark'] .metric-card.is-primary{background:var(--panel-soft)}
+
+/* ---------- Marca, avatar e botoes ---------- */
+.brand-mark{background:var(--blue);color:var(--on-accent);box-shadow:none;border-radius:var(--radius-md)}
+.avatar,.skeleton-avatar.avatar{background:var(--panel-raised);color:var(--blue);border:1px solid var(--line)}
+.btn.primary{background:var(--blue);border-color:var(--blue);color:var(--on-accent);box-shadow:none}
+.btn.primary:hover{background:var(--blue-dark);border-color:var(--blue-dark);color:var(--on-accent);filter:brightness(1.08)}
+html[data-theme='dark'] .btn,html[data-theme='dark'] .period-button{background:var(--panel-soft);color:var(--text);border-color:var(--line)}
+html[data-theme='dark'] .btn:hover,html[data-theme='dark'] .period-button:hover{background:var(--panel-raised);border-color:var(--panel-raised);color:var(--text)}
+html[data-theme='dark'] .btn.primary{background:var(--blue);border-color:var(--blue);color:var(--on-accent)}
+html[data-theme='dark'] .btn.primary:hover{background:var(--blue);filter:brightness(1.1);color:var(--on-accent)}
+.btn.danger{background:transparent;border-color:color-mix(in srgb,var(--red) 55%,var(--line));color:var(--red)}
+.btn.danger:hover{background:color-mix(in srgb,var(--red) 12%,transparent);color:var(--red)}
+.btn.danger.solid{background:var(--red);border-color:var(--red);color:#fff}
+.dot{box-shadow:none}
+.live-dot{box-shadow:none}
+.brand-copy small{font-size:12px}
+
+/* ---------- Navegacao ---------- */
+html[data-theme='dark'] .nav>a,html[data-theme='dark'] .nav-group>a{color:var(--muted)}
+html[data-theme='dark'] .nav>a.active,html[data-theme='dark'] .nav>a:hover,
+html[data-theme='dark'] .nav-group>a.active,html[data-theme='dark'] .nav-group>a:hover{background:var(--panel-soft);color:var(--text)}
+.nav>a.active,.nav-group>a.active{box-shadow:inset 2px 0 0 var(--blue)}
+html[data-theme='dark'] .nav-label{color:var(--muted)}
+
+/* ---------- Badges (fundo translucido + texto da cor) ---------- */
+html[data-theme='dark'] .badge.blue,html[data-theme='dark'] .status-badge.blue{background:color-mix(in srgb,var(--blue) 16%,transparent);color:var(--blue)}
+html[data-theme='dark'] .badge.gold,html[data-theme='dark'] .status-badge.amber{background:color-mix(in srgb,var(--gold) 16%,transparent);color:var(--gold)}
+html[data-theme='dark'] .badge.green,html[data-theme='dark'] .status-badge.green{background:color-mix(in srgb,var(--green) 16%,transparent);color:var(--green)}
+html[data-theme='dark'] .badge.red,html[data-theme='dark'] .alert-count{background:color-mix(in srgb,var(--red) 16%,transparent);color:var(--red)}
+.badge.violet,.status-badge.violet,html[data-theme='dark'] .status-badge.violet,
+.metric-icon.violet,.quick-icon.violet,html[data-theme='dark'] .metric-icon.violet,html[data-theme='dark'] .quick-icon.violet{background:var(--panel-soft);color:var(--muted)}
+
+/* ---------- Tamanho minimo de texto (era 9 a 10px) ---------- */
+.nav-label,.status-badge,.chart-y,.section-kicker,.eyebrow,.order-head,.metric-foot,
+.alert-item p,.quick-action-list small,.profile-chip small,.notification span{font-size:11px}
+.chartx-tick,.chartx-x-label{font-size:11px}
+
+/* ---------- Componente: dialogo de confirmacao ---------- */
+.confirm-overlay{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:16px;background:rgba(10,10,15,.6)}
+.confirm-dialog{width:min(440px,100%);background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:var(--radius-lg);box-shadow:var(--shadow-pop);padding:24px}
+.confirm-dialog h3{margin:0 0 8px;font-size:18px}
+.confirm-dialog p{margin:0;color:var(--muted);font-size:14px;line-height:1.5}
+.confirm-dialog .actions{margin-top:24px}
+
+/* ---------- Componente: estado vazio e erro (sem mascote nas telas de trabalho) ---------- */
+.state-block{display:grid;justify-items:center;gap:8px;text-align:center;padding:40px 16px;color:var(--muted)}
+.state-block h3{margin:0;color:var(--text);font-size:16px}
+.state-block p{margin:0;max-width:360px;font-size:14px}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* ---------- Mascote: apenas login, 404 e estados vazios ---------- */
+.login-mascot{height:88px;width:auto;margin:0 auto 16px;display:block}
+.not-found{text-align:center}.not-found .btn{margin-top:20px}
+.empty-state-mascot{height:88px;width:auto;margin:0 auto 4px;display:block}
+
+/* ---------- Topbar: botao Nova comanda ---------- */
+.new-order-btn{white-space:nowrap}
+@media(max-width:720px){.new-order-btn span{display:none}.new-order-btn{min-width:44px;min-height:44px;padding:0}}
+
+/* ---------- Contatos do site ---------- */
+.nav-count{margin-left:auto;min-width:20px;height:20px;padding:0 6px;border-radius:10px;background:var(--blue);color:var(--on-accent);font-family:var(--mono);font-size:11px;display:grid;place-items:center}
+.app-shell.is-collapsed .nav-count{display:none}
+.lead-filters{display:flex;gap:8px;flex-wrap:wrap}
+.lead-filters .btn[aria-pressed=true]{background:var(--panel-raised);border-color:var(--blue);color:var(--text)}
+.lead-list{display:grid;gap:12px}
+.lead-card{padding:20px}
+.lead-card header{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap}
+.lead-card header strong{display:block;font-size:15px}
+.lead-card header .muted{font-size:13px}
+.lead-meta{display:flex;gap:12px;align-items:center}
+.lead-meta time{font-size:12px}
+.lead-subject{margin:14px 0 6px;font-family:var(--mono);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--blue)}
+.lead-message{margin:0;white-space:pre-wrap;line-height:1.55;font-size:14px}
+.lead-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+
+
+/* --- Graficos: acabamento profissional --- */
+.chartx-svg{overflow:visible;font-family:var(--font-ui,'Inter',system-ui,sans-serif)}
+.chartx-grid{stroke:var(--line);stroke-width:1;stroke-dasharray:3 4;opacity:.8}
+.chartx-grid.is-base{stroke-dasharray:none;opacity:1}
+.chartx-tick,.chartx-x-label{font-size:11px;fill:var(--muted);font-variant-numeric:tabular-nums}
+.chartx-band{fill:var(--panel-soft);opacity:.7}
+.chartx-crosshair{stroke:var(--muted);stroke-width:1;stroke-dasharray:3 3;opacity:.6}
+.chartx-tooltip{box-shadow:0 8px 24px rgba(10,10,15,.14);border-radius:10px}
+.chartx-bar{transition:opacity .15s}
+.chartx-legend{gap:18px}
+.donut-segment{transition:opacity .15s}
+
+/* Formas de pagamento: barras mais respiradas e centralizadas no card */
+.report-bars{gap:20px}
+.report-bar-row{font-size:13px}
+.report-bar-track{height:10px;border-radius:5px}
+.report-bar-fill{border-radius:5px}
+.panel:has(> .report-bars){display:flex;flex-direction:column}
+.panel > .report-bars{margin-block:auto;padding-block:8px}

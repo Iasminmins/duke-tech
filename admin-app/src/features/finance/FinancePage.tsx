@@ -6,13 +6,14 @@ import { useToast } from '../../components/ui/ToastProvider';
 import { BarChart } from '../../components/ui/charts/BarChart';
 import { ChartSkeleton } from '../../components/ui/charts/ChartSkeleton';
 import { computeFinanceStatus, financeStatusLabels, type FinanceStatus } from './financeUtils';
+import { localDayKey } from '../../lib/dateUtils';
 
 type Entry = { id: string; kind: 'Entrada' | 'Saída'; description: string; category: string; amount: number; date: string; due_date: string | null; paid_at: string | null; source: 'payments' | 'expenses' };
 type Period = 'Todos' | 'Últimos 7 dias' | 'Últimos 30 dias' | 'Este mês';
 type View = 'fluxo' | 'contas';
 const financeStatusTone: Record<FinanceStatus, 'warning' | 'success' | 'danger'> = { pending: 'warning', paid: 'success', overdue: 'danger' };
 const money = (value: number) => Number(value || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-const dayKey = (value: string) => value.slice(0, 10);
+const dayKey = (value: string) => localDayKey(value);
 const dayLabel = (key: string) => new Date(`${key}T12:00:00`).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
 const startFor = (period: Period) => { const now = new Date(); if (period === 'Este mês') return new Date(now.getFullYear(), now.getMonth(), 1); if (period === 'Últimos 7 dias' || period === 'Últimos 30 dias') { const start = new Date(now.getFullYear(), now.getMonth(), now.getDate()); start.setDate(start.getDate() - (period === 'Últimos 7 dias' ? 6 : 29)); return start; } return null; };
 

@@ -5,8 +5,8 @@ type DonutChartProps = { data: DonutSlice[]; formatValue?: (value: number) => st
 
 const SIZE = 180;
 const CENTER = SIZE / 2;
-const RADIUS = 70;
-const STROKE = 26;
+const RADIUS = 72;
+const STROKE = 20;
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
 
 export function DonutChart({ data, formatValue = value => String(value), emptyLabel = 'Sem dados no período selecionado.' }: DonutChartProps) {

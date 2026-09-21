@@ -1,13 +1,14 @@
 export type Theme = 'light' | 'dark';
 export const themeStorageKey = 'duke-tech-theme';
 
-export function getInitialTheme(saved: string | null, systemPrefersDark: boolean): Theme {
+/** Escolha manual salva vence; sem escolha, o padrao e o tema claro (o escuro continua disponivel no botao de tema). */
+export function getInitialTheme(saved: string | null): Theme {
   if (saved === 'light' || saved === 'dark') return saved;
-  return systemPrefersDark ? 'dark' : 'light';
+  return 'light';
 }
 
 export function readInitialTheme(): Theme {
-  const saved = typeof window !== 'undefined' ? window.localStorage.getItem(themeStorageKey) : null;
-  const prefersDark = typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches;
-  return getInitialTheme(saved, prefersDark);
+  let saved: string | null = null;
+  try { saved = typeof window !== 'undefined' ? window.localStorage.getItem(themeStorageKey) : null; } catch { saved = null; }
+  return getInitialTheme(saved);
 }

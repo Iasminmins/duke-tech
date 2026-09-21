@@ -98,12 +98,12 @@ html[data-theme='dark'] .kanban-card:hover{border-color:#385b80}
 .module-stat .trend-line{display:block;color:var(--green);font-weight:700;font-size:11px;margin-top:2px}
 .module-stat .trend-line.is-negative{color:var(--red)}
 .report-bars{display:grid;gap:11px;margin-top:16px}
-.report-bar-row{display:grid;grid-template-columns:minmax(0,150px) 1fr 34px;align-items:center;gap:10px;font-size:12px}
+.report-bar-row{display:grid;grid-template-columns:minmax(0,150px) 1fr minmax(64px,auto);align-items:center;gap:10px;font-size:12px}
 .report-bar-label{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text)}
 .report-bar-track{height:8px;border-radius:4px;background:var(--panel-soft);overflow:hidden;background-image:repeating-linear-gradient(to right,var(--chart-grid) 0,var(--chart-grid) 1px,transparent 1px,transparent 25%);background-size:100% 100%}
 .report-bar-fill{height:100%;background:var(--series-1);border-radius:0 4px 4px 0}
-.report-bar-value{text-align:right;font-variant-numeric:tabular-nums;color:var(--text);font-family:var(--mono)}
-@media(max-width:600px){.report-bar-row{grid-template-columns:1fr 26px;grid-template-areas:"label label" "track value"}.report-bar-label{grid-area:label}.report-bar-track{grid-area:track}.report-bar-value{grid-area:value}}
+.report-bar-value{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums;color:var(--text);font-family:var(--mono)}
+@media(max-width:600px){.report-bar-row{grid-template-columns:1fr minmax(58px,auto);grid-template-areas:"label label" "track value"}.report-bar-label{grid-area:label}.report-bar-track{grid-area:track}.report-bar-value{grid-area:value}}
 
 /* --- Financeiro: fluxo de caixa (entradas x saídas) --- */
 .flow-column .flow-bars{display:flex;align-items:flex-end;gap:3px;height:100%}
@@ -114,7 +114,9 @@ html[data-theme='dark'] .kanban-card:hover{border-color:#385b80}
 .flow-legend span{display:inline-flex;align-items:center;gap:6px}
 .legend-dot.red-dot{background:var(--red)}
 
-/* --- Drawer genérico (Estoque e futuras ações rápidas) --- */
+/* --- Estoque: produtos e pedidos de compra lado a lado em telas largas --- */
+.stock-tables-grid{grid-template-columns:1fr 1fr}
+@media(max-width:1200px){.stock-tables-grid{grid-template-columns:1fr}}
 .drawer-overlay{position:fixed;inset:0;background:rgba(15,36,68,.4);z-index:40;display:flex;justify-content:flex-end}
 .drawer-panel{width:min(440px,100%);height:100%;background:var(--panel);border-left:1px solid var(--line);box-shadow:var(--shadow-pop);display:flex;flex-direction:column;animation:drawer-in .16s ease-out}
 @keyframes drawer-in{from{transform:translateX(24px);opacity:.5}to{transform:translateX(0);opacity:1}}
@@ -187,14 +189,16 @@ html[data-theme='dark'] .kanban-card:hover{border-color:#385b80}
 .chartx-mode-toggle{margin-left:auto}
 .chartx-canvas{position:relative}
 .chartx-svg{width:100%;display:block;overflow:visible}
-.chartx-svg:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:6px}
+.chartx-svg:focus{outline:none}
+.chartx-svg:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+.chartx-svg rect:focus{outline:none}
 .chartx-grid{stroke:var(--line);stroke-width:1}
 .chartx-tick{fill:var(--muted);font-size:9px}
 .chartx-x-label{fill:var(--muted);font-size:9.5px;text-anchor:middle}
 .chartx-x-label.is-active{fill:var(--text);font-weight:700}
 .chartx-bar{transition:opacity .12s}
 .chartx-crosshair{stroke:var(--muted);stroke-width:1;stroke-dasharray:2 3;pointer-events:none}
-.chartx-tooltip{position:absolute;top:0;transform:translate(-50%,-100%);margin-top:-8px;background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow-pop);padding:10px 12px;font-size:12px;white-space:nowrap;pointer-events:none;z-index:5}
+.chartx-tooltip{position:absolute;top:0;transform:translateX(-50%);background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow-pop);padding:10px 12px;font-size:12px;white-space:nowrap;pointer-events:none;z-index:5;max-width:calc(100% - 16px)}
 .chartx-tooltip strong{display:block;color:var(--text);margin-bottom:5px;font-size:11.5px}
 .chartx-tooltip-row{display:flex;align-items:center;gap:7px}
 .chartx-tooltip-key{width:8px;height:8px;border-radius:2px;flex-shrink:0}
