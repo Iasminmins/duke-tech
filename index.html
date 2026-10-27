@@ -3,241 +3,146 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Duke Tech | Seu mundo conectado começa aqui</title>
-<meta name="description" content="Duke Tech: smartphones novos e seminovos, acessórios, assistência técnica (Duke Care) e software sob medida (Duke Solutions). Loja física no Belvedere Shopping.">
-<meta name="theme-color" content="#FFFFFF">
+<title>Duke Tech | Tecnologia, assistência e soluções</title>
+<meta name="description" content="Smartphones novos e seminovos, assistência técnica especializada e software sob medida. Atendimento Duke Tech no Belvedere Shopping.">
+<meta name="theme-color" content="#17191D">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pt_BR">
 <meta property="og:site_name" content="Duke Tech">
-<meta property="og:title" content="Duke Tech | Seu mundo conectado começa aqui">
-<meta property="og:description" content="Smartphones novos e seminovos, assistência técnica e software sob medida. Loja física no Belvedere Shopping.">
+<meta property="og:title" content="Duke Tech | Tecnologia, assistência e soluções">
+<meta property="og:description" content="Smartphones novos e seminovos, assistência técnica especializada e software sob medida. Atendimento no Belvedere Shopping.">
 <!-- PENDENTE: quando o dominio final existir, trocar por URL absoluta (https://seudominio.com.br/assets/duke-poster.jpg). -->
 <meta property="og:image" content="/assets/duke-poster.jpg">
 <meta property="og:image:alt" content="Duke, o mascote da Duke Tech, com o slogan Seu mundo conectado começa aqui">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230A0A0F'/%3E%3Cpath d='M6 22h20l1.5-11-5.7 4L16 7l-5.8 8-5.7-4L6 22Z' fill='%23F5B93A'/%3E%3C/svg%3E">
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"LocalBusiness",
+  "name":"Duke Tech",
+  "description":"Smartphones novos e seminovos, assistência técnica especializada e software sob medida.",
+  "telephone":"+55 24 99932-7549",
+  "address":{"@type":"PostalAddress","addressLocality":"Belvedere Shopping","addressCountry":"BR"},
+  "openingHours":"Mo-Sa 10:00-22:00, Su 14:00-20:00",
+  "sameAs":["https://wa.me/5524999327549"]
+}
+</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23501B2C'/%3E%3Cpath d='M6 22h20l1.5-11-5.7 4L16 7l-5.8 8-5.7-4L6 22Z' fill='%23D4A547'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+/* =====================================================================
+   Duke Tech — identidade vinho e dourado (fachada da loja)
+   Todas as cores do site saem destes tokens. Contraste WCAG AA conferido:
+   branco/vinho 13.7 · dourado/vinho 6.0 · dourado/grafite 7.8 ·
+   gold-text/fundo 5.0 · muted/fundo 6.4. O dourado puro (#D4A547) nao
+   deve ser usado como texto sobre fundo claro (2.3): use --gold-text.
+   ===================================================================== */
 :root{
   color-scheme:light;
-  --bg:#FFFFFF; --s1:#F5F7FA; --s2:#EDF1F6; --s3:#E2E8F0; --line:#E1E6EE;
-  --text:#0F1420; --muted:#566074;
-  --blue:#0EA5FF; --blue-text:#0A6FB0; --gold:#F5B93A; --gold-text:#8A5A00; --wa:#25D366;
-  --r:12px; --r-sm:8px;
+  /* marca */
+  --primary:#501B2C; --primary-hover:#3F1522; --primary-deep:#3A1220; --primary-mid:#5A2033; --primary-glow:#6E2A40; --primary-soft:#F4ECEE; --primary-line:#E3CDD3;
+  --gold:#D4A547; --gold-hover:#E0B865; --gold-text:#8A6420; --gold-soft:#F7EFDF;
+  --dark:#17191D; --dark-2:#202329; --dark-line:#33363D;
+  --background:#F8F7F5; --surface:#FFFFFF; --surface-warm:#FBFAF8; --surface-warm-2:#F1EDE7; --dark-soft:#ECEBE8;
+  /* texto e linhas */
+  --text:#17191D; --muted:#5F5A55; --line:#E7E3DE; --line-strong:#9A938C;
+  --on-dark:#F8F7F5; --on-dark-muted:#B8B4AE; --on-primary-muted:#E8DCDF;
+  /* estados e terceiros */
+  --ok-bg:#E6F1EA; --ok-text:#1F6B3F;
+  --wa:#25D366; --wa-hover:#3DDC7F; --wa-text:#062610;
+  --focus:var(--primary);
+  /* forma e tipografia */
+  --r:14px; --r-sm:10px; --r-lg:24px;
+  --shadow-sm:0 1px 2px rgba(23,25,29,.06);
+  --shadow-md:0 18px 40px -28px rgba(23,25,29,.45);
   --display:'Sora',system-ui,sans-serif; --body:'Inter',system-ui,sans-serif; --mono:'JetBrains Mono',ui-monospace,monospace;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;scroll-padding-top:80px}
-body{background:var(--bg);color:var(--text);font-family:var(--body);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{background:var(--background);color:var(--text);font-family:var(--body);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 img{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
 button,input,select,textarea{font:inherit;color:inherit}
 button{cursor:pointer;border:0;background:none}
-:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
-.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
-.skip{position:absolute;left:-9999px;top:8px;background:var(--blue);color:#04121C;padding:8px 14px;border-radius:var(--r-sm);z-index:200;font-weight:600}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px;border-radius:4px}
+header.site,.hero,.gestao,footer{--focus:var(--gold)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:-9999px;top:8px;background:var(--gold);color:var(--dark);padding:8px 14px;border-radius:var(--r-sm);z-index:200;font-weight:600}
 .skip:focus{left:8px}
-h1,h2,h3{font-family:var(--display);letter-spacing:-.01em;line-height:1.15}
-.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-bottom:12px}
-.eyebrow.gold{color:var(--gold)}
-section{padding:80px 0}
-.section-head{margin-bottom:32px;max-width:640px}
-.section-head h2{font-size:clamp(26px,3.4vw,36px);font-weight:700;margin-bottom:10px}
-.section-head p{color:var(--muted);font-size:15px}
-hr.rule{border:0;border-top:1px solid var(--line);max-width:1112px;margin:0 auto}
+h1,h2,h3{font-family:var(--display);letter-spacing:-.02em;line-height:1.12}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-text);margin-bottom:14px}
+.eyebrow::before{content:'';width:22px;height:1px;background:currentColor}
+section{padding:96px 0}
+.section-head{margin-bottom:40px;max-width:660px}
+.section-head h2,.h2{font-size:clamp(28px,3.6vw,40px);font-weight:700;margin-bottom:12px}
+.section-head p,.lead-sm{color:var(--muted);font-size:16px;max-width:560px}
+hr.rule{border:0;border-top:1px solid var(--line);max-width:1132px;margin:0 auto}
 
-/* botoes */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 20px;border-radius:var(--r-sm);font-weight:600;font-size:14px;border:1px solid transparent;transition:background .15s,border-color .15s,color .15s;white-space:nowrap}
-.btn-primary{background:var(--blue);color:#04121C}
-.btn-primary:hover{background:#3db8ff}
-.btn-wa{background:var(--wa);color:#062610}
-.btn-wa:hover{background:#3ddc7f}
-.btn-gold{background:var(--gold);color:#231600}
-.btn-gold:hover{background:#f8c862}
-.btn-outline{border-color:var(--line);background:var(--s1)}
-.btn-outline:hover{border-color:var(--blue);color:var(--blue)}
+/* ---- botoes ---- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 22px;border-radius:var(--r-sm);font-weight:600;font-size:14.5px;border:1px solid transparent;white-space:nowrap;transition:background .18s,border-color .18s,color .18s,transform .18s,box-shadow .18s}
+.btn:hover{transform:translateY(-1px)}
+.btn:disabled{opacity:.6;cursor:progress;transform:none}
+.btn-primary{background:var(--primary);color:var(--surface);box-shadow:0 10px 22px -12px rgba(80,27,44,.7)}
+.btn-primary:hover{background:var(--primary-hover)}
+.btn-gold{background:var(--gold);color:var(--dark);box-shadow:0 10px 24px -12px rgba(212,165,71,.7)}
+.btn-gold:hover{background:var(--gold-hover)}
+.btn-wa{background:var(--wa);color:var(--wa-text)}
+.btn-wa:hover{background:var(--wa-hover)}
+.btn-outline{background:var(--surface);border-color:var(--line);color:var(--text)}
+.btn-outline:hover{border-color:var(--primary);color:var(--primary)}
+.btn-ghost-light{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.32);color:var(--surface)}
+.btn-ghost-light:hover{border-color:var(--gold);color:var(--gold)}
+.btn-ghost-dark{background:rgba(255,255,255,.04);border-color:var(--dark-line);color:var(--on-dark)}
+.btn-ghost-dark:hover{border-color:var(--gold);color:var(--gold)}
 
-/* header */
-header.site{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--line)}
-.bar{display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px}
-.logo{display:flex;align-items:center;gap:8px;font-family:var(--display);font-weight:800;font-size:19px}
-.logo svg{width:24px;height:19px}
-.logo .t{color:var(--blue)}
-nav.main a{font-size:14px;color:var(--muted);font-weight:500;padding:8px 12px;border-radius:var(--r-sm)}
-nav.main a:hover{color:var(--text);background:var(--s1)}
-nav.main{display:flex;gap:4px;align-items:center}
+/* ---- cabecalho (grafite) ---- */
+header.site{position:sticky;top:0;z-index:100;background:var(--dark);color:var(--on-dark);border-bottom:1px solid var(--dark-line);transition:box-shadow .2s}
+header.site.scrolled{box-shadow:0 10px 28px -16px rgba(0,0,0,.6)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:16px;height:68px}
+.logo{display:flex;align-items:center;gap:9px;font-family:var(--display);font-weight:800;font-size:19px;letter-spacing:.01em;color:var(--surface)}
+.logo svg{width:24px;height:19px;color:var(--gold)}
+.logo .t{color:var(--gold)}
+nav.main{display:flex;gap:2px;align-items:center}
+nav.main a{font-size:14px;color:var(--on-dark-muted);font-weight:500;padding:8px 12px;border-radius:8px;transition:color .15s,background .15s}
+nav.main a:hover{color:var(--surface);background:var(--dark-2)}
+nav.main a[aria-current=true]{color:var(--gold);background:var(--dark-2)}
 .bar-cta{display:flex;align-items:center;gap:12px}
-.burger{display:none;width:44px;height:44px;border:1px solid var(--line);border-radius:var(--r-sm);align-items:center;justify-content:center}
+.burger{display:none;width:44px;height:44px;border:1px solid var(--dark-line);border-radius:var(--r-sm);align-items:center;justify-content:center;color:var(--surface)}
 .burger svg{width:20px;height:20px}
 
-/* hero */
-.hero{padding:64px 0 72px}
-.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
-.hero h1{font-size:clamp(36px,5.2vw,56px);font-weight:800;margin-bottom:20px}
-.hero h1 em{font-style:normal;color:var(--blue)}
-.hero .lead{color:var(--muted);font-size:17px;max-width:520px;margin-bottom:28px}
-.cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:36px}
-.facts{display:flex;gap:32px;flex-wrap:wrap;padding-top:24px;border-top:1px solid var(--line)}
-.facts div{font-size:13px;color:var(--muted)}
-.facts b{display:block;font-family:var(--mono);font-weight:500;font-size:14px;color:var(--text);margin-bottom:2px}
-.hero-art{background:var(--s1);border:1px solid var(--line);border-radius:var(--r);display:flex;justify-content:center;align-items:flex-end;min-height:440px;padding:24px 24px 0;position:relative;overflow:hidden}
-.hero-art::after{content:'';position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--blue)}
-.hero-art img{height:420px;width:auto;max-width:100%;object-fit:contain}
-
-/* duke solutions (destaque) */
-.solutions{background:var(--s1);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.sol-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:start}
-.solutions h2{font-size:clamp(30px,4vw,44px);font-weight:800;margin-bottom:16px}
-.solutions .desc{color:var(--muted);font-size:16px;max-width:520px;margin-bottom:28px}
-.svc{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:0 24px;margin-bottom:32px}
-.svc li{padding:12px 0;border-bottom:1px solid var(--line);font-size:14px;color:var(--text)}
-.diff{display:grid;gap:16px}
-.diff-item{background:var(--s2);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:var(--r);padding:24px}
-.diff-item .k{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
-.diff-item h3{font-size:20px;font-weight:700;margin-bottom:8px}
-.diff-item p{color:var(--muted);font-size:14px}
-.diff-note{font-size:13px;color:var(--muted);padding:0 4px}
-
-/* catalogo */
-.rail{display:flex;gap:16px;overflow-x:auto;padding-bottom:12px;scroll-snap-type:x proximity}
-.rail .card{min-width:240px;flex:0 0 240px;scroll-snap-align:start}
-.rail::-webkit-scrollbar{height:6px}.rail::-webkit-scrollbar-thumb{background:var(--line);border-radius:99px}
-.tools{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:24px}
-.search{flex:1;min-width:220px;max-width:420px;background:var(--s1);border:1px solid var(--line);border-radius:var(--r-sm);padding:12px 14px;font-size:14px}
-.search::placeholder{color:var(--muted)}
-.search:focus-visible{outline-offset:0;border-color:var(--blue)}
-.count{font-family:var(--mono);font-size:12px;color:var(--muted)}
-.shell{display:grid;grid-template-columns:220px 1fr;gap:32px}
-.filters{position:sticky;top:88px;align-self:start}
-.fg{margin-bottom:24px}
-.fg h4{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;font-weight:500}
-.opt{display:flex;justify-content:space-between;align-items:center;width:100%;text-align:left;padding:9px 10px;border-radius:var(--r-sm);font-size:14px;color:var(--muted);border:1px solid transparent}
-.opt:hover{background:var(--s1);color:var(--text)}
-.opt[aria-pressed=true]{background:var(--s2);border-color:var(--line);color:var(--blue)}
-.opt .n{font-family:var(--mono);font-size:11px}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.card{background:var(--s1);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:flex;flex-direction:column;transition:border-color .15s}
-.card:hover{border-color:var(--blue)}
-.thumb{height:132px;border-radius:var(--r-sm);background:var(--s2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:14px}
-.thumb svg{width:48px;height:48px;color:var(--muted)}
-.tag{position:absolute;top:10px;left:10px;font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.05em;padding:3px 8px;border-radius:6px;text-transform:uppercase}
-.tag.novo{background:var(--gold);color:#231600}
-.tag.seminovo{background:transparent;color:var(--blue);border:1px solid var(--blue)}
-.card h3{font-size:16px;font-weight:600;margin-bottom:4px}
-.specs{font-family:var(--mono);font-size:12px;color:var(--muted);margin-bottom:12px}
-.price{font-family:var(--mono);font-weight:600;font-size:19px;margin-top:auto;margin-bottom:12px}
-.card .btn{width:100%;font-size:13px;padding:10px}
-.empty{display:none;grid-column:1/-1;text-align:center;padding:48px 16px;border:1px dashed var(--line);border-radius:var(--r)}
-.empty img{width:96px;margin:0 auto 16px}
-.empty h4{font-family:var(--display);font-size:18px;margin-bottom:6px}
-.empty p{color:var(--muted);font-size:14px;max-width:360px;margin:0 auto}
-.note{font-size:12px;color:var(--muted);margin-top:16px}
-
-/* duke care */
-.care-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
-.care-list{list-style:none;margin:20px 0 28px}
-.care-list li{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);font-size:14px}
-.care-list li::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--blue);flex:none}
-.steps{list-style:none;counter-reset:s;display:grid;gap:0;border:1px solid var(--line);border-radius:var(--r);background:var(--s1);overflow:hidden}
-.steps li{counter-increment:s;display:grid;grid-template-columns:48px 1fr;gap:12px;padding:20px;border-bottom:1px solid var(--line)}
-.steps li:last-child{border-bottom:0}
-.steps li::before{content:counter(s,decimal-leading-zero);font-family:var(--mono);font-size:14px;color:var(--blue);padding-top:2px}
-.steps b{display:block;font-family:var(--display);font-size:16px;margin-bottom:2px}
-.steps span{color:var(--muted);font-size:14px}
-.trust{display:flex;gap:24px;flex-wrap:wrap;margin-bottom:24px}
-.trust div{font-size:13px;color:var(--muted)}
-.trust b{display:block;font-family:var(--mono);font-size:14px;color:var(--text);font-weight:500}
-
-/* sobre e contato */
-.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
-.info{margin:20px 0}
-.info h4{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:6px;font-weight:500}
-.info p{color:var(--muted);font-size:15px}
-.photo{position:relative;border-radius:var(--r);border:1px solid var(--line);overflow:hidden;background:var(--s1);aspect-ratio:4/4.3}
-.photo>img.f{width:100%;height:100%;object-fit:cover;object-position:50% 40%}
-.duke-badge{position:absolute;right:12px;bottom:0;display:flex;align-items:flex-end}
-.duke-badge img{height:190px;width:auto}
-.bubble{position:absolute;right:112px;bottom:150px;background:var(--s1);border:1px solid var(--line);border-radius:var(--r-sm);padding:8px 12px;font-size:13px;font-weight:500;white-space:nowrap}
-.bubble::after{content:'';position:absolute;bottom:-6px;right:18px;width:10px;height:10px;background:var(--s1);border-right:1px solid var(--line);border-bottom:1px solid var(--line);transform:rotate(45deg)}
-.contact{background:var(--s1);border-top:1px solid var(--line)}
-.form{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:760px}
-.field{display:grid;gap:6px}
-.field.full{grid-column:1/-1}
-.field label{font-size:13px;font-weight:500}
-.field input,.field select,.field textarea{background:var(--bg);border:1px solid var(--line);border-radius:var(--r-sm);padding:12px;font-size:14px;width:100%}
-.field textarea{min-height:110px;resize:vertical}
-.field input:focus-visible,.field select:focus-visible,.field textarea:focus-visible{outline-offset:0;border-color:var(--blue)}
-.field small{color:var(--muted);font-size:12px}
-
-/* rodape */
-footer{border-top:1px solid var(--line);padding:48px 0 28px}
-.fgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px;margin-bottom:32px}
-.fgrid h5{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500;margin-bottom:12px}
-.fgrid a,.fgrid p{display:block;color:var(--muted);font-size:14px;margin-bottom:8px}
-.fgrid a:hover{color:var(--blue)}
-.fbottom{color:var(--muted);font-size:13px;padding-top:20px;border-top:1px solid var(--line)}
-
-/* botao flutuante */
-.wa-float{position:fixed;right:16px;bottom:16px;z-index:90;display:flex;align-items:center;gap:8px;background:var(--wa);color:#062610;font-weight:600;font-size:14px;padding:12px 16px;border-radius:999px;box-shadow:0 4px 16px rgba(0,0,0,.4)}
-.wa-float:hover{background:#3ddc7f}
-.wa-float svg{width:22px;height:22px}
-
-
-/* ---- visual claro (sobrescreve as cores escuras acima) ---- */
-.eyebrow,.info h4,.steps li::before,.opt[aria-pressed=true],.tag.seminovo,.fgrid a:hover,.btn-outline:hover,.logo .t,.hero h1 em{color:var(--blue-text)}
-.eyebrow.gold,.diff-item .k{color:var(--gold-text)}
-.tag.seminovo{border-color:var(--blue-text)}
-.btn-outline{background:#fff}
-.btn-outline:hover{border-color:var(--blue-text)}
-header.site{background:rgba(255,255,255,.97)}
-.hero-art{background:var(--s1)}
-.solutions{background:var(--s1)}
-.diff-item,.card,.steps,.search,.field input,.field select,.field textarea,.bubble,.bubble::after{background:#fff}
-.card{box-shadow:0 1px 2px rgba(15,20,32,.05)}
-.card:hover{border-color:var(--blue-text)}
-.thumb{background:var(--s1)}
-.opt:hover{background:var(--s1)}
-.opt[aria-pressed=true]{background:var(--s1);border-color:var(--line)}
-.field input:focus-visible,.field select:focus-visible,.field textarea:focus-visible,.search:focus-visible{border-color:var(--blue-text)}
-.photo{background:var(--s1)}
-.contact{background:var(--s1)}
-nav.main a:hover{background:var(--s1)}
-.wa-float{box-shadow:0 4px 16px rgba(15,20,32,.22)}
-.skip{color:#04121C}
-
-/* ---- fase 1: hero com mais impacto ---- */
-.hero{position:relative;padding:72px 0 88px;background:linear-gradient(180deg,#fff 0%,var(--s1) 100%);overflow:hidden}
-.hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(15,20,32,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(15,20,32,.045) 1px,transparent 1px);background-size:48px 48px;-webkit-mask-image:radial-gradient(ellipse 70% 80% at 75% 40%,#000 20%,transparent 75%);mask-image:radial-gradient(ellipse 70% 80% at 75% 40%,#000 20%,transparent 75%);pointer-events:none}
+/* ---- hero (vinho) ---- */
+.hero{position:relative;padding:88px 0 96px;background:var(--primary);color:var(--surface);overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 55% 70% at 82% 30%,rgba(212,165,71,.16),transparent 70%),radial-gradient(ellipse 50% 60% at 0% 100%,rgba(0,0,0,.28),transparent 70%);pointer-events:none}
+.hero::after{content:'';position:absolute;left:0;right:0;bottom:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold) 20%,var(--gold) 80%,transparent)}
 .hero .wrap{position:relative}
-.hero h1{font-size:clamp(40px,6vw,68px);font-weight:800;line-height:1.05;letter-spacing:-.025em;margin-bottom:22px}
-.hero h1 em{background:linear-gradient(90deg,#0A6FB0,#0EA5FF);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:var(--blue-text)}
-.hero .lead{font-size:18px;line-height:1.6}
-.pill{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--blue-text);background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 14px 7px 12px;margin-bottom:22px;box-shadow:0 1px 2px rgba(15,20,32,.05)}
-.pill .dot{width:8px;height:8px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 4px rgba(14,165,255,.18)}
-.hero .btn{padding:14px 24px;font-size:15px}
-.hero .btn-primary{box-shadow:0 8px 20px -6px rgba(14,165,255,.55)}
-.hero .btn-primary:hover{transform:translateY(-1px)}
-.hero .btn{transition:background .15s,border-color .15s,color .15s,transform .15s,box-shadow .15s}
-.facts{border-top:0;padding-top:0;gap:0;background:#fff;border:1px solid var(--line);border-radius:var(--r);box-shadow:0 1px 2px rgba(15,20,32,.05);overflow:hidden;max-width:620px}
-.facts>div{flex:1 1 0;min-width:170px;display:flex;gap:10px;align-items:flex-start;padding:14px 16px;border-right:1px solid var(--line)}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);background:rgba(255,255,255,.06);border:1px solid rgba(212,165,71,.4);border-radius:999px;padding:7px 14px 7px 12px;margin-bottom:24px}
+.pill .dot{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px rgba(212,165,71,.2)}
+.hero h1{font-size:clamp(40px,6vw,68px);font-weight:800;line-height:1.04;letter-spacing:-.03em;margin-bottom:22px;color:var(--surface)}
+.hero h1 em{font-style:normal;color:var(--gold)}
+.hero .lead{color:var(--on-primary-muted);font-size:18px;line-height:1.65;max-width:520px;margin-bottom:32px}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:40px}
+.hero .btn{padding:15px 26px;font-size:15px}
+.facts{display:flex;flex-wrap:wrap;max-width:640px;border:1px solid rgba(212,165,71,.28);border-radius:var(--r);background:rgba(0,0,0,.14);overflow:hidden}
+.facts>div{flex:1 1 0;min-width:170px;display:flex;gap:12px;align-items:flex-start;padding:16px 18px;border-right:1px solid rgba(212,165,71,.2)}
 .facts>div:last-child{border-right:0}
-.facts .fi{flex:none;width:32px;height:32px;border-radius:8px;background:var(--s1);color:var(--blue-text);display:grid;place-items:center}
+.facts .fi{flex:none;width:34px;height:34px;border-radius:9px;background:rgba(212,165,71,.14);color:var(--gold);display:grid;place-items:center}
 .facts .fi svg{width:18px;height:18px}
-.facts span{font-size:12.5px;line-height:1.35;color:var(--muted)}
-.facts b{font-family:var(--body);font-weight:600;font-size:13.5px;color:var(--text);margin-bottom:1px}
-.hero-art{min-height:520px;background:radial-gradient(circle at 50% 62%,#DCF0FF 0%,#EAF5FF 38%,#F5F9FD 70%);border:1px solid #D5E4F2;border-radius:20px;box-shadow:0 30px 60px -30px rgba(10,111,176,.35);padding:24px 24px 0}
-.hero-art::after{display:none}
-.hero-art .glow{position:absolute;left:50%;bottom:-40px;width:340px;height:340px;transform:translateX(-50%);border-radius:50%;background:radial-gradient(circle,rgba(14,165,255,.35),rgba(14,165,255,0) 68%);pointer-events:none}
-.hero-art .ring{position:absolute;left:50%;top:56%;border:1px solid rgba(10,111,176,.22);border-radius:50%;transform:translate(-50%,-50%);pointer-events:none}
+.facts span{font-size:12.5px;line-height:1.4;color:var(--on-primary-muted)}
+.facts b{display:block;font-weight:600;font-size:13.5px;color:var(--surface);margin-bottom:2px}
+.hero-art{position:relative;display:flex;justify-content:center;align-items:flex-end;min-height:520px;padding:24px 24px 0;border-radius:var(--r-lg);border:1px solid rgba(212,165,71,.3);background:radial-gradient(circle at 50% 62%,var(--primary-glow) 0%,var(--primary-mid) 40%,var(--primary-deep) 100%);box-shadow:0 40px 80px -40px rgba(0,0,0,.6);overflow:hidden}
+.hero-art .glow{position:absolute;left:50%;bottom:-60px;width:360px;height:360px;transform:translateX(-50%);border-radius:50%;background:radial-gradient(circle,rgba(212,165,71,.32),rgba(212,165,71,0) 68%);pointer-events:none}
+.hero-art .ring{position:absolute;left:50%;top:56%;border:1px solid rgba(212,165,71,.3);border-radius:50%;transform:translate(-50%,-50%);pointer-events:none}
 .hero-art .ring.r1{width:360px;height:360px}
-.hero-art .ring.r2{width:500px;height:500px;border-style:dashed;border-color:rgba(10,111,176,.16)}
-.hero-art img{position:relative;height:470px;filter:drop-shadow(0 18px 24px rgba(10,30,60,.22))}
-.chip{position:absolute;z-index:2;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-size:12px;color:var(--muted);box-shadow:0 12px 28px -12px rgba(15,20,32,.28);line-height:1.3}
+.hero-art .ring.r2{width:500px;height:500px;border-style:dashed;border-color:rgba(212,165,71,.18)}
+.hero-art img{position:relative;height:470px;width:auto;max-width:100%;object-fit:contain;filter:drop-shadow(0 22px 26px rgba(0,0,0,.4))}
+.chip{position:absolute;z-index:2;background:var(--surface);color:var(--muted);border-radius:12px;padding:10px 14px;font-size:12px;line-height:1.3;box-shadow:0 16px 30px -14px rgba(0,0,0,.5)}
 .chip b{display:block;font-family:var(--display);font-size:13.5px;color:var(--text)}
 .chip.c1{left:18px;top:26px;border-left:3px solid var(--gold)}
-.chip.c2{right:18px;bottom:120px;border-left:3px solid var(--blue)}
+.chip.c2{right:18px;bottom:120px;border-left:3px solid var(--primary)}
 @keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 .hero .wrap>div:first-child>*{animation:rise .6s cubic-bezier(.2,.7,.2,1) both}
 .hero .wrap>div:first-child>*:nth-child(2){animation-delay:.07s}
@@ -245,139 +150,245 @@ nav.main a:hover{background:var(--s1)}
 .hero .wrap>div:first-child>*:nth-child(4){animation-delay:.21s}
 .hero .wrap>div:first-child>*:nth-child(5){animation-delay:.28s}
 .hero-art{animation:rise .8s .1s cubic-bezier(.2,.7,.2,1) both}
-@media (prefers-reduced-motion:reduce){.hero .wrap>div:first-child>*,.hero-art{animation:none}}
 
-/* ---- fase 2: Duke Solutions em destaque (secao escura pontual) ---- */
-.solutions.dark{position:relative;background:#0A0A0F;color:#F4F6FA;border-top:0;border-bottom:0;padding:96px 0;overflow:hidden}
-.solutions.dark::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 60% at 88% 8%,rgba(14,165,255,.22),transparent 70%),radial-gradient(ellipse 40% 50% at 4% 100%,rgba(245,185,58,.12),transparent 70%);pointer-events:none}
-.solutions.dark::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:48px 48px;-webkit-mask-image:linear-gradient(180deg,#000,transparent 70%);mask-image:linear-gradient(180deg,#000,transparent 70%);pointer-events:none}
-.solutions.dark .wrap{position:relative;z-index:1}
-.solutions.dark .eyebrow.gold{color:#F5B93A}
-.solutions.dark h2{color:#fff;font-size:clamp(32px,4.4vw,50px);font-weight:800;line-height:1.08;letter-spacing:-.02em;margin-bottom:18px}
-.solutions.dark .desc{color:#9AA3B5;font-size:17px;max-width:520px;margin-bottom:28px}
-.sol-top{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center;margin-bottom:56px}
-.btn-ghost-dark{border-color:#2A2D3A;background:rgba(255,255,255,.04);color:#F4F6FA}
-.btn-ghost-dark:hover{border-color:#F5B93A;color:#F5B93A}
-.solutions.dark .btn-gold{box-shadow:0 10px 24px -8px rgba(245,185,58,.5);padding:14px 24px;font-size:15px}
-.solutions.dark .btn-ghost-dark{padding:14px 24px;font-size:15px}
-.dcards{display:grid;gap:16px}
-.dcard{display:flex;gap:16px;align-items:flex-start;background:#12131A;border:1px solid #2A2D3A;border-radius:14px;padding:24px;transition:border-color .2s,transform .2s,box-shadow .2s}
-.dcard:hover{border-color:rgba(245,185,58,.6);transform:translateY(-2px);box-shadow:0 18px 36px -18px rgba(0,0,0,.7)}
-.dicon{flex:none;width:48px;height:48px;border-radius:12px;background:rgba(245,185,58,.12);border:1px solid rgba(245,185,58,.35);color:#F5B93A;display:grid;place-items:center}
+/* ---- caminhos de entrada e faixa de confianca ---- */
+.entry-points{padding:80px 0 48px}
+.compact-head{margin-bottom:28px}
+.compact-head h2{font-size:clamp(24px,3vw,32px);max-width:680px}
+.entry-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.entry-card{min-height:156px;display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:start;padding:24px;border:1px solid var(--line);border-top-width:3px;border-radius:var(--r);background:var(--surface);box-shadow:var(--shadow-sm);transition:transform .2s,border-color .2s,box-shadow .2s}
+.entry-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:var(--primary-line)}
+.entry-card-primary{border-top-color:var(--primary)}
+.entry-card-gold{border-top-color:var(--gold)}
+.entry-card-dark{border-top-color:var(--dark)}
+.entry-card:hover.entry-card-primary{border-top-color:var(--primary)}
+.entry-card:hover.entry-card-gold{border-top-color:var(--gold)}
+.entry-card:hover.entry-card-dark{border-top-color:var(--dark)}
+.entry-index{font-family:var(--mono);font-size:12px;color:var(--gold-text);padding-top:2px}
+.entry-card b{display:block;font-family:var(--display);font-size:17px;line-height:1.25;margin-bottom:8px}
+.entry-card small{display:block;color:var(--muted);font-size:13.5px;line-height:1.5;max-width:240px}
+.entry-arrow{font-size:20px;line-height:1;color:var(--primary);transition:transform .2s}
+.entry-card:hover .entry-arrow{transform:translate(2px,-2px)}
+.trust-strip{padding:0 0 80px}
+.trust-strip-grid{display:grid;grid-template-columns:repeat(4,1fr);background:var(--surface);border:1px solid var(--line);border-radius:var(--r)}
+.trust-strip-grid>div{padding:20px 22px;border-right:1px solid var(--line)}
+.trust-strip-grid>div:last-child{border-right:0}
+.trust-strip strong{display:flex;align-items:center;gap:8px;font-family:var(--display);font-size:14px;margin-bottom:4px}
+.trust-strip strong::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--gold);flex:none}
+.trust-strip span{display:block;color:var(--muted);font-size:13px;line-height:1.45}
+
+/* ---- catalogo ---- */
+.rail{display:flex;gap:16px;overflow-x:auto;padding:4px 2px 14px;scroll-snap-type:x proximity;scrollbar-color:var(--line-strong) transparent}
+.rail .card{min-width:252px;flex:0 0 252px;scroll-snap-align:start}
+.rail::-webkit-scrollbar{height:6px}.rail::-webkit-scrollbar-thumb{background:var(--line-strong);border-radius:99px}
+.rail::after{content:'Arraste para ver mais';flex:0 0 auto;align-self:center;color:var(--muted);font-family:var(--mono);font-size:11px;letter-spacing:.04em;white-space:nowrap;padding:0 8px}
+.tools{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:28px}
+.search{flex:1;min-width:220px;max-width:440px;background:var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235F5A55' stroke-width='1.8' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='6.5'/%3E%3Cpath d='m16 16 4 4'/%3E%3C/svg%3E") no-repeat 14px center/20px;border:1px solid var(--line);border-radius:var(--r-sm);padding:14px 16px 14px 44px;font-size:14px;box-shadow:var(--shadow-sm);transition:border-color .15s,box-shadow .15s}
+.search::placeholder{color:var(--muted)}
+.search:focus-visible{outline:0;border-color:var(--primary);box-shadow:0 0 0 4px rgba(80,27,44,.14)}
+.count{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.shell{display:grid;grid-template-columns:220px 1fr;gap:36px}
+.filters{position:sticky;top:96px;align-self:start}
+.fg{margin-bottom:26px}
+.fg h4{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;font-weight:500}
+.opt{display:flex;justify-content:space-between;align-items:center;width:100%;text-align:left;padding:9px 12px;border-radius:var(--r-sm);font-size:14px;color:var(--muted);border:1px solid transparent;transition:background .15s,color .15s,border-color .15s}
+.opt:hover{background:var(--surface);color:var(--text)}
+.opt[aria-pressed=true]{background:var(--primary-soft);border-color:var(--primary-line);color:var(--primary);font-weight:600}
+.opt .n{font-family:var(--mono);font-size:11px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px;display:flex;flex-direction:column;box-shadow:var(--shadow-sm);transition:transform .2s,box-shadow .2s,border-color .2s}
+.card:hover{transform:translateY(-4px);border-color:var(--primary-line);box-shadow:var(--shadow-md)}
+.thumb{height:150px;border-radius:var(--r-sm);background:linear-gradient(145deg,var(--surface-warm),var(--surface-warm-2));display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:16px;overflow:hidden}
+.thumb::before{content:'';position:absolute;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(212,165,71,.22),transparent 70%)}
+.thumb svg{position:relative;width:60px;height:60px;color:var(--primary);opacity:.85;transition:transform .25s}
+.card:hover .thumb svg{transform:scale(1.08)}
+.tag{position:absolute;top:10px;left:10px;z-index:1;font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.06em;padding:3px 8px;border-radius:6px;text-transform:uppercase}
+.tag.novo{background:var(--gold);color:var(--dark)}
+.tag.seminovo{background:var(--surface);color:var(--primary);border:1px solid var(--primary)}
+.card h3{font-size:16px;font-weight:600;letter-spacing:-.01em;margin-bottom:4px}
+.specs{font-family:var(--mono);font-size:12px;color:var(--muted);margin-bottom:12px}
+.price{font-family:var(--mono);font-weight:600;font-size:22px;letter-spacing:-.02em;color:var(--text);margin-top:auto;margin-bottom:12px}
+.card .btn{width:100%;font-size:13px;padding:11px;margin-top:4px}
+.empty{display:none;grid-column:1/-1;text-align:center;padding:48px 16px;border:1px dashed var(--line-strong);border-radius:var(--r);background:var(--surface)}
+.empty img{width:96px;margin:0 auto 16px}
+.empty h4{font-family:var(--display);font-size:18px;margin-bottom:6px}
+.empty p{color:var(--muted);font-size:14px;max-width:360px;margin:0 auto}
+.note{font-size:12.5px;color:var(--muted);margin-top:18px}
+
+/* ---- Duke Care ---- */
+.care-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+.care-list{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:26px 0 28px}
+.care-list li{display:flex;gap:12px;align-items:center;padding:13px 16px;border:1px solid var(--line);border-radius:var(--r-sm);background:var(--surface);box-shadow:var(--shadow-sm);font-size:14px;font-weight:500}
+.care-list li::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--gold);flex:none}
+.care-list li:last-child:nth-child(odd){grid-column:1/-1}
+.trust{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:28px}
+.trust div{font-size:13px;color:var(--muted);background:var(--primary-soft);border:1px solid var(--primary-line);border-radius:var(--r-sm);padding:10px 14px}
+.trust b{display:block;font-family:var(--mono);font-size:13.5px;color:var(--primary);font-weight:600}
+.care-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:32px;box-shadow:var(--shadow-md)}
+.care-card>h3{font-size:18px;margin-bottom:22px}
+.steps{list-style:none;counter-reset:s;display:grid;gap:0}
+.steps li{counter-increment:s;position:relative;display:grid;grid-template-columns:44px 1fr;gap:16px;padding-bottom:24px}
+.steps li:last-child{padding-bottom:0}
+.steps li::before{content:counter(s,decimal-leading-zero);width:44px;height:44px;border-radius:50%;background:var(--primary);color:var(--surface);display:grid;place-items:center;font-family:var(--mono);font-weight:600;font-size:13px;position:relative;z-index:1;box-shadow:0 0 0 5px var(--primary-soft)}
+.steps li:not(:last-child)::after{content:'';position:absolute;left:21px;top:50px;bottom:6px;width:2px;background:linear-gradient(var(--gold),var(--line))}
+.steps li>div{padding-top:9px}
+.steps b{display:block;font-family:var(--display);font-size:16px;margin-bottom:3px}
+.steps span{color:var(--muted);font-size:14px}
+
+/* ---- Duke Solutions ---- */
+.solutions{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.sol-head{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:end;margin-bottom:56px}
+.sol-head h2{font-size:clamp(30px,4.2vw,48px);font-weight:800;line-height:1.06;letter-spacing:-.03em}
+.sol-head .desc{color:var(--muted);font-size:16.5px;margin-bottom:24px}
+.sol-head .cta-row{margin-bottom:0}
+/* sistema de gestao em destaque */
+.gestao{display:grid;grid-template-columns:.9fr 1.1fr;gap:48px;align-items:center;background:var(--dark);color:var(--on-dark);border-radius:var(--r-lg);padding:48px;position:relative;overflow:hidden;margin-bottom:56px}
+.gestao::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 60% at 100% 0%,rgba(212,165,71,.14),transparent 70%),radial-gradient(ellipse 40% 50% at 0% 100%,rgba(80,27,44,.55),transparent 70%);pointer-events:none}
+.gestao>*{position:relative}
+.gestao .eyebrow{color:var(--gold)}
+.gestao h3{font-size:clamp(24px,2.8vw,32px);font-weight:700;color:var(--surface);margin-bottom:14px}
+.gestao-copy>p{color:var(--on-dark-muted);font-size:15.5px;margin-bottom:24px}
+.benefits{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:18px 22px;margin-bottom:30px}
+.benefits li{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start}
+.benefits i{width:28px;height:28px;border-radius:8px;background:rgba(212,165,71,.14);color:var(--gold);display:grid;place-items:center}
+.benefits i svg{width:15px;height:15px}
+.benefits b{display:block;font-size:14px;color:var(--surface);font-weight:600;line-height:1.35;margin-bottom:2px}
+.benefits span{display:block;font-size:13px;color:var(--on-dark-muted);line-height:1.45}
+.demo-tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.demo-tab{padding:8px 14px;border-radius:999px;font-size:13px;font-weight:500;color:var(--on-dark-muted);border:1px solid var(--dark-line);transition:color .15s,border-color .15s,background .15s}
+.demo-tab:hover{color:var(--surface);border-color:var(--on-dark-muted)}
+.demo-tab[aria-selected=true]{background:var(--gold);border-color:var(--gold);color:var(--dark);font-weight:600}
+.demo-frame{background:var(--surface);color:var(--text);border-radius:var(--r);overflow:hidden;box-shadow:0 40px 70px -30px rgba(0,0,0,.7);border:1px solid var(--dark-line)}
+.demo-bar{display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--background);border-bottom:1px solid var(--line)}
+.demo-dots{display:flex;gap:6px}
+.demo-dots span{width:9px;height:9px;border-radius:50%;background:var(--line)}
+.demo-url{font-family:var(--mono);font-size:11px;color:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:3px 10px}
+.demo-body{display:grid;grid-template-columns:150px 1fr;min-height:320px}
+.demo-side{background:var(--dark-2);padding:14px 10px;display:flex;flex-direction:column;gap:2px}
+.demo-side .brand{display:flex;align-items:center;gap:8px;font-family:var(--display);font-weight:700;font-size:12.5px;color:var(--surface);padding:2px 6px 12px}
+.demo-side .brand i{width:22px;height:22px;border-radius:6px;background:var(--primary);color:var(--gold);display:grid;place-items:center;font-style:normal;font-size:11px}
+.demo-side span{font-size:12px;color:var(--on-dark-muted);padding:6px 8px;border-radius:6px}
+.demo-side span.on{background:rgba(212,165,71,.14);color:var(--gold);font-weight:600}
+.demo-main{padding:18px;min-width:0}
+.demo-panel[hidden]{display:none}
+.demo-h{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px}
+.demo-h b{font-family:var(--display);font-size:15px}
+.demo-h small{display:block;font-size:11.5px;color:var(--muted);font-weight:400}
+.demo-btn{flex:none;font-size:11.5px;font-weight:600;background:var(--primary);color:var(--surface);border-radius:7px;padding:6px 10px}
+.demo-rows{list-style:none;display:grid;gap:8px}
+.demo-rows li{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:9px;font-size:12.5px}
+.demo-rows li>span:first-child{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.demo-rows small{color:var(--muted)}
+.badge{flex:none;font-size:11px;font-weight:600;padding:3px 9px;border-radius:999px;white-space:nowrap}
+.badge.b-gold{background:var(--gold-soft);color:var(--gold-text)}
+.badge.b-wine{background:var(--primary-soft);color:var(--primary)}
+.badge.b-dark{background:var(--dark-soft);color:var(--dark)}
+.badge.b-ok{background:var(--ok-bg);color:var(--ok-text)}
+.track{list-style:none;display:grid;gap:0}
+.track li{position:relative;display:flex;gap:12px;align-items:center;padding:8px 0;font-size:13px;color:var(--muted)}
+.track li::before{content:'';width:12px;height:12px;border-radius:50%;border:2px solid var(--line-strong);background:var(--surface);flex:none;position:relative;z-index:1}
+.track li:not(:last-child)::after{content:'';position:absolute;left:5px;top:24px;height:calc(100% - 14px);width:2px;background:var(--line)}
+.track li.done{color:var(--text)}
+.track li.done::before{background:var(--primary);border-color:var(--primary)}
+.track li.now{color:var(--primary);font-weight:600}
+.track li.now::before{border-color:var(--gold);background:var(--gold);box-shadow:0 0 0 4px var(--gold-soft)}
+.demo-note{font-size:12px;color:var(--on-dark-muted);margin-top:12px}
+/* outras frentes e servicos */
+.sol-sub{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.dcards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:12px}
+.dcard{display:flex;gap:16px;align-items:flex-start;background:var(--background);border:1px solid var(--line);border-radius:var(--r);padding:26px;transition:border-color .2s,transform .2s,box-shadow .2s}
+.dcard:hover{border-color:var(--primary-line);transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.dicon{flex:none;width:48px;height:48px;border-radius:12px;background:var(--primary);color:var(--gold);display:grid;place-items:center}
 .dicon svg{width:24px;height:24px}
-.dcard .k{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#F5B93A;margin-bottom:6px}
-.dcard h3{font-size:20px;font-weight:700;color:#fff;margin-bottom:6px}
-.dcard p:not(.k){color:#9AA3B5;font-size:14px;line-height:1.55}
-.dnote{font-size:13px;color:#9AA3B5;padding:0 4px}
-.sv-grid{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.sv{display:flex;align-items:center;gap:14px;background:#12131A;border:1px solid #2A2D3A;border-radius:12px;padding:18px 20px;font-size:15px;font-weight:500;color:#F4F6FA;transition:border-color .2s,background .2s,transform .2s}
-.sv:hover{border-color:#0EA5FF;background:#151824;transform:translateY(-2px)}
-.sv i{flex:none;width:40px;height:40px;border-radius:10px;background:rgba(14,165,255,.12);color:#0EA5FF;display:grid;place-items:center}
+.dcard .k{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-text);margin-bottom:6px}
+.dcard h3{font-size:19px;font-weight:700;margin-bottom:6px}
+.dcard p:not(.k){color:var(--muted);font-size:14px;line-height:1.55}
+.dnote{font-size:13.5px;color:var(--muted);margin-bottom:40px}
+.sv-grid{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.sv{display:flex;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-sm);padding:18px 20px;font-size:15px;font-weight:500;transition:border-color .2s,transform .2s}
+.sv:hover{border-color:var(--gold);transform:translateY(-2px)}
+.sv i{flex:none;width:40px;height:40px;border-radius:10px;background:var(--gold-soft);color:var(--gold-text);display:grid;place-items:center}
 .sv i svg{width:20px;height:20px}
 
-/* ---- fase 3: produtos e Duke Care ---- */
-#novidades{background:var(--s1);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.section-head h2{letter-spacing:-.02em}
-.search{background:#fff;padding:14px 16px 14px 44px;border-radius:10px;box-shadow:0 1px 2px rgba(15,20,32,.05);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23566074' stroke-width='1.8' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='6.5'/%3E%3Cpath d='m16 16 4 4'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:14px center;background-size:20px}
-.opt{transition:background .15s,color .15s,border-color .15s}
-.opt[aria-pressed=true]{background:#fff;border-color:var(--blue-text);color:var(--blue-text);font-weight:600;box-shadow:0 1px 2px rgba(15,20,32,.05)}
-.card{padding:14px;border-radius:14px;transition:transform .2s,box-shadow .2s,border-color .2s}
-.card:hover{transform:translateY(-4px);box-shadow:0 18px 34px -18px rgba(10,111,176,.35)}
-.thumb{height:150px;border:0;border-radius:10px;background:linear-gradient(135deg,#F7FAFD 0%,#E3EFFA 100%);overflow:hidden}
-.thumb::before{content:'';position:absolute;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(14,165,255,.22),transparent 70%)}
-.thumb svg{position:relative;width:60px;height:60px;color:var(--blue-text);opacity:.85;transition:transform .25s}
-.card:hover .thumb svg{transform:scale(1.08)}
-.tag{top:10px;left:10px;box-shadow:0 1px 2px rgba(15,20,32,.12)}
-.tag.seminovo{background:#fff}
-.card h3{font-size:16px;letter-spacing:-.01em}
-.price{font-size:22px;letter-spacing:-.02em;color:var(--text)}
-.card .btn{padding:11px}
-.rail .card{min-width:250px;flex-basis:250px}
-.care-list{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:22px 0 28px}
-.care-list li{padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:#fff;box-shadow:0 1px 2px rgba(15,20,32,.04);font-weight:500}
-.care-list li::before{width:8px;height:8px;background:var(--gold)}
-.trust{gap:12px}
-.trust div{background:var(--s1);border:1px solid var(--line);border-radius:10px;padding:10px 14px}
-.steps{border:0;background:none;overflow:visible;gap:0;padding-top:4px}
-.steps li{display:grid;grid-template-columns:44px 1fr;gap:16px;padding:0 0 22px;border:0;position:relative;counter-increment:s}
-.steps li:last-child{padding-bottom:0}
-.steps li::before{content:counter(s,decimal-leading-zero);width:44px;height:44px;border-radius:50%;background:#fff;border:2px solid var(--blue-text);display:grid;place-items:center;padding:0;font-weight:600;font-size:14px;color:var(--blue-text);position:relative;z-index:1;box-shadow:0 0 0 5px rgba(14,165,255,.12)}
-.steps li:not(:last-child)::after{content:'';position:absolute;left:21px;top:44px;bottom:-2px;width:2px;background:linear-gradient(var(--blue),var(--line))}
-.steps li>div{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px;box-shadow:0 1px 2px rgba(15,20,32,.05);transition:border-color .2s,transform .2s}
-.steps li:hover>div{border-color:var(--blue-text);transform:translateX(3px)}
-.steps b{font-size:16px}
-
-/* ---- fase 4: sobre, contato e rodape ---- */
-.photo{border:0;border-radius:20px;box-shadow:14px 14px 0 0 #DCEEFB,0 30px 60px -30px rgba(10,111,176,.4);margin-right:14px;margin-bottom:14px}
-.photo>img.f{transition:transform .6s}
-.photo:hover>img.f{transform:scale(1.03)}
-.duke-badge img{filter:drop-shadow(0 10px 14px rgba(10,30,60,.3))}
-.bubble{box-shadow:0 10px 24px -10px rgba(15,20,32,.35);font-weight:600}
-.info{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin:12px 0;box-shadow:0 1px 2px rgba(15,20,32,.04)}
-.info h4{margin-bottom:4px}
+/* ---- sobre ---- */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.info{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-sm);padding:14px 18px;margin:12px 0;box-shadow:var(--shadow-sm)}
+.info h4{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-text);margin-bottom:4px;font-weight:500}
 .info p{color:var(--text);font-size:15px}
-.contact{background:linear-gradient(180deg,var(--s1),#EAF3FB)}
+.photo{position:relative;border-radius:var(--r-lg);overflow:hidden;background:var(--dark);aspect-ratio:4/4.3;margin:0 14px 14px 0;box-shadow:14px 14px 0 0 var(--gold),0 30px 60px -30px rgba(23,25,29,.5)}
+.photo>img.f{width:100%;height:100%;object-fit:cover;object-position:50% 30%;transition:transform .6s}
+.photo:hover>img.f{transform:scale(1.03)}
+.duke-badge{position:absolute;right:12px;bottom:0;display:flex;align-items:flex-end}
+.duke-badge img{height:190px;width:auto;filter:drop-shadow(0 10px 14px rgba(0,0,0,.35))}
+.bubble{position:absolute;right:112px;bottom:150px;background:var(--surface);color:var(--text);border-radius:var(--r-sm);padding:8px 12px;font-size:13px;font-weight:600;white-space:nowrap;box-shadow:0 10px 24px -10px rgba(0,0,0,.45)}
+.bubble::after{content:'';position:absolute;bottom:-5px;right:18px;width:10px;height:10px;background:var(--surface);transform:rotate(45deg)}
+
+/* ---- contato ---- */
 .contact .wrap{display:grid;grid-template-columns:.85fr 1.15fr;gap:56px;align-items:start}
-.contact-side{position:sticky;top:96px}
-.alt{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:12px;font-size:13px;color:var(--muted);box-shadow:0 1px 2px rgba(15,20,32,.04);transition:border-color .2s,transform .2s}
-.alt:hover{border-color:var(--blue-text);transform:translateX(3px)}
-.alt i{flex:none;width:40px;height:40px;border-radius:10px;background:var(--s1);color:var(--blue-text);display:grid;place-items:center}
+.contact-side{position:sticky;top:100px}
+.contact .section-head h2{max-width:500px}
+.alt{display:flex;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-sm);padding:14px 16px;margin-bottom:12px;font-size:13px;color:var(--muted);box-shadow:var(--shadow-sm);transition:border-color .2s,transform .2s}
+.alt:hover{border-color:var(--primary-line);transform:translateX(3px)}
+.alt i{flex:none;width:40px;height:40px;border-radius:10px;background:var(--primary-soft);color:var(--primary);display:grid;place-items:center}
 .alt i svg{width:20px;height:20px}
 .alt b{display:block;font-size:15px;color:var(--text);font-weight:600}
-.form{max-width:none;background:#fff;border:1px solid var(--line);border-radius:20px;padding:32px;box-shadow:0 30px 60px -36px rgba(10,111,176,.4)}
-.field label{font-weight:600}
-.field input,.field select,.field textarea{border-radius:10px;padding:13px 14px;background:var(--s1);transition:border-color .15s,box-shadow .15s,background .15s}
-.field input:focus-visible,.field select:focus-visible,.field textarea:focus-visible{background:#fff;box-shadow:0 0 0 4px rgba(14,165,255,.16)}
-#cf-send{padding:14px 28px;font-size:15px;box-shadow:0 10px 22px -8px rgba(14,165,255,.55)}
-footer{background:#0A0A0F;color:#F4F6FA;border-top:0;padding:0 0 28px;position:relative;overflow:hidden}
-footer::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 70% at 90% 0%,rgba(14,165,255,.16),transparent 70%);pointer-events:none}
-footer .wrap{position:relative}
-.f-cta{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;padding:48px 0;margin-bottom:40px;border-bottom:1px solid #2A2D3A}
-.f-cta h3{font-size:clamp(22px,2.6vw,30px);font-weight:700;color:#fff;margin-bottom:6px}
-.f-cta p{color:#9AA3B5;font-size:15px}
-.f-cta-btns{display:flex;gap:12px;flex-wrap:wrap}
-footer .logo{color:#fff}
-footer .logo .t{color:#0EA5FF}
-.fgrid h5{color:#F5B93A}
-.fgrid a,.fgrid p{color:#9AA3B5}
-.fgrid a:hover{color:#fff}
-.fbottom{color:#6B7488;border-top-color:#2A2D3A}
-.section-head .eyebrow{color:var(--blue-text)}
-.fgrid a.logo{color:#fff;font-size:22px;margin-bottom:14px}
-.fgrid a.logo:hover{color:#fff}
-.fgrid a.logo .t{color:#0EA5FF}
-.fgrid a.logo svg{width:28px;height:22px}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:16px;background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--gold);border-radius:var(--r-lg);padding:32px;box-shadow:var(--shadow-md)}
+.field{display:grid;gap:6px}
+.field.full{grid-column:1/-1}
+.field label{font-size:13px;font-weight:600}
+.field input,.field select,.field textarea{background:var(--background);border:1px solid var(--line);border-radius:var(--r-sm);padding:13px 14px;font-size:14px;width:100%;transition:border-color .15s,box-shadow .15s,background .15s}
+.field textarea{min-height:120px;resize:vertical}
+.field input:focus-visible,.field select:focus-visible,.field textarea:focus-visible{outline:0;background:var(--surface);border-color:var(--primary);box-shadow:0 0 0 4px rgba(80,27,44,.14)}
+.field small{color:var(--primary);font-size:12.5px;font-weight:500}
+#cf-send{justify-self:start;padding:15px 28px;font-size:15px}
+#cf-status{margin-top:12px;font-size:14px;color:var(--muted)}
+#cf-status a{color:var(--primary);text-decoration:underline}
 
-/* ---- fase 5: movimento e acabamento ---- */
-header.site{transition:box-shadow .2s,background .2s}
-header.site.scrolled{box-shadow:0 8px 24px -14px rgba(15,20,32,.28)}
-nav.main a[aria-current=true]{color:var(--text);background:var(--s1)}
+/* ---- rodape (grafite) ---- */
+footer{background:var(--dark);color:var(--on-dark);padding:0 0 28px;position:relative;overflow:hidden}
+footer::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 70% at 90% 0%,rgba(80,27,44,.6),transparent 70%);pointer-events:none}
+footer .wrap{position:relative}
+.f-cta{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;padding:52px 0;margin-bottom:40px;border-bottom:1px solid var(--dark-line)}
+.f-cta h3{font-size:clamp(22px,2.6vw,30px);font-weight:700;color:var(--surface);margin-bottom:6px;max-width:600px}
+.f-cta p{color:var(--on-dark-muted);font-size:15px}
+.f-cta-btns{display:flex;gap:12px;flex-wrap:wrap}
+.fgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px;margin-bottom:32px}
+.fgrid h5{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:12px}
+.fgrid a,.fgrid p{display:block;color:var(--on-dark-muted);font-size:14px;margin-bottom:8px}
+.fgrid a:hover{color:var(--surface)}
+.fgrid a.logo{display:flex;color:var(--surface);font-size:22px;margin-bottom:14px}
+.fgrid a.logo svg{width:28px;height:22px}
+.fbottom{color:var(--on-dark-muted);font-size:13px;padding-top:20px;border-top:1px solid var(--dark-line)}
+
+/* ---- botao flutuante ---- */
+.wa-float{position:fixed;right:16px;bottom:16px;z-index:90;display:flex;align-items:center;gap:8px;background:var(--wa);color:var(--wa-text);font-weight:600;font-size:14px;padding:12px 16px;border-radius:999px;box-shadow:0 6px 18px rgba(23,25,29,.28)}
+.wa-float:hover{background:var(--wa-hover)}
+.wa-float svg{width:22px;height:22px}
+
+/* ---- entrada suave ao rolar ---- */
 .js .rv{opacity:0}
 .js .rv.in{opacity:1;animation:rise .6s cubic-bezier(.2,.7,.2,1) backwards;animation-delay:var(--d,0s)}
-.fbottom{color:#8A93A6}
-/* ajuste: Duke Care alinhada (colunas com a mesma altura, lista sem item sobrando) */
-.care-grid{align-items:stretch}
-.care-list li:last-child:nth-child(odd){grid-column:1/-1}
-.steps{display:grid;grid-template-rows:repeat(4,minmax(0,1fr));gap:14px;padding-top:0;height:100%}
-.steps li{min-height:0;padding-bottom:0}
-.steps li>div{display:flex;flex-direction:column;justify-content:flex-start;height:100%;padding-top:13px}
-.steps li::before{align-self:center;margin-top:0}.steps li:not(:last-child)::after{top:50%;bottom:calc(-14px - 50% + 22px)}
+
 @media (max-width:980px){
-  section{padding:56px 0}
+  section{padding:64px 0}
   .burger{display:inline-flex}
-  nav.main{display:none;position:absolute;top:64px;left:0;right:0;flex-direction:column;align-items:stretch;background:var(--bg);border-bottom:1px solid var(--line);padding:8px 24px 16px}
+  nav.main{display:none;position:absolute;top:68px;left:0;right:0;flex-direction:column;align-items:stretch;background:var(--dark);border-bottom:1px solid var(--dark-line);padding:8px 24px 16px}
   nav.main.open{display:flex}
-  nav.main a{padding:14px 8px;font-size:16px;border-bottom:1px solid var(--line);border-radius:0}
+  nav.main a{padding:14px 8px;font-size:16px;border-bottom:1px solid var(--dark-line);border-radius:0}
   .bar-cta .btn span{display:none}
-  .hero-grid,.sol-grid,.care-grid,.about-grid{grid-template-columns:1fr;gap:32px}
-  .sol-top{grid-template-columns:1fr;gap:32px;margin-bottom:40px}
+  .hero{padding:56px 0 72px}
+  .hero-grid,.care-grid,.about-grid,.sol-head,.gestao{grid-template-columns:1fr;gap:32px}
+  .sol-head{margin-bottom:40px}
+  .gestao{padding:32px}
   .contact .wrap{grid-template-columns:1fr;gap:32px}
   .contact-side{position:static}
-  .photo{margin-right:10px;margin-bottom:10px;box-shadow:10px 10px 0 0 #DCEEFB,0 24px 48px -28px rgba(10,111,176,.4)}
+  .photo{margin:0 10px 10px 0;box-shadow:10px 10px 0 0 var(--gold),0 24px 48px -28px rgba(23,25,29,.5)}
   .sv-grid{grid-template-columns:repeat(2,1fr)}
-  .solutions.dark{padding:64px 0}
+  .entry-grid{grid-template-columns:1fr}
+  .trust-strip-grid{grid-template-columns:repeat(2,1fr)}
+  .trust-strip-grid>div:nth-child(2){border-right:0}
+  .trust-strip-grid>div:nth-child(-n+2){border-bottom:1px solid var(--line)}
   .hero-art{min-height:420px}.hero-art img{height:380px}.hero-art .ring.r2{width:420px;height:420px}
-  .hero{padding:48px 0 64px}
   .shell{grid-template-columns:1fr}
   .filters{position:static;display:flex;gap:16px;overflow-x:auto}
   .fg{min-width:160px;margin-bottom:0}
@@ -385,19 +396,30 @@ nav.main a[aria-current=true]{color:var(--text);background:var(--s1)}
   .fgrid{grid-template-columns:1fr 1fr}
 }
 @media (max-width:560px){
+  .wrap{padding:0 16px}
   .grid{grid-template-columns:1fr}
-  .svc,.form,.sv-grid,.care-list{grid-template-columns:1fr}
+  .form,.sv-grid,.care-list,.benefits,.dcards{grid-template-columns:1fr}
+  .trust-strip-grid{grid-template-columns:1fr}
+  .trust-strip-grid>div,.trust-strip-grid>div:nth-child(2){border-right:0;border-bottom:1px solid var(--line)}
+  .trust-strip-grid>div:last-child{border-bottom:0}
+  .entry-card{min-height:126px;padding:18px}
+  .entry-points{padding-top:56px}
+  .trust-strip{padding-bottom:56px}
+  .gestao{padding:22px;border-radius:18px}
+  .demo-body{grid-template-columns:1fr}
+  .demo-side{display:none}
   .dcard{padding:20px}
-  .form{padding:20px;border-radius:16px}
+  .care-card{padding:22px}
+  .form{padding:20px;border-radius:18px}
   .f-cta{padding:36px 0}.f-cta-btns .btn{flex:1 1 100%}
   .wa-float span{display:none}
   .wa-float{padding:14px}
   .duke-badge img{height:150px}.bubble{bottom:118px;right:90px}
   .chip{display:none}
   .hero-art{min-height:360px}.hero-art img{height:320px}.hero-art .ring.r1{width:280px;height:280px}.hero-art .ring.r2{width:380px;height:380px}
-  .facts>div{flex:1 1 100%;border-right:0;border-bottom:1px solid var(--line)}.facts>div:last-child{border-bottom:0}
+  .facts>div{flex:1 1 100%;border-right:0;border-bottom:1px solid rgba(212,165,71,.2)}.facts>div:last-child{border-bottom:0}
 }
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.js .rv{opacity:1}.js .rv.in{animation:none}*{transition:none!important}.dcard:hover,.sv:hover,.card:hover,.steps li:hover>div{transform:none}.card:hover .thumb svg{transform:none}.alt:hover{transform:none}.photo:hover>img.f{transform:none}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.hero .wrap>div:first-child>*,.hero-art{animation:none}.js .rv{opacity:1}.js .rv.in{animation:none}*{transition:none!important}.btn:hover,.dcard:hover,.sv:hover,.card:hover,.entry-card:hover,.alt:hover{transform:none}.card:hover .thumb svg{transform:none}.photo:hover>img.f{transform:none}}
 </style>
 <script>if(!matchMedia('(prefers-reduced-motion:reduce)').matches&&'IntersectionObserver' in window)document.documentElement.classList.add('js')</script>
 </head>
@@ -407,7 +429,7 @@ nav.main a[aria-current=true]{color:var(--text);background:var(--s1)}
 <header class="site">
   <div class="wrap bar">
     <a href="#inicio" class="logo" aria-label="Duke Tech, início">
-      <svg viewBox="0 0 24 19" aria-hidden="true"><path d="M3 15.5h18l1.3-9.3-5 3.4L12 3l-5.3 6.6-5-3.4L3 15.5Z" fill="#F5B93A"/><rect x="4.3" y="15.4" width="15.4" height="2.3" rx="1" fill="#F5B93A"/></svg>
+      <svg viewBox="0 0 24 19" aria-hidden="true"><path d="M3 15.5h18l1.3-9.3-5 3.4L12 3l-5.3 6.6-5-3.4L3 15.5Z" fill="currentColor"/><rect x="4.3" y="15.4" width="15.4" height="2.3" rx="1" fill="currentColor"/></svg>
       DUKE<span class="t">TECH</span>
     </a>
     <nav class="main" id="menu" aria-label="Principal">
@@ -430,17 +452,18 @@ nav.main a[aria-current=true]{color:var(--text);background:var(--s1)}
   </div>
 </header>
 
+
 <main id="conteudo">
 
 <section class="hero" id="inicio">
   <div class="wrap hero-grid">
     <div>
       <p class="pill"><span class="dot" aria-hidden="true"></span>Loja física no Belvedere Shopping</p>
-      <h1>Seu mundo conectado <em>começa aqui.</em></h1>
-      <p class="lead">Smartphones novos e seminovos, acessórios, assistência técnica especializada e software sob medida para a sua empresa.</p>
+      <h1>Tecnologia que <em>resolve a sua rotina.</em></h1>
+      <p class="lead">Smartphones, assistência técnica e soluções sob medida para pessoas e empresas — com atendimento próximo no Belvedere Shopping.</p>
       <div class="cta-row">
-        <a href="https://wa.me/5524999327549?text=Ol%C3%A1%2C%20quero%20falar%20com%20a%20Duke%20Tech!" target="_blank" rel="noopener" class="btn btn-primary">Falar no WhatsApp</a>
-        <a href="#produtos" class="btn btn-outline">Ver produtos</a>
+        <a href="https://wa.me/5524999327549?text=Ol%C3%A1%2C%20quero%20falar%20com%20a%20Duke%20Tech!" target="_blank" rel="noopener" class="btn btn-gold">Falar no WhatsApp</a>
+        <a href="#produtos" class="btn btn-ghost-light">Ver produtos</a>
       </div>
       <div class="facts">
         <div><i class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.4"/></svg></i><span><b>Loja física</b>Belvedere Shopping</span></div>
@@ -452,43 +475,45 @@ nav.main a[aria-current=true]{color:var(--text);background:var(--s1)}
       <span class="glow" aria-hidden="true"></span><span class="ring r1" aria-hidden="true"></span><span class="ring r2" aria-hidden="true"></span>
       <div class="chip c1" aria-hidden="true"><b>Duke Solutions</b>Software sob medida</div>
       <div class="chip c2" aria-hidden="true"><b>Duke Care</b>Assistência técnica</div>
-      <img src="assets/duke-mascote.webp" width="460" height="835" fetchpriority="high" alt="Duke, o mascote da Duke Tech: um pato amarelo de boné preto e óculos, segurando um smartphone">
+      <img src="assets/duke-mascote.webp" width="424" height="642" fetchpriority="high" alt="Duke, o mascote da Duke Tech: um pato amarelo de óculos, boné e moletom vinho com a coroa dourada, segurando um smartphone">
     </div>
   </div>
 </section>
 
-<section class="solutions dark" id="solucoes">
+<section class="entry-points" aria-labelledby="entry-title">
   <div class="wrap">
-    <div class="sol-top">
-      <div class="sol-intro">
-        <p class="eyebrow gold">Duke Solutions</p>
-        <h2>Software sob medida para o jeito que o seu negócio funciona.</h2>
-        <p class="desc">Sistemas, sites e automações desenhados a partir da sua operação, do briefing ao suporte depois da entrega.</p>
-        <div class="cta-row" style="margin:0">
-          <a class="btn btn-gold" href="https://wa.me/5524999327549?text=Ol%C3%A1%2C%20quero%20solicitar%20uma%20proposta%20com%20a%20Duke%20Solutions." target="_blank" rel="noopener">Solicitar proposta</a>
-          <a class="btn btn-ghost-dark" href="#contato">Enviar mensagem</a>
-        </div>
-      </div>
-      <div class="dcards">
-        <div class="dcard">
-          <i class="dicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11 12 4l9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9Z"/></svg></i>
-          <div><p class="k">Diferencial</p><h3>Automação residencial</h3><p>Integração dos equipamentos da casa em um controle único, pensada para o dia a dia da família.</p></div>
-        </div>
-        <div class="dcard">
-          <i class="dicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V11M10 20V5M16 20v-6M22 20H2"/><path d="M19 3v4M17 5h4"/></svg></i>
-          <div><p class="k">Diferencial</p><h3>Controle empresarial com IA</h3><p>Painéis de gestão com apoio de inteligência artificial para acompanhar a operação da empresa.</p></div>
-        </div>
-        <p class="dnote">Além disso, desenvolvemos qualquer software que a sua empresa precisar.</p>
-      </div>
+    <div class="section-head compact-head">
+      <p class="eyebrow">Escolha seu caminho</p>
+      <h2 id="entry-title">A Duke Tech acompanha o que você precisa agora.</h2>
     </div>
-    <ul class="sv-grid" aria-label="Serviços da Duke Solutions">
-      <li class="sv"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></i><span>Desenvolvimento de sistemas</span></li>
-      <li class="sv"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg></i><span>Sites institucionais e landing pages</span></li>
-      <li class="sv"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 3 5 13h6l-1 8 8-10h-6l1-8Z"/></svg></i><span>Automações e integrações</span></li>
-      <li class="sv"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 13 9 5 9-5"/></svg></i><span>Software empresarial sob medida</span></li>
-      <li class="sv"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3Z"/></svg></i><span>Consultoria em tecnologia</span></li>
-      <li class="sv"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg></i><span>Suporte do briefing ao pós-entrega</span></li>
-    </ul>
+    <div class="entry-grid">
+      <a class="entry-card entry-card-primary" href="#produtos">
+        <span class="entry-index">01</span>
+        <span><b>Comprar tecnologia</b><small>Novos, seminovos e acessórios para o seu dia a dia.</small></span>
+        <span class="entry-arrow" aria-hidden="true">↗</span>
+      </a>
+      <a class="entry-card entry-card-gold" href="#assistencia">
+        <span class="entry-index">02</span>
+        <span><b>Consertar meu aparelho</b><small>Diagnóstico claro, orçamento e reparo com garantia.</small></span>
+        <span class="entry-arrow" aria-hidden="true">↗</span>
+      </a>
+      <a class="entry-card entry-card-dark" href="#solucoes">
+        <span class="entry-index">03</span>
+        <span><b>Criar uma solução</b><small>Sistemas, sites e automações para sua empresa.</small></span>
+        <span class="entry-arrow" aria-hidden="true">↗</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="trust-strip" aria-label="Por que escolher a Duke Tech">
+  <div class="wrap">
+    <div class="trust-strip-grid">
+      <div><strong>Loja física</strong><span>Belvedere Shopping</span></div>
+      <div><strong>Atendimento direto</strong><span>Fale com a equipe pelo WhatsApp</span></div>
+      <div><strong>Garantia no serviço</strong><span>Prazo informado no orçamento</span></div>
+      <div><strong>Compra com orientação</strong><span>Disponibilidade confirmada antes do pedido</span></div>
+    </div>
   </div>
 </section>
 
@@ -513,7 +538,7 @@ nav.main a[aria-current=true]{color:var(--text);background:var(--s1)}
       <p>Busque ou filtre por categoria, condição e faixa de preço. Todo pedido é confirmado direto no WhatsApp.</p>
     </div>
     <div class="tools">
-      <label class="sr" for="q" style="position:absolute;left:-9999px">Buscar produto</label>
+      <label class="sr" for="q">Buscar produto</label>
       <input class="search" id="q" type="search" placeholder="Buscar por nome ou modelo" autocomplete="off">
       <span class="count" id="count" role="status" aria-live="polite"></span>
     </div>
@@ -526,7 +551,7 @@ nav.main a[aria-current=true]{color:var(--text);background:var(--s1)}
       <div>
         <div class="grid" id="productGrid"></div>
         <div class="empty" id="emptyState">
-          <img src="assets/duke-mascote.webp" width="96" height="174" loading="lazy" alt="Duke, o mascote da Duke Tech">
+          <img src="assets/duke-mascote.webp" width="96" height="145" loading="lazy" alt="Duke, o mascote da Duke Tech">
           <h4>Nada por aqui ainda</h4>
           <p>Não encontramos itens com esses filtros. Chame no WhatsApp que a gente avisa quando chegar.</p>
         </div>
@@ -538,12 +563,12 @@ nav.main a[aria-current=true]{color:var(--text);background:var(--s1)}
 
 <hr class="rule">
 
-<section id="assistencia">
+<section id="assistencia" aria-labelledby="care-title">
   <div class="wrap care-grid">
     <div>
       <p class="eyebrow">Duke Care</p>
-      <h2 style="font-size:clamp(26px,3.4vw,36px);font-weight:700;margin-bottom:10px">Assistência técnica, sem enrolação</h2>
-      <p style="color:var(--muted);font-size:15px;max-width:460px">Diagnóstico transparente, peças de qualidade e técnicos especializados para celulares, smartphones, computadores e eletrônicos.</p>
+      <h2 class="h2" id="care-title">Assistência técnica, sem enrolação</h2>
+      <p class="lead-sm">Diagnóstico transparente, peças de qualidade e técnicos especializados para celulares, smartphones, computadores e eletrônicos.</p>
       <ul class="care-list">
         <li>Troca de tela</li>
         <li>Troca de bateria</li>
@@ -557,12 +582,120 @@ nav.main a[aria-current=true]{color:var(--text);background:var(--s1)}
       </div>
       <a class="btn btn-primary" href="https://wa.me/5524999327549?text=Ol%C3%A1%2C%20quero%20solicitar%20um%20or%C3%A7amento%20de%20assist%C3%AAncia%20t%C3%A9cnica%20na%20Duke%20Care." target="_blank" rel="noopener">Solicitar orçamento</a>
     </div>
-    <ol class="steps" aria-label="Como funciona a assistência">
-      <li><div><b>Traga o aparelho</b><span>Na loja do Belvedere Shopping, ou chame no WhatsApp antes para descrever o problema.</span></div></li>
-      <li><div><b>Diagnóstico e orçamento</b><span>Avaliamos o aparelho e explicamos o que precisa ser feito e quanto custa.</span></div></li>
-      <li><div><b>Aprovação e reparo</b><span>O reparo só começa depois da sua aprovação.</span></div></li>
-      <li><div><b>Teste e retirada</b><span>Testamos o aparelho e avisamos pelo WhatsApp quando estiver pronto.</span></div></li>
-    </ol>
+    <div class="care-card">
+      <h3>Como funciona</h3>
+      <ol class="steps" aria-label="Como funciona a assistência">
+        <li><div><b>Traga o aparelho</b><span>Na loja do Belvedere Shopping, ou chame no WhatsApp antes para descrever o problema.</span></div></li>
+        <li><div><b>Diagnóstico e orçamento</b><span>Avaliamos o aparelho e explicamos o que precisa ser feito e quanto custa.</span></div></li>
+        <li><div><b>Aprovação e reparo</b><span>O reparo só começa depois da sua aprovação.</span></div></li>
+        <li><div><b>Teste e retirada</b><span>Testamos o aparelho e avisamos pelo WhatsApp quando estiver pronto.</span></div></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="solutions" id="solucoes" aria-labelledby="sol-title">
+  <div class="wrap">
+    <div class="sol-head">
+      <div>
+        <p class="eyebrow">Duke Solutions</p>
+        <h2 id="sol-title">Software sob medida para o jeito que o seu negócio funciona.</h2>
+      </div>
+      <div>
+        <p class="desc">Sistemas, sites e automações desenhados a partir da sua operação, do briefing ao suporte depois da entrega.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://wa.me/5524999327549?text=Ol%C3%A1%2C%20quero%20solicitar%20uma%20proposta%20com%20a%20Duke%20Solutions." target="_blank" rel="noopener">Solicitar proposta</a>
+          <a class="btn btn-outline" href="#contato">Enviar mensagem</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="gestao" aria-labelledby="gestao-title">
+      <div class="gestao-copy">
+        <p class="eyebrow">Em destaque · Sistema de gestão</p>
+        <h3 id="gestao-title">Duke Tech Gestão: a operação inteira em um só painel.</h3>
+        <p>Sistema de gestão desenvolvido pela Duke Solutions para a operação da própria Duke Tech. Desenvolvemos sistemas como este, adaptados à rotina da sua empresa.</p>
+        <ul class="benefits">
+          <li><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4h6v3H9zM7 5.5H5v15h14v-15h-2M9 12h6M9 16h4"/></svg></i><div><b>Comandas com histórico</b><span>Cada etapa do atendimento fica registrada.</span></div></li>
+          <li><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg></i><div><b>Acompanhamento online</b><span>O cliente consulta o andamento pelo código.</span></div></li>
+          <li><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.3 7.9L3 21l1.2-4.5A9 9 0 1 1 21 12Z"/></svg></i><div><b>Mensagens para WhatsApp</b><span>Avisos de status prontos para enviar.</span></div></li>
+          <li><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 13 9 5 9-5"/></svg></i><div><b>Estoque com alerta</b><span>Aviso de estoque baixo e sem estoque.</span></div></li>
+          <li><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V11M10 20V5M16 20v-6M22 20H2"/></svg></i><div><b>Vendas e financeiro</b><span>Vendas, contas e relatórios no mesmo lugar.</span></div></li>
+          <li><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></i><div><b>Acesso por perfil</b><span>Administrador, operação e técnico.</span></div></li>
+        </ul>
+        <a class="btn btn-gold" href="https://wa.me/5524999327549?text=Ol%C3%A1%2C%20quero%20conhecer%20o%20sistema%20de%20gest%C3%A3o%20da%20Duke%20Solutions." target="_blank" rel="noopener">Solicitar demonstração</a>
+      </div>
+
+      <div class="demo">
+        <div class="demo-tabs" role="tablist" aria-label="Telas do sistema de gestão">
+          <button class="demo-tab" type="button" role="tab" id="tab-comandas" aria-controls="panel-comandas" aria-selected="true">Comandas</button>
+          <button class="demo-tab" type="button" role="tab" id="tab-acompanhar" aria-controls="panel-acompanhar" aria-selected="false" tabindex="-1">Acompanhamento</button>
+          <button class="demo-tab" type="button" role="tab" id="tab-estoque" aria-controls="panel-estoque" aria-selected="false" tabindex="-1">Estoque</button>
+        </div>
+        <div class="demo-frame">
+          <div class="demo-bar" aria-hidden="true"><span class="demo-dots"><span></span><span></span><span></span></span><span class="demo-url">Duke Tech Gestão</span></div>
+          <div class="demo-body">
+            <div class="demo-side" aria-hidden="true">
+              <span class="brand"><i>D</i>Duke Tech</span>
+              <span>Visão geral</span><span class="on" data-side="comandas">Comandas</span><span>Clientes</span><span>Aparelhos</span><span>Agenda</span><span data-side="estoque">Estoque</span><span>Vendas</span><span>Financeiro</span>
+            </div>
+            <div class="demo-main">
+              <div class="demo-panel" role="tabpanel" id="panel-comandas" aria-labelledby="tab-comandas">
+                <div class="demo-h"><span><b>Comandas</b><small>Atendimentos da assistência</small></span><span class="demo-btn" aria-hidden="true">+ Nova comanda</span></div>
+                <ul class="demo-rows">
+                  <li><span>Smartphone <small>· troca de tela</small></span><span class="badge b-gold">Em diagnóstico</span></li>
+                  <li><span>Notebook <small>· manutenção geral</small></span><span class="badge b-wine">Aguardando aprovação</span></li>
+                  <li><span>Smartphone <small>· troca de bateria</small></span><span class="badge b-dark">Em reparo</span></li>
+                  <li><span>Tablet <small>· diagnóstico completo</small></span><span class="badge b-ok">Pronto para retirada</span></li>
+                </ul>
+              </div>
+              <div class="demo-panel" role="tabpanel" id="panel-acompanhar" aria-labelledby="tab-acompanhar" hidden>
+                <div class="demo-h"><span><b>Acompanhamento do cliente</b><small>Consulta pública pelo código da comanda</small></span></div>
+                <ol class="track">
+                  <li class="done">Recebido</li>
+                  <li class="done">Em diagnóstico</li>
+                  <li class="done">Orçamento enviado</li>
+                  <li class="done">Aprovado</li>
+                  <li class="now" aria-current="step">Em reparo</li>
+                  <li>Pronto para retirada</li>
+                </ol>
+              </div>
+              <div class="demo-panel" role="tabpanel" id="panel-estoque" aria-labelledby="tab-estoque" hidden>
+                <div class="demo-h"><span><b>Estoque</b><small>Situação de cada produto</small></span></div>
+                <ul class="demo-rows">
+                  <li><span>Película de vidro</span><span class="badge b-ok">Ativo</span></li>
+                  <li><span>Capa de silicone</span><span class="badge b-gold">Estoque baixo</span></li>
+                  <li><span>Cabo USB-C</span><span class="badge b-ok">Ativo</span></li>
+                  <li><span>Carregador USB-C</span><span class="badge b-wine">Sem estoque</span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="demo-note">Tela ilustrativa, com dados fictícios.</p>
+      </div>
+    </div>
+
+    <h3 class="sol-sub">Outras frentes</h3>
+    <div class="dcards">
+      <div class="dcard">
+        <i class="dicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11 12 4l9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9Z"/></svg></i>
+        <div><p class="k">Diferencial</p><h3>Automação residencial</h3><p>Integração dos equipamentos da casa em um controle único, pensada para o dia a dia da família.</p></div>
+      </div>
+      <div class="dcard">
+        <i class="dicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V11M10 20V5M16 20v-6M22 20H2"/><path d="M19 3v4M17 5h4"/></svg></i>
+        <div><p class="k">Diferencial</p><h3>Controle empresarial com IA</h3><p>Painéis de gestão com apoio de inteligência artificial para acompanhar a operação da empresa.</p></div>
+      </div>
+    </div>
+    <p class="dnote">Além disso, desenvolvemos qualquer software que a sua empresa precisar.</p>
+    <ul class="sv-grid" aria-label="Serviços da Duke Solutions">
+      <li class="sv"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></i><span>Desenvolvimento de sistemas</span></li>
+      <li class="sv"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg></i><span>Sites institucionais e landing pages</span></li>
+      <li class="sv"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 3 5 13h6l-1 8 8-10h-6l1-8Z"/></svg></i><span>Automações e integrações</span></li>
+      <li class="sv"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 13 9 5 9-5"/></svg></i><span>Software empresarial sob medida</span></li>
+      <li class="sv"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3Z"/></svg></i><span>Consultoria em tecnologia</span></li>
+      <li class="sv"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg></i><span>Suporte do briefing ao pós-entrega</span></li>
+    </ul>
   </div>
 </section>
 
@@ -581,11 +714,11 @@ nav.main a[aria-current=true]{color:var(--text);background:var(--s1)}
 
 <hr class="rule">
 
-<section id="sobre">
+<section id="sobre" aria-labelledby="sobre-title">
   <div class="wrap about-grid">
     <div>
       <p class="eyebrow">Visite a loja</p>
-      <h2 style="font-size:clamp(26px,3.4vw,36px);font-weight:700">Sobre a Duke Tech</h2>
+      <h2 class="h2" id="sobre-title">Sobre a Duke Tech</h2>
       <div class="info"><h4>Endereço</h4><p>Belvedere Shopping, loja térrea, entrada principal.</p></div>
       <div class="info"><h4>Horário de funcionamento</h4><p>Segunda a sábado, das 10h às 22h. Domingo, das 14h às 20h.</p></div>
       <div class="info"><h4>Contato</h4><p>(24) 99932-7549</p></div>
@@ -597,10 +730,10 @@ nav.main a[aria-current=true]{color:var(--text);background:var(--s1)}
       <!-- PENDENTE: adicionar botao do Instagram quando a loja tiver o perfil oficial. -->
     </div>
     <div class="photo">
-      <img class="f" src="assets/fachada.jpg" width="753" height="807" loading="lazy" alt="Fachada da loja Duke Tech no Belvedere Shopping, com vitrine de smartphones e letreiro azul">
+      <img class="f" src="assets/fachada.jpg" width="452" height="672" loading="lazy" alt="Fachada da loja Duke Tech no Belvedere Shopping: letreiro vinho com a coroa dourada, vitrines de smartphones e acessórios e o balcão de atendimento ao fundo">
       <div class="duke-badge">
         <span class="bubble">Te espero lá!</span>
-        <img src="assets/duke-mascote.webp" width="460" height="835" loading="lazy" alt="Duke, o mascote da Duke Tech">
+        <img src="assets/duke-mascote.webp" width="424" height="642" loading="lazy" alt="Duke, o mascote da Duke Tech">
       </div>
     </div>
   </div>
@@ -611,8 +744,8 @@ nav.main a[aria-current=true]{color:var(--text);background:var(--s1)}
     <div class="contact-side">
       <div class="section-head" style="margin-bottom:24px">
         <p class="eyebrow">Contato</p>
-        <h2>Conte o que você precisa</h2>
-        <p>Preencha o formulário e a equipe da Duke Tech responde pelo WhatsApp.</p>
+        <h2>Precisa de tecnologia, reparo ou uma solução para sua empresa?</h2>
+        <p>Conte o que você precisa e a equipe da Duke Tech orienta o próximo passo pelo WhatsApp.</p>
       </div>
       <a class="alt" href="https://wa.me/5524999327549" target="_blank" rel="noopener"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.3 7.9L3 21l1.2-4.5A9 9 0 1 1 21 12Z"/></svg></i><span><b>WhatsApp</b>(24) 99932-7549</span></a>
       <a class="alt" href="tel:+5524999327549"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg></i><span><b>Ligar agora</b>(24) 99932-7549</span></a>
@@ -631,7 +764,7 @@ nav.main a[aria-current=true]{color:var(--text);background:var(--s1)}
       </div>
       <div class="field full"><label for="cf-msg">Mensagem</label><textarea id="cf-msg" name="msg" required></textarea><small id="cf-erro" role="alert"></small></div>
       <div class="field full" aria-hidden="true" style="position:absolute;left:-9999px"><label for="cf-site">Não preencha este campo</label><input id="cf-site" name="website" tabindex="-1" autocomplete="off"></div>
-      <div class="field full"><button class="btn btn-primary" type="submit" id="cf-send" style="justify-self:start">Enviar mensagem</button><p id="cf-status" role="status" style="margin-top:12px;font-size:14px;color:var(--muted)"></p></div>
+      <div class="field full"><button class="btn btn-primary" type="submit" id="cf-send">Enviar mensagem</button><p id="cf-status" role="status"></p></div>
     </form>
   </div>
 </section>
@@ -641,16 +774,17 @@ nav.main a[aria-current=true]{color:var(--text);background:var(--s1)}
 <footer>
   <div class="wrap">
     <div class="f-cta">
-      <div><h3>Vamos conversar sobre o seu projeto?</h3><p>Fale com a equipe da Duke Tech pelo WhatsApp.</p></div>
+      <div><h3>Precisa de tecnologia, reparo ou uma solução para sua empresa?</h3><p>Fale com a equipe da Duke Tech e encontre o próximo passo.</p></div>
       <div class="f-cta-btns">
-        <a class="btn btn-gold" href="https://wa.me/5524999327549?text=Ol%C3%A1%2C%20quero%20solicitar%20uma%20proposta%20com%20a%20Duke%20Solutions." target="_blank" rel="noopener">Solicitar proposta</a>
+        <a class="btn btn-gold" href="#produtos">Ver produtos</a>
+        <a class="btn btn-ghost-dark" href="#assistencia">Solicitar orçamento</a>
         <a class="btn btn-ghost-dark" href="https://wa.me/5524999327549" target="_blank" rel="noopener">Falar no WhatsApp</a>
       </div>
     </div>
     <div class="fgrid">
       <div>
-        <a href="#inicio" class="logo" style="margin-bottom:12px" aria-label="Duke Tech, início">
-          <svg viewBox="0 0 24 19" aria-hidden="true"><path d="M3 15.5h18l1.3-9.3-5 3.4L12 3l-5.3 6.6-5-3.4L3 15.5Z" fill="#F5B93A"/><rect x="4.3" y="15.4" width="15.4" height="2.3" rx="1" fill="#F5B93A"/></svg>
+        <a href="#inicio" class="logo" aria-label="Duke Tech, início">
+          <svg viewBox="0 0 24 19" aria-hidden="true"><path d="M3 15.5h18l1.3-9.3-5 3.4L12 3l-5.3 6.6-5-3.4L3 15.5Z" fill="currentColor"/><rect x="4.3" y="15.4" width="15.4" height="2.3" rx="1" fill="currentColor"/></svg>
           DUKE<span class="t">TECH</span>
         </a>
         <p>Seu mundo conectado começa aqui.</p>
@@ -769,6 +903,21 @@ document.getElementById('q').addEventListener('input', e => { state.q = e.target
 document.getElementById('newArrivalsRail').innerHTML = products.filter(p => p.featured).map(cardHTML).join('');
 renderFilters(); renderGrid();
 
+// ---- Demonstracao do sistema de gestao (abas) ----
+const demoTabs = [...document.querySelectorAll('.demo-tab')];
+function selectDemo(tab){
+  demoTabs.forEach(t => { const on = t === tab; t.setAttribute('aria-selected', String(on)); t.tabIndex = on ? 0 : -1; document.getElementById(t.getAttribute('aria-controls')).hidden = !on; });
+  const side = tab.id === 'tab-estoque' ? 'estoque' : 'comandas';
+  document.querySelectorAll('.demo-side [data-side]').forEach(s => s.classList.toggle('on', s.dataset.side === side));
+}
+demoTabs.forEach((t, i) => {
+  t.addEventListener('click', () => selectDemo(t));
+  t.addEventListener('keydown', e => {
+    const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0; if (!d) return;
+    const next = demoTabs[(i + d + demoTabs.length) % demoTabs.length]; selectDemo(next); next.focus(); e.preventDefault();
+  });
+});
+
 // ---- Formulario de contato (abre o WhatsApp com a mensagem pronta) ----
 const tel = document.getElementById('cf-tel');
 tel.addEventListener('input', () => {
@@ -792,7 +941,7 @@ async function saveLead(d){
 }
 function showStatus(text, linkText, href){
   const el = document.getElementById('cf-status'); el.textContent = text + ' ';
-  if (href) { const a = document.createElement('a'); a.href = href; a.target = '_blank'; a.rel = 'noopener'; a.textContent = linkText; a.style.color = 'var(--blue-text)'; a.style.textDecoration = 'underline'; el.appendChild(a); }
+  if (href) { const a = document.createElement('a'); a.href = href; a.target = '_blank'; a.rel = 'noopener'; a.textContent = linkText; el.appendChild(a); }
 }
 document.getElementById('contactForm').addEventListener('submit', async e => {
   e.preventDefault();
@@ -821,7 +970,7 @@ document.getElementById('contactForm').addEventListener('submit', async e => {
   links.forEach(a => { const t = document.querySelector(a.getAttribute('href')); if (t) secObs.observe(t); });
 
   if (!document.documentElement.classList.contains('js')) return;
-  const sel = '.section-head,.dcard,.sv,.care-list li,.trust div,.steps li,.info,.photo,.alt,.form,.f-cta,.hero .facts,.rail';
+  const sel = '.section-head,.entry-card,.dcard,.sv,.benefits li,.demo,.care-list li,.trust div,.steps li,.info,.photo,.alt,.form,.f-cta,.hero .facts,.rail';
   const items = [...document.querySelectorAll(sel)].filter(el => !el.closest('.hero-art'));
   const seen = new Map();
   items.forEach(el => {

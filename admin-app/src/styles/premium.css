@@ -1,0 +1,300 @@
+/*
+  Duke Tech Gestão - acabamento premium (camada final, carregada por último em main.tsx).
+  Direção: painel de loja de alto padrão, no espírito da fachada vinho e dourada.
+  - Superfícies quietas: fundo off-white, cartões brancos com borda fina e sombra quase imperceptível.
+  - Uma única peça marcante por tela: o indicador principal em vinho com filete dourado.
+  - Dourado só como detalhe (item ativo do menu, filetes, foco na barra lateral).
+  - Números em Sora (mesma fonte dos títulos do site), interface em Inter, sem fonte de código em dados.
+  - Rótulos em caixa normal: nada de MAIÚSCULAS espaçadas em menus e cabeçalhos de tabela.
+  Cores: somente variáveis de tokens.css.
+*/
+:root{
+  --radius-sm:9px;
+  --radius-md:12px;
+  --radius-lg:14px;
+  --topbar-h:68px;
+  --shadow-card:0 1px 2px rgba(23,25,29,.04),0 0 0 1px rgba(23,25,29,.01);
+  --shadow-hover:0 12px 28px -16px rgba(23,25,29,.28);
+  --sidebar-active:rgba(212,165,71,.13);
+  --on-wine:#FFFFFF;
+  --on-wine-muted:rgba(255,255,255,.74);
+  --table-head:color-mix(in srgb,var(--panel-soft) 55%,var(--panel));
+  --row-hover:color-mix(in srgb,var(--panel-soft) 65%,var(--panel));
+  --search-icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235F5A55' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.5-3.5'/%3E%3C/svg%3E");
+}
+html[data-theme='dark']{
+  --search-icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23B8B4AE' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.5-3.5'/%3E%3C/svg%3E");
+  --shadow-card:none;
+  --shadow-hover:0 12px 28px -16px rgba(0,0,0,.7);
+}
+
+/* ---------- Base ---------- */
+body{font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;color:var(--text)}
+::selection{background:color-mix(in srgb,var(--gold) 35%,transparent)}
+h1,h2,h3,h4{font-family:var(--font-display);font-weight:600;letter-spacing:-.015em;color:var(--text)}
+.metric-card>strong,.module-stat strong,.panel-total,.number-value,.status-summary>strong,.donut-center strong{font-family:var(--font-display);font-variant-numeric:tabular-nums;letter-spacing:-.03em}
+.order-row strong,.table td.num{font-family:var(--font-ui);font-variant-numeric:tabular-nums}
+.report-bar-value,.donut-legend-value,.margin-value,.chartx-tooltip-value,.week-column-header strong,.calendar-cell-date,.tracking-info-card strong{font-family:var(--font-display);font-weight:600;font-variant-numeric:tabular-nums}
+
+/* ---------- Barra lateral ---------- */
+.sidebar{width:252px;padding:18px 12px 14px;gap:18px;border-right:0}
+.sidebar .brand{padding:2px 8px 18px;border-bottom:1px solid var(--sidebar-line);gap:12px}
+.brand-mark{width:38px;height:38px;border-radius:11px}
+.brand-copy strong{font-family:var(--font-display);font-size:15px;font-weight:600;letter-spacing:-.01em}
+.brand-copy small{font-size:12px;margin-top:1px}
+.nav{gap:1px;padding-right:2px}
+.sidebar .nav,.sidebar{scrollbar-width:none}
+.sidebar .nav::-webkit-scrollbar,.sidebar::-webkit-scrollbar{display:none}
+.nav-group{gap:1px;margin-top:14px}
+.nav-label{text-transform:none;letter-spacing:0;font-size:12px;font-weight:500;color:var(--sidebar-label);padding:4px 12px 6px}
+.nav>a,.nav-group>a{position:relative;font-size:13.5px;font-weight:500;padding:9px 12px;border-radius:9px;gap:12px;color:var(--sidebar-text);transition:background .15s,color .15s}
+.nav>a svg,.nav-group>a svg{width:18px;height:18px;opacity:.8}
+.nav>a:hover,.nav-group>a:hover{background:var(--sidebar-soft);color:var(--sidebar-strong)}
+.nav>a.active,.nav-group>a.active{background:var(--sidebar-active);color:var(--sidebar-strong);font-weight:600;box-shadow:none}
+.nav>a.active::before,.nav-group>a.active::before{content:"";position:absolute;left:0;top:9px;bottom:9px;width:3px;border-radius:0 3px 3px 0;background:var(--gold)}
+.nav>a.active svg,.nav-group>a.active svg{opacity:1;color:var(--gold)}
+.nav-count{font-family:var(--font-ui);font-weight:700;font-size:11px}
+.logout-button{padding:10px 12px;border-radius:9px;font-size:13.5px;font-weight:500}
+
+/* ---------- Topo ---------- */
+.topbar{height:var(--topbar-h);padding:0 32px;background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-backdrop-filter:saturate(1.4) blur(12px);backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid var(--line)}
+.topbar-title h1{font-size:19px;margin:0;line-height:1.25}
+.topbar-title>span:last-child{font-size:12.5px;color:var(--muted)}
+.topbar-actions{gap:10px}
+.global-search{height:38px;width:300px;border-radius:var(--radius-sm);background:var(--panel);border-color:var(--line);box-shadow:var(--shadow-card);transition:border-color .15s,box-shadow .15s}
+.global-search input{font-size:13px}
+.icon-button{width:38px;height:38px;border-radius:var(--radius-sm)}
+.topbar .icon-button.notification,.topbar .theme-toggle{border:1px solid var(--line);background:var(--panel);box-shadow:var(--shadow-card)}
+.notification span{background:var(--wine);color:var(--on-wine);border-color:var(--bg)}
+.profile-chip{gap:10px;padding-left:14px;margin-left:4px;border-left:1px solid var(--line)}
+.profile-chip strong{font-size:13px;font-weight:600}
+.profile-chip small{font-size:12px}
+.avatar{background:var(--wine);color:var(--gold);border:0;font-weight:700;letter-spacing:.02em}
+
+/* ---------- Conteúdo e cabeçalhos de página ---------- */
+.content{padding:28px 32px 64px;max-width:1440px}
+.page-toolbar-top{margin-bottom:22px;gap:12px}
+.page-toolbar-count{font-size:13.5px;font-weight:500;color:var(--muted)}
+.page-heading{margin-bottom:24px}
+.page-heading h2{font-size:26px;letter-spacing:-.025em;margin:0 0 4px}
+.page-heading p{font-size:14px}
+.eyebrow,.section-kicker{text-transform:none;letter-spacing:0;font-size:12.5px;font-weight:600;color:var(--gold-text)}
+
+/* ---------- Botões ---------- */
+.btn,.period-button{min-height:38px;padding:0 14px;border-radius:var(--radius-sm);font-size:13px;font-weight:600;gap:7px;background:var(--panel);border:1px solid var(--line);color:var(--text);box-shadow:0 1px 1px rgba(23,25,29,.04);transition:background .15s,border-color .15s,color .15s,box-shadow .15s}
+.btn:hover,.period-button:hover{background:var(--panel-soft);border-color:var(--line-strong);color:var(--text)}
+.btn:active:not(:disabled){transform:translateY(1px)}
+.btn.primary{background:var(--primary);border-color:var(--primary);color:var(--on-accent);box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 1px 2px rgba(23,25,29,.18)}
+.btn.primary:hover{background:var(--primary-hover);border-color:var(--primary-hover);color:var(--on-accent)}
+.period-button{color:var(--text);font-weight:500;padding-right:30px}
+select.period-button{appearance:none;-webkit-appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 17px) 50%,calc(100% - 12px) 50%;background-size:5px 5px,5px 5px;background-repeat:no-repeat}
+.table .btn{min-height:32px;padding:0 12px;font-size:12.5px}
+
+/* ---------- Indicadores ---------- */
+.metric-grid,.module-overview,.finance-overview{gap:16px}
+.metric-card{position:relative;display:flex;flex-direction:column;min-height:0;padding:20px 20px 18px;border-radius:var(--radius-lg);background:var(--panel);border:1px solid var(--line);box-shadow:var(--shadow-card);transition:border-color .15s,box-shadow .15s}
+a.metric-card:hover{transform:none;border-color:var(--line-strong);box-shadow:var(--shadow-hover)}
+.metric-icon{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:9px;background:var(--panel-soft);color:var(--muted)}
+.metric-icon.blue{color:var(--info);background:var(--panel-soft)}
+.metric-icon.violet{color:var(--muted);background:var(--panel-soft)}
+.metric-icon.green{color:var(--green);background:var(--panel-soft)}
+.metric-icon.amber{color:var(--amber);background:var(--panel-soft)}
+.metric-icon.red{color:var(--red);background:var(--red-soft)}
+.metric-icon svg{width:17px;height:17px}
+.metric-label{margin:0;padding-right:44px;font-size:13px;font-weight:500;color:var(--muted)}
+.metric-card>strong{margin-top:14px;font-size:30px;font-weight:600;line-height:1.1;color:var(--text)}
+.metric-foot{display:block;margin-top:8px;font-size:12px;color:var(--muted)}
+/* A peça marcante: o indicador principal em vinho com filete dourado. */
+.metric-card.is-primary{background:var(--wine);border-color:var(--wine);box-shadow:inset 0 3px 0 var(--gold),0 14px 30px -18px rgba(80,27,44,.7)}
+html[data-theme='dark'] .metric-card.is-primary{background:var(--wine)}
+.metric-card.is-primary .metric-label{color:var(--on-wine-muted);font-weight:500}
+.metric-card.is-primary>strong{color:var(--on-wine);font-size:36px}
+.metric-card.is-primary .metric-foot{color:var(--gold)}
+a.metric-card.is-primary:hover{border-color:var(--wine);box-shadow:inset 0 3px 0 var(--gold),0 18px 36px -18px rgba(80,27,44,.8)}
+.metric-grid.has-primary{grid-template-columns:1.45fr repeat(3,minmax(0,1fr))}
+
+.module-overview{grid-template-columns:repeat(auto-fit,minmax(210px,1fr));margin-bottom:22px}
+.module-overview+.module-empty-panel{margin-top:0}
+.module-stat{display:flex;flex-direction:column;padding:20px;border-radius:var(--radius-lg);border-left-width:1px}
+.module-stat span{font-size:13px;font-weight:500;color:var(--muted)}
+.module-stat strong{margin-top:12px;font-size:28px;font-weight:600;line-height:1.1}
+.module-stat small{margin-top:6px;font-size:12px;color:var(--muted)}
+.module-stat.tone-amber,.module-stat.tone-red,.finance-overview .module-stat.is-balance{border-left-width:3px}
+.finance-overview .module-stat.is-balance{background:var(--panel)}
+.trend-line{font-size:12px}
+
+/* ---------- Painéis e cartões ---------- */
+.panel,.card,.form-card,.quick-actions{border-radius:var(--radius-lg);border:1px solid var(--line);box-shadow:var(--shadow-card)}
+.panel{padding:22px 24px}
+.card,.form-card{padding:22px 24px}
+.dashboard-grid{gap:16px;margin-top:16px}
+.panel-header{align-items:center;gap:16px}
+.panel h3,.card h3,.quick-actions h3{margin:0;font-size:15.5px;font-weight:600}
+.panel-total{font-size:18px;font-weight:600}
+.panel-link{font-size:13px;font-weight:600;color:var(--primary);gap:5px}
+.panel-link:hover{text-decoration:underline;text-underline-offset:3px}
+.status-summary>strong{font-size:52px;font-weight:600}
+.status-summary .status-legend,.status-summary .status-legend span{font-size:13px;color:var(--muted)}
+.status-summary .status-legend b{font-family:var(--font-display);font-size:15px;font-weight:600}
+.alert-item{padding:14px 0}
+.alert-item strong{font-size:13px;font-weight:600}
+.alert-item p{font-size:12.5px}
+.alert-count{font-size:12px;border-radius:999px;padding:3px 9px}
+
+/* ---------- Tabelas ---------- */
+.table-wrap{border-radius:var(--radius-lg);border:1px solid var(--line);box-shadow:var(--shadow-card)}
+.table th{background:var(--table-head);font-size:12px;font-weight:600;color:var(--muted);text-transform:none;letter-spacing:0;padding:11px 20px;border-bottom:1px solid var(--line)}
+.table td{padding:14px 20px;font-size:13.5px;border-bottom:1px solid var(--line);vertical-align:middle}
+.table tbody tr:last-child td{border-bottom:0}
+.table tbody tr{transition:background .12s}
+.table tbody tr:hover{background:var(--row-hover)}
+.table td strong{font-weight:600}
+.table-sticky-actions th:last-child{background:var(--table-head)}
+/* Comanda atrasada: marcador vermelho na borda em vez de pintar a linha inteira. */
+.command-table tr.is-overdue{background:transparent}
+.command-table tr.is-overdue td:first-child{box-shadow:inset 3px 0 0 var(--red)}
+.table-sticky-actions.command-table tr.is-overdue td:last-child{background:var(--panel)}
+.table-sticky-actions tbody tr:hover td:last-child,.table-sticky-actions.command-table tr.is-overdue:hover td:last-child{background:var(--row-hover)}
+.table-secondary{font-size:12.5px}
+.customer-cell .avatar{width:34px;height:34px}
+
+/* ---------- Status ---------- */
+.badge{gap:6px;padding:3px 10px 3px 8px;font-size:12px;font-weight:600;line-height:18px;border-radius:999px;white-space:nowrap}
+.badge::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;flex:none}
+.badge.red:not(.urgent){box-shadow:none}
+.priority-tag{font-size:13px;font-weight:500}
+.priority-dot{width:7px;height:7px}
+
+/* ---------- Formulários ---------- */
+.field{gap:6px}
+.field label{font-size:13px;font-weight:600;color:var(--text)}
+.input,.select,.textarea{min-height:40px;padding:9px 12px;font-size:14px;border-radius:var(--radius-sm);border:1px solid var(--line-strong);background:var(--panel);color:var(--text);transition:border-color .15s,box-shadow .15s}
+.input::placeholder,.textarea::placeholder{color:var(--muted);opacity:.8}
+.input:hover:not(:disabled),.select:hover:not(:disabled),.textarea:hover:not(:disabled){border-color:color-mix(in srgb,var(--line-strong) 55%,var(--text))}
+.input:focus-visible,.select:focus-visible,.textarea:focus-visible{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px color-mix(in srgb,var(--primary) 16%,transparent)}
+.global-search:focus-within{border-color:var(--primary);box-shadow:0 0 0 3px color-mix(in srgb,var(--primary) 16%,transparent)}
+.form-grid{gap:18px 20px}
+.form-card{margin-bottom:20px}
+.form-card .actions,.drawer-body .actions{margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}
+.toolbar{margin-bottom:18px}
+.toolbar .search,.list-search .input{max-width:380px;padding-left:38px;background-image:var(--search-icon);background-repeat:no-repeat;background-position:13px 50%;background-size:16px}
+.error,.success{border-radius:var(--radius-sm);font-size:13.5px;padding:11px 14px}
+
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.list-tools{margin:0 0 18px}
+.sort-control{white-space:nowrap;font-size:13px}
+.sort-control .select{min-width:180px}
+
+/* ---------- Abas de status e alternâncias ---------- */
+/* Rolagem horizontal sem barra visivel; um esmaecimento na direita indica que ha mais abas. */
+.command-filters,html[data-theme='dark'] .command-filters{gap:22px;margin-bottom:22px;background:none;scrollbar-width:none;-webkit-mask-image:linear-gradient(90deg,black calc(100% - 40px),transparent);mask-image:linear-gradient(90deg,black calc(100% - 40px),transparent);padding-right:40px}
+.command-filters::-webkit-scrollbar{display:none}
+.command-filters .btn{padding:0 2px 12px;font-size:13px;font-weight:500}
+.command-filters .btn.active{font-weight:600}
+.view-toggle{border-radius:var(--radius-sm);padding:3px}
+.view-toggle .btn{border-radius:7px;font-weight:500}
+.view-toggle .btn.active{font-weight:600}
+.lead-filters .btn[aria-pressed=true]{font-weight:600}
+
+/* ---------- Kanban ---------- */
+.kanban-board{gap:16px}
+.kanban-column{flex-basis:284px;border-radius:var(--radius-lg);padding:12px;gap:10px}
+.kanban-card{border-radius:11px;padding:12px 14px;gap:7px}
+.kanban-card:hover{border-color:var(--line-strong);box-shadow:var(--shadow-hover)}
+.kanban-card-customer{font-size:13.5px;font-weight:600}
+
+/* ---------- Detalhe da comanda e linha do tempo ---------- */
+.detail-grid{gap:20px}
+.detail-card h3{margin:12px 0 0;font-size:22px;letter-spacing:-.02em}
+.detail-list{gap:18px 24px}
+.detail-list dt{text-transform:none;font-size:12.5px;font-weight:500}
+.detail-list dd{font-size:14px;font-weight:500}
+.timeline{gap:0;margin-top:16px}
+.timeline-item{position:relative;gap:14px;padding-bottom:18px}
+.timeline-item:not(:last-child)::after{content:"";position:absolute;left:5px;top:20px;bottom:0;width:1px;background:var(--line)}
+.timeline-item .dot{width:11px;height:11px;margin-top:5px;background:var(--panel);border:2px solid var(--primary)}
+.timeline-item:first-child .dot{background:var(--primary)}
+.timeline-item p{margin:2px 0}
+.tracking-share{border-radius:var(--radius-lg)}
+
+/* ---------- Estados vazios ---------- */
+.empty-state{min-height:300px}
+.empty-state h3{font-size:17px}
+.empty-state p{font-size:13.5px}
+.empty-state small{font-size:12.5px}
+.empty-state-mascot{height:96px}
+.state-block h3{font-size:16px}
+
+/* ---------- Gaveta, diálogo e avisos ---------- */
+.drawer-overlay,.confirm-overlay{-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
+.drawer-panel{box-shadow:var(--shadow-pop)}
+.drawer-header{padding:22px 24px}
+.drawer-header h3{font-size:17px}
+.drawer-body{padding:24px}
+.confirm-dialog{border-radius:var(--radius-lg);padding:26px}
+.toast{border-radius:var(--radius-md)}
+
+/* ---------- Login: vitrine da marca + formulário ---------- */
+.login-page{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);place-items:stretch;padding:0;background:var(--bg)}
+.login-showcase{position:relative;display:flex;flex-direction:column;justify-content:space-between;gap:24px;padding:40px 48px;background:var(--wine);color:var(--on-wine);overflow:hidden}
+.login-showcase::after{content:"";position:absolute;inset:auto -12% -30% auto;width:520px;height:520px;border-radius:50%;border:1px solid rgba(212,165,71,.28);pointer-events:none}
+.login-showcase .brand{padding:0;border:0}
+.login-showcase .brand-copy strong{color:var(--on-wine)}
+.login-showcase .brand-copy small{color:var(--on-wine-muted)}
+.login-showcase-mascot{position:relative;z-index:1;align-self:center;width:auto;height:min(46vh,400px);filter:drop-shadow(0 24px 30px rgba(0,0,0,.35))}
+.login-showcase-line{position:relative;z-index:1;max-width:360px;margin:0;font-family:var(--font-display);font-size:22px;line-height:1.3;font-weight:500;letter-spacing:-.01em;color:var(--on-wine)}
+.login-showcase-line small{display:block;margin-top:10px;font-family:var(--font-ui);font-size:13px;font-weight:400;color:var(--on-wine-muted);letter-spacing:0}
+.login-card{align-self:center;justify-self:center;width:min(400px,calc(100% - 48px));margin:40px 0;padding:0;background:transparent;border:0;border-radius:0;box-shadow:none}
+.login-card .login-mascot,.login-card .brand{display:none}
+.login-card h1{margin:0 0 6px;font-size:28px;letter-spacing:-.02em}
+.login-card>p{margin:0;font-size:14.5px}
+.login-card form{gap:18px;margin-top:28px}
+.login-card .btn.primary{min-height:44px;font-size:14px;margin-top:4px}
+.login-card .input{min-height:44px}
+.login-card .error{margin-top:20px}
+@media(max-width:860px){
+  .login-page{grid-template-columns:1fr;align-content:start}
+  .login-showcase{display:none}
+  .login-card{margin:56px 0;padding:32px 24px;background:var(--panel);border:1px solid var(--line);border-top:3px solid var(--gold);border-radius:18px;box-shadow:var(--shadow-md)}
+  .login-card .login-mascot{display:block}
+  .login-card .brand{display:flex;margin-bottom:20px}
+}
+
+/* ---------- Acompanhamento público ---------- */
+.tracking-card,.tracking-hours-card{border-radius:var(--radius-lg)}
+.tracking-title{font-size:24px;letter-spacing:-.02em}
+.tracking-pill{text-transform:none;letter-spacing:0;font-size:12px;font-weight:600}
+
+/* ---------- Responsivo ---------- */
+@media(max-width:1100px){
+  .sidebar{width:78px}
+  .sidebar .brand{justify-content:center;padding:2px 0 18px}
+  .nav>a.active::before,.nav-group>a.active::before{display:none}
+  .content{padding:24px 24px 56px}
+  .topbar{padding:0 24px}
+  .metric-grid.has-primary{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:720px){
+  .sidebar,.app-shell.is-collapsed .sidebar{width:272px}
+  .sidebar .brand{justify-content:flex-start;padding:2px 8px 18px}
+  .sidebar .nav>a.active::before,.sidebar .nav-group>a.active::before{display:block}
+  .topbar{padding:0 14px;height:62px}
+  .profile-chip{border-left:0;padding-left:0;margin-left:0}
+  .content{padding:20px 16px 48px}
+  .metric-card>strong{font-size:24px}
+  .metric-card.is-primary>strong{font-size:30px}
+}
+@media(max-width:600px){
+  .metric-grid.has-primary{grid-template-columns:1fr 1fr}
+  .metric-grid.has-primary .metric-card.is-primary,.metric-grid.has-primary .metric-card:nth-child(4):last-child{grid-column:1/-1}
+  .mobile-kicker,.topbar-title>span:last-child{display:none}
+  .topbar-title h1{max-width:none;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .topbar-title{flex:1;min-width:0}
+  .topbar-actions{gap:6px}
+  .topbar .icon-button{min-width:40px;width:40px;min-height:40px;height:40px}
+  .topbar .new-order-btn{min-width:40px;min-height:40px}
+  .metric-card{padding:16px}
+  .metric-icon{top:12px;right:12px;width:28px;height:28px}
+  .panel,.card,.form-card{padding:18px}
+  .table th,.table td{padding:12px 14px}
+}

@@ -49,7 +49,6 @@ export function WorkOrdersPage() {
           <button type="button" className={`btn${view === 'list' ? ' active' : ''}`} aria-pressed={view === 'list'} onClick={() => setView('list')}>Lista</button>
           <button type="button" className={`btn${view === 'kanban' ? ' active' : ''}`} aria-pressed={view === 'kanban'} onClick={() => setView('kanban')}>Kanban</button>
         </div>
-        <Link className="btn primary" to="/admin/comandas/nova">+ Nova comanda</Link>
       </div>
     </div>
 

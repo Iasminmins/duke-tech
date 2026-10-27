@@ -6,6 +6,7 @@ import './styles/tokens.css';
 import './styles/admin-enhancements.css';
 import './styles/admin-fixes.css';
 import './styles/design-system.css';
+import './styles/premium.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode><BrowserRouter><App /></BrowserRouter></StrictMode>,

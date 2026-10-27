@@ -26,8 +26,12 @@ export function LoginPage() {
     else navigate(redirectTo, { replace: true });
   }
 
-  return <main className="login-page"><section className="login-card">
-    <img className="login-mascot" src={`${import.meta.env.BASE_URL}duke-mascote.webp`} alt="" width="72" height="131" /><div className="brand"><div className="brand-mark">D</div><div className="brand-copy"><strong>Duke Tech</strong><small>Gestão de assistência</small></div></div>
+  return <main className="login-page"><aside className="login-showcase" aria-hidden="true">
+    <div className="brand"><div className="brand-mark">D</div><div className="brand-copy"><strong>Duke Tech</strong><small>Gestão operacional</small></div></div>
+    <img className="login-showcase-mascot" src={`${import.meta.env.BASE_URL}duke-mascote.webp`} alt="" width="424" height="642" />
+    <p className="login-showcase-line">Comandas, clientes, estoque e caixa da loja em um só lugar.<small>Belvedere Shopping</small></p>
+  </aside><section className="login-card">
+    <img className="login-mascot" src={`${import.meta.env.BASE_URL}duke-mascote.webp`} alt="" width="72" height="109" /><div className="brand"><div className="brand-mark">D</div><div className="brand-copy"><strong>Duke Tech</strong><small>Gestão de assistência</small></div></div>
     <h1>Entrar no painel</h1>
     <p>Acesse as operações da loja com segurança.</p>
     {!hasSupabase && <div className="error" role="alert">Ambiente sem Supabase configurado. Defina VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY em admin-app/.env.local.</div>}

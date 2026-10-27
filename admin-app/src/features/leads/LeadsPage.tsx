@@ -61,7 +61,7 @@ export function LeadsPage() {
     {error && <div className="error" role="alert">{error} <button type="button" className="btn" onClick={load}>Tentar novamente</button></div>}
     {loading ? <div className="loading-skeleton" role="status" aria-label="Carregando contatos"><span /><span /><span /></div>
       : visible.length === 0 ? <section className="panel state-block">
-          <img className="empty-state-mascot" src={`${import.meta.env.BASE_URL}duke-mascote.webp`} alt="" width="64" height="116" loading="lazy" />
+          <img className="empty-state-mascot" src={`${import.meta.env.BASE_URL}duke-mascote.webp`} alt="" width="64" height="97" loading="lazy" />
           <h3>{rows.length === 0 ? 'Nenhum contato recebido ainda' : 'Nada nesta lista'}</h3>
           <p>{rows.length === 0 ? 'Quando alguém preencher o formulário do site, a mensagem aparece aqui.' : 'Troque o filtro ou a busca para ver outros contatos.'}</p>
         </section>
