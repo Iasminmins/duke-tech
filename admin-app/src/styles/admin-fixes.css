@@ -419,6 +419,12 @@
 .table-sticky-actions td:last-child{z-index:1}
 .table-sticky-actions tbody tr:hover td:last-child{background:var(--panel-soft)}
 .table-sticky-actions.command-table tr.is-overdue td:last-child{background:color-mix(in srgb,var(--danger) 6%,var(--panel))}
+.products-table{min-width:760px}
+.products-table th:first-child{min-width:260px}
+.products-table .product-stock-cell,.products-table .product-actions{display:flex;align-items:center;gap:8px}
+.products-table .product-stock-cell{flex-wrap:wrap}
+.products-table .action-cell{min-width:140px}
+.products-table .row-menu{top:48px}
 
 /* --- Aparelhos: texto do problema quebra em vez de forcar rolagem horizontal --- */
 .device-problem-cell{white-space:normal;max-width:320px;min-width:200px}
