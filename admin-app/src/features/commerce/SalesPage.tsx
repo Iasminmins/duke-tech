@@ -1,6 +1,5 @@
 import { FormEvent, useEffect, useMemo, useState } from 'react';
 import { supabase } from '../../lib/supabase';
-import { getSalePayment } from '../finance/financeUtils';
 import { KpiCard } from '../../components/ui/KpiCard';
 import { useToast } from '../../components/ui/ToastProvider';
 import { BarChart } from '../../components/ui/charts/BarChart';
@@ -8,25 +7,76 @@ import { ChartSkeleton } from '../../components/ui/charts/ChartSkeleton';
 import { DonutChart } from '../../components/ui/charts/DonutChart';
 import { PAYMENT_METHOD_COLORS } from '../../lib/chartColors';
 import { localDayKey } from '../../lib/dateUtils';
+import { fetchAllPages } from '../../lib/fetchAllPages';
 
 type Product = { id: string; name: string; sale_price: number; quantity: number };
 type Customer = { id: string; full_name: string };
-type Sale = { id: string; number: number; total: number; payment_method: string | null; created_at: string; customers?: any };
+type Sale = { id: string; number: number; total: number; payment_method: string | null; customer_name?: string | null; created_at: string; customers?: any };
 const methods = { pix: 'Pix', cash: 'Dinheiro', debit: 'Débito', credit: 'Crédito', installments: 'Parcelado', other: 'Outro' };
 const money = (value: number) => Number(value || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 const dayLabel = (key: string) => new Date(`${key}T12:00:00`).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
 
 export function SalesPage() {
   const toast = useToast();
-  const [rows, setRows] = useState<Sale[]>([]); const [products, setProducts] = useState<Product[]>([]); const [customers, setCustomers] = useState<Customer[]>([]); const [open, setOpen] = useState(false); const [productId, setProductId] = useState(''); const [customerId, setCustomerId] = useState(''); const [quantity, setQuantity] = useState('1'); const [payment, setPayment] = useState('pix'); const [error, setError] = useState(''); const [saving, setSaving] = useState(false); const [methodView, setMethodView] = useState<'bar' | 'pie'>('bar'); const [loading, setLoading] = useState(true);
-  useEffect(() => { if (!supabase) return; supabase.from('sales').select('id,number,total,payment_method,created_at,customers(full_name)').is('cancelled_at', null).order('created_at', { ascending: false }).limit(50).then(({ data }) => { setRows((data || []) as Sale[]); setLoading(false); }); supabase.from('products').select('id,name,sale_price,quantity').eq('active', true).is('archived_at', null).order('name').then(({ data }) => setProducts((data || []) as Product[])); supabase.from('customers').select('id,full_name').is('archived_at', null).order('full_name').then(({ data }) => setCustomers((data || []) as Customer[])); }, []);
-  async function submit(event: FormEvent) { event.preventDefault(); if (!supabase) return; const product = products.find(item => item.id === productId); const amount = Number(quantity); if (!product || amount < 1 || amount > product.quantity) { setError('Selecione um produto e uma quantidade disponível.'); return; } setSaving(true); setError(''); const total = amount * Number(product.sale_price); const sale = await supabase.from('sales').insert({ customer_id: customerId || null, subtotal: total, total, payment_method: payment }).select('id,number,total,payment_method,created_at,customers(full_name)').single(); if (sale.error || !sale.data) { setError('Não foi possível criar a venda.'); setSaving(false); return; } const paymentResult = await supabase.from('payments').insert(getSalePayment({ id: sale.data.id, total: Number(sale.data.total), payment_method: payment })); const item = paymentResult.error ? paymentResult : await supabase.from('sale_items').insert({ sale_id: sale.data.id, product_id: product.id, quantity: amount, unit_price: product.sale_price }); const stock = item.error ? item : await supabase.from('products').update({ quantity: product.quantity - amount }).eq('id', product.id); if (paymentResult.error || item.error || stock.error) { setError('Venda criada, mas não foi possível concluir o pagamento, itens ou estoque.'); setSaving(false); return; } setRows(prev => [sale.data as Sale, ...prev]); setProducts(prev => prev.map(item => item.id === product.id ? { ...item, quantity: item.quantity - amount } : item)); setOpen(false); setProductId(''); setCustomerId(''); setQuantity('1'); toast.success('Venda registrada e lançada no financeiro.'); setSaving(false); }
+  const [rows, setRows] = useState<Sale[]>([]); const [products, setProducts] = useState<Product[]>([]); const [customers, setCustomers] = useState<Customer[]>([]); const [open, setOpen] = useState(false); const [productId, setProductId] = useState(''); const [customerId, setCustomerId] = useState(''); const [customerName, setCustomerName] = useState(''); const [dueDate, setDueDate] = useState(''); const [quantity, setQuantity] = useState('1'); const [payment, setPayment] = useState('pix'); const [error, setError] = useState(''); const [saving, setSaving] = useState(false); const [methodView, setMethodView] = useState<'bar' | 'pie'>('bar'); const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    if (!supabase) { setLoading(false); setError('Supabase não está configurado.'); return; }
+    let active = true;
+    const client = supabase;
+    Promise.all([
+      fetchAllPages<Sale>((from, to) => client.from('sales').select('id,number,total,payment_method,customer_name,created_at,customers(full_name)').is('cancelled_at', null).order('created_at', { ascending: false }).range(from, to)),
+      client.from('products').select('id,name,sale_price,quantity').eq('active', true).is('archived_at', null).order('name'),
+      client.from('customers').select('id,full_name').is('archived_at', null).order('full_name'),
+    ]).then(([sales, productResult, customerResult]) => {
+      if (!active) return;
+      if (sales.error || productResult.error || customerResult.error) setError('Não foi possível carregar todos os dados de vendas. Atualize a página para tentar novamente.');
+      setRows((sales.error ? [] : sales.data) as Sale[]);
+      setProducts((productResult.data || []) as Product[]);
+      setCustomers((customerResult.data || []) as Customer[]);
+      setLoading(false);
+    });
+    return () => { active = false; };
+  }, []);
+
+  async function submit(event: FormEvent) {
+    event.preventDefault();
+    if (!supabase) return;
+    const product = products.find(item => item.id === productId);
+    const amount = Number(quantity);
+    if (!product || !Number.isInteger(amount) || amount < 1 || amount > product.quantity) { setError('Selecione um produto e uma quantidade disponível.'); return; }
+    const payLater = payment === 'pay_later';
+    if (payLater && !customerName.trim()) { setError('Informe o nome do cliente para registrar a venda a prazo.'); return; }
+    setSaving(true); setError('');
+    const { data, error: saleError } = await supabase.rpc('create_sale', {
+      p_product_id: product.id,
+      p_quantity: amount,
+      p_customer_id: payLater ? null : customerId || null,
+      p_payment_method: payLater ? null : payment,
+      p_customer_name: payLater ? customerName.trim() : null,
+      p_due_date: payLater ? dueDate || null : null,
+    });
+    const created = Array.isArray(data) ? data[0] : data;
+    if (saleError || !created) {
+      const message = saleError?.message || '';
+      setError(message.includes('Estoque insuficiente') || message.includes('Produto indisponível') || message.includes('preço válido')
+        ? message
+        : 'Não foi possível concluir a venda. Nenhuma alteração foi aplicada ao estoque ou ao financeiro.');
+      setSaving(false);
+      return;
+    }
+    const customer = customers.find(item => item.id === customerId);
+    setRows(prev => [{ ...created, customers: customer || null } as Sale, ...prev]);
+    setProducts(prev => prev.map(item => item.id === product.id ? { ...item, quantity: item.quantity - amount } : item));
+    setOpen(false); setProductId(''); setCustomerId(''); setCustomerName(''); setDueDate(''); setQuantity('1');
+    toast.success(payLater ? 'Venda registrada e cobrança adicionada às contas a vencer.' : 'Venda registrada e lançada no financeiro.');
+    setSaving(false);
+  }
 
   const revenue = rows.reduce((sum, row) => sum + Number(row.total), 0);
   const average = rows.length ? revenue / rows.length : 0;
   const byMethod = useMemo(() => {
     const map = new Map<string, number>();
-    rows.forEach(row => { const key = row.payment_method || 'other'; map.set(key, (map.get(key) || 0) + Number(row.total)); });
+    rows.forEach(row => { if (!row.payment_method) return; const key = row.payment_method; map.set(key, (map.get(key) || 0) + Number(row.total)); });
     return Array.from(map.entries()).sort((a, b) => b[1] - a[1]);
   }, [rows]);
   const maxMethod = Math.max(1, ...byMethod.map(([, value]) => value));
@@ -43,7 +93,7 @@ export function SalesPage() {
       <KpiCard icon="cart" tone="violet" label="Ticket médio" value={money(average)} note="Por venda" />
       <KpiCard icon="chart" tone="green" label="Forma mais usada" value={byMethod.length ? methods[byMethod[0][0] as keyof typeof methods] || 'Outro' : '—'} note={byMethod.length ? money(byMethod[0][1]) : 'Sem dados'} />
     </div>
-    {open && <form className="form-card" onSubmit={submit}><h3>Nova venda</h3><div className="form-grid"><div className="field full"><label htmlFor="sale-product">Produto <span className="required">*</span></label><select id="sale-product" className="select" value={productId} onChange={e => setProductId(e.target.value)} required><option value="">Selecione um produto</option>{products.map(product => <option key={product.id} value={product.id}>{product.name} · {money(product.sale_price)} · {product.quantity} disponíveis</option>)}</select></div><div className="field"><label htmlFor="sale-customer">Cliente</label><select id="sale-customer" className="select" value={customerId} onChange={e => setCustomerId(e.target.value)}><option value="">Venda balcão</option>{customers.map(customer => <option key={customer.id} value={customer.id}>{customer.full_name}</option>)}</select></div><div className="field"><label htmlFor="sale-quantity">Quantidade <span className="required">*</span></label><input id="sale-quantity" className="input" type="number" min="1" value={quantity} onChange={e => setQuantity(e.target.value)} required /></div><div className="field"><label htmlFor="sale-payment">Forma de pagamento</label><select id="sale-payment" className="select" value={payment} onChange={e => setPayment(e.target.value)}>{Object.entries(methods).map(([key, label]) => <option value={key} key={key}>{label}</option>)}</select></div></div>{error && <div className="error" role="alert">{error}</div>}<div className="actions"><button type="button" className="btn" onClick={() => setOpen(false)}>Cancelar</button><button className="btn primary" disabled={saving}>{saving ? 'Salvando…' : 'Finalizar venda'}</button></div></form>}
+    {open && <form className="form-card" onSubmit={submit}><h3>Nova venda</h3><div className="form-grid"><div className="field full"><label htmlFor="sale-product">Produto <span className="required">*</span></label><select id="sale-product" className="select" value={productId} onChange={e => setProductId(e.target.value)} required><option value="">Selecione um produto</option>{products.map(product => <option key={product.id} value={product.id}>{product.name} · {money(product.sale_price)} · {product.quantity} disponíveis</option>)}</select></div><div className="field"><label htmlFor="sale-payment">Forma de pagamento</label><select id="sale-payment" className="select" value={payment} onChange={e => setPayment(e.target.value)}>{Object.entries(methods).map(([key, label]) => <option value={key} key={key}>{label}</option>)}<option value="pay_later">Pagar depois (fiado)</option></select></div><div className="field"><label htmlFor="sale-quantity">Quantidade <span className="required">*</span></label><input id="sale-quantity" className="input" type="number" min="1" value={quantity} onChange={e => setQuantity(e.target.value)} required /></div>{payment === 'pay_later' ? <><div className="field"><label htmlFor="sale-customer-name">Nome do cliente <span className="required">*</span></label><input id="sale-customer-name" className="input" value={customerName} onChange={e => setCustomerName(e.target.value)} maxLength={120} required /></div><div className="field"><label htmlFor="sale-due-date">Data para cobrar</label><input id="sale-due-date" className="input" type="date" value={dueDate} onChange={e => setDueDate(e.target.value)} /></div></> : <div className="field"><label htmlFor="sale-customer">Cliente</label><select id="sale-customer" className="select" value={customerId} onChange={e => setCustomerId(e.target.value)}><option value="">Venda balcão</option>{customers.map(customer => <option key={customer.id} value={customer.id}>{customer.full_name}</option>)}</select></div>}</div>{error && <div className="error" role="alert">{error}</div>}<div className="actions"><button type="button" className="btn" onClick={() => setOpen(false)}>Cancelar</button><button className="btn primary" disabled={saving}>{saving ? 'Salvando…' : 'Finalizar venda'}</button></div></form>}
 
     <div className="dashboard-grid secondary-grid">
       <section className="panel">
@@ -56,6 +106,6 @@ export function SalesPage() {
       </section>
     </div>
 
-    <section className="panel" style={{ marginTop: 16 }}><header className="panel-header"><h3>Vendas recentes</h3></header>{rows.length ? <div className="table-wrap"><table className="table"><thead><tr><th>Nº</th><th>Cliente</th><th>Total</th><th>Pagamento</th><th>Data</th></tr></thead><tbody>{rows.map(row => <tr key={row.id}><td>#{row.number}</td><td>{Array.isArray(row.customers) ? row.customers[0]?.full_name || 'Venda balcão' : row.customers?.full_name || 'Venda balcão'}</td><td>{money(row.total)}</td><td>{methods[row.payment_method as keyof typeof methods] || 'Pendente'}</td><td>{new Date(row.created_at).toLocaleDateString('pt-BR')}</td></tr>)}</tbody></table></div> : <div className="empty">Nenhuma venda registrada.</div>}</section>
+    <section className="panel" style={{ marginTop: 16 }}><header className="panel-header"><h3>Vendas recentes</h3></header>{rows.length ? <div className="table-wrap"><table className="table"><thead><tr><th>Nº</th><th>Cliente</th><th>Total</th><th>Pagamento</th><th>Data</th></tr></thead><tbody>{rows.map(row => <tr key={row.id}><td>#{row.number}</td><td>{row.customer_name || (Array.isArray(row.customers) ? row.customers[0]?.full_name || 'Venda balcão' : row.customers?.full_name || 'Venda balcão')}</td><td>{money(row.total)}</td><td>{row.payment_method ? methods[row.payment_method as keyof typeof methods] || 'Outro' : 'Fiado'}</td><td>{new Date(row.created_at).toLocaleDateString('pt-BR')}</td></tr>)}</tbody></table></div> : <div className="empty">Nenhuma venda registrada.</div>}</section>
   </section>;
 }

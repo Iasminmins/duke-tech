@@ -28,9 +28,14 @@ export function FinancePage() {
     if (!supabase) { setLoading(false); return; }
     Promise.all([
       supabase.from('expenses').select('id,category,description,amount,due_date,paid_at,created_at').order('created_at', { ascending: false }).limit(60),
-      supabase.from('payments').select('id,sale_id,amount,due_date,paid_at,sales(number)').order('paid_at', { ascending: false, nullsFirst: true }).limit(60),
+      supabase.from('payments').select('id,sale_id,amount,due_date,paid_at,sales(number,customer_name,customers(full_name))').order('paid_at', { ascending: false, nullsFirst: true }).limit(60),
     ]).then(([expenses, payments]) => {
-      const income = ((payments.data || []) as any[]).map(row => ({ id: row.id, kind: 'Entrada' as const, description: row.sale_id ? 'Venda #' + (Array.isArray(row.sales) ? row.sales[0]?.number || '—' : row.sales?.number || '—') : 'Pagamento recebido', category: 'Vendas', amount: row.amount, date: row.paid_at || row.due_date || new Date().toISOString(), due_date: row.due_date, paid_at: row.paid_at, source: 'payments' as const }));
+      const income = ((payments.data || []) as any[]).map(row => {
+        const sale = Array.isArray(row.sales) ? row.sales[0] : row.sales;
+        const customer = Array.isArray(sale?.customers) ? sale.customers[0] : sale?.customers;
+        const name = sale?.customer_name || customer?.full_name;
+        return { id: row.id, kind: 'Entrada' as const, description: row.sale_id ? `Venda #${sale?.number || '—'}${name ? ` · ${name}` : ''}` : 'Pagamento recebido', category: 'Vendas', amount: row.amount, date: row.paid_at || row.due_date || new Date().toISOString(), due_date: row.due_date, paid_at: row.paid_at, source: 'payments' as const };
+      });
       const outgoing = ((expenses.data || []) as any[]).map(row => ({ id: row.id, kind: 'Saída' as const, description: row.description, category: row.category, amount: row.amount, date: row.due_date || row.created_at, due_date: row.due_date, paid_at: row.paid_at, source: 'expenses' as const }));
       setRows([...income, ...outgoing]);
       setLoading(false);
@@ -63,7 +68,7 @@ export function FinancePage() {
   const categories = useMemo(() => ['Todas', ...Array.from(new Set(rows.map(row => row.category)))], [rows]);
   const filteredRows = useMemo(() => {
     const start = startFor(period);
-    return rows.filter(row => (!start || row.date >= start.toISOString()) && (categoryFilter === 'Todas' || row.category === categoryFilter));
+    return rows.filter(row => row.paid_at !== null && (!start || row.date >= start.toISOString()) && (categoryFilter === 'Todas' || row.category === categoryFilter));
   }, [rows, period, categoryFilter]);
 
   const totalIn = filteredRows.filter(row => row.kind === 'Entrada').reduce((sum, row) => sum + Number(row.amount), 0);
