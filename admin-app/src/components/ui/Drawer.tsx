@@ -4,15 +4,22 @@ type DrawerProps = { open: boolean; onClose: () => void; title: string; descript
 
 export function Drawer({ open, onClose, title, description, children }: DrawerProps) {
   const panelRef = useRef<HTMLDivElement>(null);
+  const onCloseRef = useRef(onClose);
+
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  }, [onClose]);
 
   useEffect(() => {
     if (!open) return;
-    function onKeyDown(event: KeyboardEvent) { if (event.key === 'Escape') onClose(); }
+    function onKeyDown(event: KeyboardEvent) { if (event.key === 'Escape') onCloseRef.current(); }
     document.addEventListener('keydown', onKeyDown);
-    const focusTarget = panelRef.current?.querySelector<HTMLElement>('input,select,textarea,button');
+    const focusTarget = panelRef.current?.querySelector<HTMLElement>(
+      '.drawer-body input:not([disabled]),.drawer-body select:not([disabled]),.drawer-body textarea:not([disabled]),.drawer-body button:not([disabled])',
+    );
     focusTarget?.focus();
     return () => document.removeEventListener('keydown', onKeyDown);
-  }, [open, onClose]);
+  }, [open]);
 
   if (!open) return null;
   return <div className="drawer-overlay" onClick={onClose}>
