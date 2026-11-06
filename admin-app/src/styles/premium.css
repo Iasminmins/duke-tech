@@ -298,3 +298,14 @@ a.metric-card.is-primary:hover{border-color:var(--wine);box-shadow:inset 0 3px 0
   .panel,.card,.form-card{padding:18px}
   .table th,.table td{padding:12px 14px}
 }
+
+/* Keep the desktop header readable when the page is zoomed in or the window is narrower. */
+@media(max-width:1250px) and (min-width:721px){
+  .topbar{gap:16px;padding-inline:20px}
+  .topbar-title{flex:0 0 auto}
+  .topbar-title>span:last-child{display:none}
+  .topbar-actions{flex:1;min-width:0;justify-content:flex-end;gap:8px}
+  .topbar-actions .global-search{width:clamp(180px,22vw,260px);min-width:0}
+  .profile-chip{gap:0;padding-left:10px;margin-left:0}
+  .profile-chip>div:nth-child(2),.profile-chip>svg{display:none}
+}
